@@ -18,7 +18,7 @@
     startDate += 7;
   }
 
-  // Add
+  // Add each date cell to the calendar
   for (let i = 1; i <= 42; i++) {
     if (i >= startDate && i - startDate <= lastDay) {
       days.push(i - startDate);
