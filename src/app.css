@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+body {
+  user-select: none;
+}
+
+#container:has(#calendar) {
+  grid-template-columns: auto 100vh;
+}
+
+#container:has(#schedule) {
+  grid-template-columns: 1fr 4fr;
+
+  #date-headings {
+    margin-left: 3em;
+  }
+}
