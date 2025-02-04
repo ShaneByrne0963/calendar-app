@@ -1,6 +1,6 @@
 <script lang="ts">
   import HourMarkings from "./HourMarkings.svelte";
-  let { data, selectedDate } = $props();
+  let { data, selectedDate, handleDateClick } = $props();
 
   let days = $derived.by(() => {
     let arr: string[] = [];
@@ -34,8 +34,13 @@
 
 <div id="schedule">
   <HourMarkings extrude={true} />
-  {#each days as day}
-    <div class={day}></div>
+  {#each days as day, i}
+    <button
+      class={day}
+      data-date={data[i].getDate()}
+      aria-label="Select Day"
+      onclick={handleDateClick}
+    ></button>
   {/each}
 </div>
 

@@ -53,8 +53,27 @@
   }
 
   function handleDateClick() {
-    let day = parseInt(this.querySelector(".date-number").innerText);
-    selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
+    if (format === "weekly") {
+      let day = parseInt(this.getAttribute("data-date"));
+      selectedDate = new Date(
+        wDisplayStart.getFullYear(),
+        wDisplayStart.getMonth(),
+        day
+      );
+      // Update the month display to easily get to the selected date in the other format
+      mDisplayMonth = selectedDate.getMonth();
+      mDisplayYear = selectedDate.getFullYear();
+    } else {
+      let day = parseInt(this.querySelector(".date-number").innerText);
+      selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
+
+      // Update the week display for the same reason
+      wDisplayStart = new Date(
+        mDisplayYear,
+        mDisplayMonth,
+        day - selectedDate.getDay() + 1
+      );
+    }
   }
 
   function handleFormatChange() {
@@ -135,7 +154,7 @@
     </div>
   </div>
   {#if format === "weekly"}
-    <Schedule data={weekData} {selectedDate} />
+    <Schedule data={weekData} {selectedDate} {handleDateClick} />
   {:else}
     <Calendar
       month={mDisplayMonth}
