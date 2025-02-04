@@ -34,7 +34,9 @@
 
   function handleDateClick() {
     let day = parseInt(this.getAttribute("data-date"));
-    calendarData.selected = new Date(wDisplay.year, wDisplay.month, day);
+    let month = parseInt(this.getAttribute("data-month"));
+    let year = parseInt(this.getAttribute("data-year"));
+    calendarData.selected = new Date(year, month, day);
     // Update the month display to easily get to the selected date in the other format
     mDisplay.set(calendarData.selected);
   }
@@ -46,6 +48,8 @@
     <button
       class={day}
       data-date={data[i].getDate()}
+      data-month={data[i].getMonth()}
+      data-year={data[i].getFullYear()}
       aria-label="Select Day"
       onclick={handleDateClick}
     ></button>
