@@ -28,9 +28,7 @@
 
 <div id="calendar">
   {#each days as day}
-    <div
-      class="day border-1 border-indigo-200 {day === 0 ? 'bg-indigo-100' : ''}"
-    >
+    <div class="day {day === 0 ? 'bg-indigo-100' : ''}">
       {#if day > 0}
         {day}
       {/if}
@@ -51,5 +49,6 @@
     text-align: right;
     aspect-ratio: 1 / 1;
     box-sizing: border-box;
+    border: 1px solid var(--color-indigo-200);
   }
 </style>

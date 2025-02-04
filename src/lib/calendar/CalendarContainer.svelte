@@ -1,6 +1,7 @@
 <script lang="ts">
   import { first3 } from "../../helpers";
   import { days, months } from "../../types";
+  import Graphic from "../Graphic.svelte";
   import Calendar from "./Calendar.svelte";
 
   let today = new Date();
@@ -23,7 +24,16 @@
 
 <div id="calendar-container">
   <div id="calendar-header">
-    <div id="calendar-view-panel"></div>
+    <div id="calendar-view-panel">
+      <button class="btn btn-square" aria-label="Switch to Weekly Schedule">
+        <Graphic width="6" height="6" pathWidth={448} path={"weeklyView"}
+        ></Graphic>
+      </button>
+      <button class="btn btn-square" aria-label="Switch to Monthly Calendar">
+        <Graphic width="6" height="6" pathWidth={448} path={"monthlyView"}
+        ></Graphic>
+      </button>
+    </div>
     <div id="calendar-navigation">
       <button
         aria-label="Previous"
@@ -95,5 +105,10 @@
   #date-label {
     min-width: 30%;
     text-align: center;
+  }
+
+  svg {
+    width: 3em;
+    aspect-ratio: 1 / 1;
   }
 </style>
