@@ -9,6 +9,7 @@
   let format: "weekly" | "monthly" = $state("monthly");
   let mDisplayMonth = $state(today.getMonth());
   let mDisplayYear = $state(today.getFullYear());
+  let selectedDate = $state(today);
 
   function handleDateDisplayChange(direction: 1 | -1) {
     mDisplayMonth += direction;
@@ -75,7 +76,8 @@
     </div>
   </div>
   {#if format === "monthly"}
-    <Calendar month={mDisplayMonth} year={mDisplayYear}></Calendar>
+    <Calendar month={mDisplayMonth} year={mDisplayYear} {selectedDate}
+    ></Calendar>
   {/if}
 </div>
 

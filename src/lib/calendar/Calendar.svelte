@@ -1,8 +1,13 @@
 <script lang="ts">
-  let { month, year } = $props();
+  let { month, year, selectedDate } = $props();
 
-  let days: number[] = $derived.by(() => {
-    let arr: number[] = [];
+  interface dateInfo {
+    date: number;
+    class: string;
+  }
+
+  let days: dateInfo[] = $derived.by(() => {
+    let arr: dateInfo[] = [];
     // Find the date of the first day of the month
     let firstDay = new Date(year, month, 1);
     let lastDay = new Date(year, month + 1, 0).getDate();
@@ -15,12 +20,33 @@
     }
 
     // Add each date cell to the calendar
+    let selectedOnDisplay =
+      selectedDate.getMonth() === month && selectedDate.getFullYear() === year;
+    let today = new Date();
+    let todayOnDisplay =
+      today.getMonth() === month && today.getFullYear() === year;
     for (let i = 1; i <= 42; i++) {
-      if (i >= startDate && i - startDate <= lastDay) {
-        arr.push(i - startDate);
+      let currentDay = i - startDate;
+      let dateData = {
+        date: 0,
+        class: "day",
+      };
+
+      // Get the background color of the date
+      dateData.class +=
+        selectedOnDisplay && selectedDate.getDate() === currentDay
+          ? " selected"
+          : "";
+      dateData.class +=
+        todayOnDisplay && today.getDate() === currentDay ? " bg-lime-100" : "";
+
+      // Find the correct date number for the current cell
+      if (i > startDate && currentDay <= lastDay) {
+        dateData.date = currentDay;
       } else {
-        arr.push(0);
+        dateData.class += " blank";
       }
+      arr.push(dateData);
     }
     return arr;
   });
@@ -28,9 +54,9 @@
 
 <div id="calendar">
   {#each days as day}
-    <div class="day {day === 0 ? 'bg-indigo-100' : ''}">
-      {#if day > 0}
-        {day}
+    <div class={day.class}>
+      {#if day.date > 0}
+        {day.date}
       {/if}
     </div>
   {/each}
@@ -50,5 +76,29 @@
     aspect-ratio: 1 / 1;
     box-sizing: border-box;
     border: 1px solid var(--color-indigo-200);
+    position: relative;
+
+    &.selected::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-blue-200);
+      opacity: 0.3;
+    }
+
+    &.blank::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-indigo-100);
+    }
   }
 </style>
