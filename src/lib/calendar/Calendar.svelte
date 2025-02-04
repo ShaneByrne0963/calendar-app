@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CalendarHeader from "./CalendarHeader.svelte";
+  let { month, year } = $props();
   let days: number[] = [];
 
   // Find the date of the first day of this month
@@ -28,21 +28,17 @@
   }
 </script>
 
-<CalendarHeader>
-  <div id="calendar">
-    {#each days as day}
-      <div
-        class="day border-1 border-indigo-200 {day === 0
-          ? 'bg-indigo-100'
-          : ''}"
-      >
-        {#if day > 0}
-          {day}
-        {/if}
-      </div>
-    {/each}
-  </div>
-</CalendarHeader>
+<div id="calendar">
+  {#each days as day}
+    <div
+      class="day border-1 border-indigo-200 {day === 0 ? 'bg-indigo-100' : ''}"
+    >
+      {#if day > 0}
+        {day}
+      {/if}
+    </div>
+  {/each}
+</div>
 
 <style>
   #calendar {

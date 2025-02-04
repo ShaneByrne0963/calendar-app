@@ -1,5 +1,13 @@
 <script lang="ts">
-  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  import { first3 } from "../../helpers";
+  import { days, months } from "../../types";
+  import Calendar from "./Calendar.svelte";
+
+  let today = new Date();
+
+  let format: "weekly" | "monthly" = $state("monthly");
+  let mDisplayMonth = $state(today.getMonth());
+  let mDisplayYear = $state(today.getFullYear());
 </script>
 
 <div id="calendar-container">
@@ -18,7 +26,7 @@
           ></path></svg
         >
       </button>
-      <div id="date-label"></div>
+      <div id="date-label">{months[mDisplayMonth]} {mDisplayYear}</div>
       <button aria-label="next-month">
         <svg
           class="h-6 w-6 fill-current md:h-8 md:w-8"
@@ -33,11 +41,13 @@
     </div>
     <div id="date-headings" class="border-1 border-blue-300 bg-blue-200">
       {#each days as day}
-        <div>{day}</div>
+        <div>{first3(day)}</div>
       {/each}
     </div>
   </div>
-  <slot />
+  {#if format === "monthly"}
+    <Calendar month={mDisplayMonth} year={mDisplayYear}></Calendar>
+  {/if}
 </div>
 
 <style>
@@ -65,5 +75,6 @@
 
   #date-label {
     min-width: 30%;
+    text-align: center;
   }
 </style>

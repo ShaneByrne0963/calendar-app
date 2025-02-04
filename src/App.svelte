@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Calendar from "./lib/calendar/Calendar.svelte";
+  import CalendarContainer from "./lib/calendar/CalendarContainer.svelte";
   import Menu from "./lib/menu/Menu.svelte";
 </script>
 
 <div id="container">
   <Menu />
-  <Calendar />
+  <CalendarContainer />
 </div>
 
 <style>
