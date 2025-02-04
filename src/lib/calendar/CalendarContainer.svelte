@@ -4,84 +4,47 @@
   import Graphic from "../Graphic.svelte";
   import Calendar from "./Calendar.svelte";
   import Schedule from "./Schedule.svelte";
+  import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
 
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
 
-  let format: "weekly" | "monthly" = $state("weekly");
-  let mDisplayMonth = $state(month);
-  let mDisplayYear = $state(year);
-  let selectedDate = $state(today);
+  mDisplay.month = month;
+  mDisplay.year = year;
 
-  // Get all of the days for the week's schedule
-  let dayOfWeek = today.getDay() - 1;
-  if (dayOfWeek < 0) {
-    dayOfWeek += 7;
-  }
-  let wDisplayStart = $state(
-    new Date(year, month, today.getDate() - dayOfWeek)
-  );
+  wDisplay.set(today);
   let weekData = $derived.by(() => {
-    let arr: Date[] = [wDisplayStart];
+    let arr: Date[] = [];
 
-    for (let i = 1; i < 7; i++) {
-      arr.push(
-        new Date(
-          wDisplayStart.getFullYear(),
-          wDisplayStart.getMonth(),
-          wDisplayStart.getDate() + i
-        )
-      );
+    for (let i = 0; i < 7; i++) {
+      arr.push(new Date(wDisplay.year, wDisplay.month, wDisplay.day + i));
     }
     return arr;
   });
 
   function handleDateDisplayChange(direction: 1 | -1) {
-    if (format === "weekly") {
-      wDisplayStart = new Date(
-        wDisplayStart.getFullYear(),
-        wDisplayStart.getMonth(),
-        wDisplayStart.getDate() + 7 * direction
+    if (calendarData.format === "weekly") {
+      let newWeek = new Date(
+        wDisplay.year,
+        wDisplay.month,
+        wDisplay.day + 7 * direction
       );
+      wDisplay.set(newWeek);
     } else {
-      mDisplayMonth += direction;
-      if (mDisplayMonth < 0) {
-        mDisplayMonth += 12;
-        mDisplayYear -= 1;
-      } else if (mDisplayMonth > 11) {
-        mDisplayMonth -= 12;
-        mDisplayYear += 1;
+      mDisplay.month += direction;
+      if (mDisplay.month < 0) {
+        mDisplay.month += 12;
+        mDisplay.year -= 1;
+      } else if (mDisplay.month > 11) {
+        mDisplay.month -= 12;
+        mDisplay.year += 1;
       }
-    }
-  }
-
-  function handleDateClick() {
-    if (format === "weekly") {
-      let day = parseInt(this.getAttribute("data-date"));
-      selectedDate = new Date(
-        wDisplayStart.getFullYear(),
-        wDisplayStart.getMonth(),
-        day
-      );
-      // Update the month display to easily get to the selected date in the other format
-      mDisplayMonth = selectedDate.getMonth();
-      mDisplayYear = selectedDate.getFullYear();
-    } else {
-      let day = parseInt(this.querySelector(".date-number").innerText);
-      selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
-      let selectedDay = selectedDate.getDay() - 1;
-      if (selectedDay < 0) {
-        selectedDay += 7;
-      }
-
-      // Update the week display for the same reason
-      wDisplayStart = new Date(mDisplayYear, mDisplayMonth, day - selectedDay);
     }
   }
 
   function handleFormatChange() {
-    format = this.id;
+    calendarData.format = this.id;
   }
 </script>
 
@@ -91,7 +54,9 @@
       <div class="tooltip tooltip-bottom" data-tip="Schedule">
         <button
           id="weekly"
-          class="btn btn-square{format === 'weekly' ? ' btn-accent' : ''}"
+          class="btn btn-square{calendarData.format === 'weekly'
+            ? ' btn-accent'
+            : ''}"
           aria-label="Switch to Weekly Schedule"
           onclick={handleFormatChange}
         >
@@ -102,7 +67,9 @@
       <div class="tooltip tooltip-bottom" data-tip="Calendar">
         <button
           id="monthly"
-          class="btn btn-square{format === 'monthly' ? ' btn-accent' : ''}"
+          class="btn btn-square{calendarData.format === 'monthly'
+            ? ' btn-accent'
+            : ''}"
           aria-label="Switch to Monthly Calendar"
           onclick={handleFormatChange}
         >
@@ -127,9 +94,9 @@
         ></Graphic>
       </button>
       <div id="date-label">
-        {format === "weekly"
-          ? `${weekData[0].getDate()} ${months[weekData[0].getMonth()]} - ${weekData[6].getDate()} ${months[weekData[6].getMonth()]}`
-          : `${months[mDisplayMonth]} ${mDisplayYear}`}
+        {calendarData.format === "weekly"
+          ? `${weekData[0].getDate()} ${months[weekData[0].getMonth()]} ${weekData[0].getFullYear()} - ${weekData[6].getDate()} ${months[weekData[6].getMonth()]} ${weekData[6].getFullYear()}`
+          : `${months[mDisplay.month]} ${mDisplay.year}`}
       </div>
       <button
         aria-label="Go to the next month"
@@ -150,22 +117,17 @@
       {#each days as day, i}
         <div class="ml-1">
           {first3(day)}
-          {format === "weekly"
+          {calendarData.format === "weekly"
             ? ` ${weekData[i].getDate()} ${first3(months[weekData[i].getMonth()])}`
             : ""}
         </div>
       {/each}
     </div>
   </div>
-  {#if format === "weekly"}
-    <Schedule data={weekData} {selectedDate} {handleDateClick} />
+  {#if calendarData.format === "weekly"}
+    <Schedule data={weekData} />
   {:else}
-    <Calendar
-      month={mDisplayMonth}
-      year={mDisplayYear}
-      {selectedDate}
-      {handleDateClick}
-    />
+    <Calendar />
   {/if}
 </div>
 

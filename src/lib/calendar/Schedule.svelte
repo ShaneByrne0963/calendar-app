@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
-  let { data, selectedDate, handleDateClick } = $props();
+  let { data } = $props();
 
   let days = $derived.by(() => {
     let arr: string[] = [];
@@ -14,9 +15,9 @@
       let currentDay = day.getDate();
 
       let isSelected =
-        selectedDate.getMonth() === month &&
-        selectedDate.getFullYear() === year &&
-        selectedDate.getDate() === currentDay;
+        calendarData.selected.getMonth() === month &&
+        calendarData.selected.getFullYear() === year &&
+        calendarData.selected.getDate() === currentDay;
       let isToday =
         today.getMonth() === month &&
         today.getFullYear() === year &&
@@ -30,6 +31,13 @@
 
     return arr;
   });
+
+  function handleDateClick() {
+    let day = parseInt(this.getAttribute("data-date"));
+    calendarData.selected = new Date(wDisplay.year, wDisplay.month, day);
+    // Update the month display to easily get to the selected date in the other format
+    mDisplay.set(calendarData.selected);
+  }
 </script>
 
 <div id="schedule">

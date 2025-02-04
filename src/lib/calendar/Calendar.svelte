@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { month, year, selectedDate, handleDateClick } = $props();
+  import { calendarData, wDisplay, mDisplay } from "../../shared.svelte";
 
   interface dateInfo {
     date: number;
@@ -8,11 +8,11 @@
 
   let days: dateInfo[] = $derived.by(() => {
     let arr: dateInfo[] = [];
-    // Find the date of the first day of the month
-    let firstDay = new Date(year, month, 1);
-    let lastDay = new Date(year, month + 1, 0).getDate();
+    // Find the date of the first day of the mDisplay.month
+    let firstDay = new Date(mDisplay.year, mDisplay.month, 1);
+    let lastDay = new Date(mDisplay.year, mDisplay.month + 1, 0).getDate();
 
-    // Find which day the first of this month lands on, with 0 being Monday and 6 being Sunday
+    // Find which day the first of this mDisplay.month lands on, with 0 being Monday and 6 being Sunday
     let startDate = firstDay.getDay() - 1;
 
     if (startDate < 0) {
@@ -21,10 +21,12 @@
 
     // Add each date cell to the calendar
     let selectedOnDisplay =
-      selectedDate.getMonth() === month && selectedDate.getFullYear() === year;
+      calendarData.selected.getMonth() === mDisplay.month &&
+      calendarData.selected.getFullYear() === mDisplay.year;
     let today = new Date();
     let todayOnDisplay =
-      today.getMonth() === month && today.getFullYear() === year;
+      today.getMonth() === mDisplay.month &&
+      today.getFullYear() === mDisplay.year;
     for (let i = 1; i <= 42; i++) {
       let currentDay = i - startDate;
       let dateData = {
@@ -34,7 +36,7 @@
 
       // Get the background color of the date
       dateData.class +=
-        selectedOnDisplay && selectedDate.getDate() === currentDay
+        selectedOnDisplay && calendarData.selected.getDate() === currentDay
           ? " selected"
           : "";
       dateData.class +=
@@ -50,6 +52,12 @@
     }
     return arr;
   });
+
+  function handleDateClick() {
+    let day = parseInt(this.querySelector(".date-number").innerText);
+    calendarData.selected = new Date(mDisplay.year, mDisplay.month, day);
+    wDisplay.set(calendarData.selected);
+  }
 </script>
 
 <div id="calendar">
