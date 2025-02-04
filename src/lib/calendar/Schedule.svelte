@@ -1,5 +1,6 @@
 <script lang="ts">
   import HourMarkings from "./HourMarkings.svelte";
+  let { data } = $props();
 
   let days = new Array(7);
 </script>

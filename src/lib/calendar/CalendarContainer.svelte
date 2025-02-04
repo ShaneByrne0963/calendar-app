@@ -6,20 +6,49 @@
   import Schedule from "./Schedule.svelte";
 
   let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth();
 
-  let format: "weekly" | "monthly" = $state("monthly");
-  let mDisplayMonth = $state(today.getMonth());
-  let mDisplayYear = $state(today.getFullYear());
+  let format: "weekly" | "monthly" = $state("weekly");
+  let mDisplayMonth = $state(month);
+  let mDisplayYear = $state(year);
   let selectedDate = $state(today);
 
+  // Get all of the days for the week's schedule
+  let wDisplayStart = $state(
+    new Date(year, month, today.getDate() - today.getDay() + 1)
+  );
+  let weekData = $derived.by(() => {
+    let arr: Date[] = [wDisplayStart];
+
+    for (let i = 1; i < 7; i++) {
+      arr.push(
+        new Date(
+          wDisplayStart.getFullYear(),
+          wDisplayStart.getMonth(),
+          wDisplayStart.getDate() + i
+        )
+      );
+    }
+    return arr;
+  });
+
   function handleDateDisplayChange(direction: 1 | -1) {
-    mDisplayMonth += direction;
-    if (mDisplayMonth < 0) {
-      mDisplayMonth += 12;
-      mDisplayYear -= 1;
-    } else if (mDisplayMonth > 11) {
-      mDisplayMonth -= 12;
-      mDisplayYear += 1;
+    if (format === "weekly") {
+      wDisplayStart = new Date(
+        wDisplayStart.getFullYear(),
+        wDisplayStart.getMonth(),
+        wDisplayStart.getDate() + 7 * direction
+      );
+    } else {
+      mDisplayMonth += direction;
+      if (mDisplayMonth < 0) {
+        mDisplayMonth += 12;
+        mDisplayYear -= 1;
+      } else if (mDisplayMonth > 11) {
+        mDisplayMonth -= 12;
+        mDisplayYear += 1;
+      }
     }
   }
 
@@ -74,7 +103,11 @@
           extraClass="fill-current"
         ></Graphic>
       </button>
-      <div id="date-label">{months[mDisplayMonth]} {mDisplayYear}</div>
+      <div id="date-label">
+        {format === "weekly"
+          ? `${weekData[0].getDate()} ${months[weekData[0].getMonth()]} - ${weekData[6].getDate()} ${months[weekData[6].getMonth()]}`
+          : `${months[mDisplayMonth]} ${mDisplayYear}`}
+      </div>
       <button
         aria-label="Go to the next month"
         class="btn btn-sm"
@@ -97,7 +130,7 @@
     </div>
   </div>
   {#if format === "weekly"}
-    <Schedule />
+    <Schedule data={weekData} />
   {:else}
     <Calendar
       month={mDisplayMonth}
