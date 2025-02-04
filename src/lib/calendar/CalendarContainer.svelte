@@ -8,13 +8,28 @@
   let format: "weekly" | "monthly" = $state("monthly");
   let mDisplayMonth = $state(today.getMonth());
   let mDisplayYear = $state(today.getFullYear());
+
+  function handleDateDisplayChange(direction: 1 | -1) {
+    mDisplayMonth += direction;
+    if (mDisplayMonth < 0) {
+      mDisplayMonth += 12;
+      mDisplayYear -= 1;
+    } else if (mDisplayMonth > 11) {
+      mDisplayMonth -= 12;
+      mDisplayYear += 1;
+    }
+  }
 </script>
 
 <div id="calendar-container">
   <div id="calendar-header">
     <div id="calendar-view-panel"></div>
     <div id="calendar-navigation">
-      <button aria-label="previous-month">
+      <button
+        aria-label="Previous"
+        class="cursor-pointer"
+        onclick={() => handleDateDisplayChange(-1)}
+      >
         <svg
           class="h-6 w-6 fill-current md:h-8 md:w-8"
           xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +42,11 @@
         >
       </button>
       <div id="date-label">{months[mDisplayMonth]} {mDisplayYear}</div>
-      <button aria-label="next-month">
+      <button
+        aria-label="Next"
+        class="cursor-pointer"
+        onclick={() => handleDateDisplayChange(1)}
+      >
         <svg
           class="h-6 w-6 fill-current md:h-8 md:w-8"
           xmlns="http://www.w3.org/2000/svg"
