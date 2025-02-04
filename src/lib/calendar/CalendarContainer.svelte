@@ -39,22 +39,32 @@
       <div class="tooltip tooltip-bottom" data-tip="Schedule">
         <button
           id="weekly"
-          class="btn btn-square"
+          class="btn btn-square{format === 'weekly' ? ' btn-secondary' : ''}"
           aria-label="Switch to Weekly Schedule"
           onclick={handleFormatChange}
         >
-          <Graphic width="6" height="6" pathWidth={448} path={"weeklyView"}
+          <Graphic
+            width="6"
+            height="6"
+            pathWidth={448}
+            path={"weeklyView"}
+            fill={format === "weekly" ? "#ffffff" : "#000000"}
           ></Graphic>
         </button>
       </div>
       <div class="tooltip tooltip-bottom" data-tip="Calendar">
         <button
           id="monthly"
-          class="btn btn-square"
+          class="btn btn-square{format === 'monthly' ? ' btn-secondary' : ''}"
           aria-label="Switch to Monthly Calendar"
           onclick={handleFormatChange}
         >
-          <Graphic width="6" height="6" pathWidth={448} path={"monthlyView"}
+          <Graphic
+            width="6"
+            height="6"
+            pathWidth={448}
+            path={"monthlyView"}
+            fill={format === "monthly" ? "#ffffff" : "#000000"}
           ></Graphic>
         </button>
       </div>

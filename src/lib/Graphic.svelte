@@ -6,6 +6,7 @@
     pathWidth = 512,
     pathHeight = 512,
     extraClass = "",
+    fill = "#000000",
   } = $props();
 
   const icons = {
@@ -21,7 +22,7 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox={`0 0 ${pathWidth} ${pathHeight}`}
-  fill="#000000"
+  {fill}
   class={`w-${width} h-${height}${extraClass ? " " + extraClass : ""}`}
 >
   <path d={icons[path as keyof typeof icons]} />
