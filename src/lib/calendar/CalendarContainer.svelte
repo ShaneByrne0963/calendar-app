@@ -71,9 +71,9 @@
         ></Graphic>
       </button>
     </div>
-    <div id="date-headings" class="border-1 border-blue-300 bg-blue-200">
+    <div id="date-headings" class="border-1 text-white bg-primary">
       {#each days as day}
-        <div>{first3(day)}</div>
+        <div class="ml-1">{first3(day)}</div>
       {/each}
     </div>
   </div>
