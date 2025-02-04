@@ -1,14 +1,41 @@
 <script lang="ts">
   import HourMarkings from "./HourMarkings.svelte";
-  let { data } = $props();
+  let { data, selectedDate } = $props();
 
-  let days = new Array(7);
+  let days = $derived.by(() => {
+    let arr: string[] = [];
+
+    let today = new Date();
+
+    for (let day of data) {
+      let dayClass = "day";
+      let month = day.getMonth();
+      let year = day.getFullYear();
+      let currentDay = day.getDate();
+
+      let isSelected =
+        selectedDate.getMonth() === month &&
+        selectedDate.getFullYear() === year &&
+        selectedDate.getDate() === currentDay;
+      let isToday =
+        today.getMonth() === month &&
+        today.getFullYear() === year &&
+        today.getDate() === currentDay;
+
+      dayClass += isSelected ? " selected" : "";
+      dayClass += isToday ? " today" : "";
+
+      arr.push(dayClass);
+    }
+
+    return arr;
+  });
 </script>
 
 <div id="schedule">
   <HourMarkings extrude={true} />
-  {#each days}
-    <div class="day"></div>
+  {#each days as day}
+    <div class={day}></div>
   {/each}
 </div>
 
@@ -25,5 +52,11 @@
     height: 100%;
     box-sizing: border-box;
     border: 1px solid var(--color-stone-300);
+    position: relative;
+
+    /* Allow the hour marks to appear over the day */
+    &.today {
+      z-index: -2;
+    }
   }
 </style>

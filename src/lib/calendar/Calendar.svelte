@@ -77,22 +77,6 @@
     border: 1px solid var(--color-stone-300);
     position: relative;
 
-    &.today {
-      background-color: var(--color-lime-100);
-    }
-
-    &.selected::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--color-blue-200);
-      opacity: 0.3;
-    }
-
     &.blank {
       cursor: default;
     }

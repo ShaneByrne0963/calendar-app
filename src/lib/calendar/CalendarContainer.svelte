@@ -135,7 +135,7 @@
     </div>
   </div>
   {#if format === "weekly"}
-    <Schedule data={weekData} />
+    <Schedule data={weekData} {selectedDate} />
   {:else}
     <Calendar
       month={mDisplayMonth}
