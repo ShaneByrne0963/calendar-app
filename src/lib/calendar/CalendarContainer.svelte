@@ -3,6 +3,7 @@
   import { days, months } from "../../types";
   import Graphic from "../Graphic.svelte";
   import Calendar from "./Calendar.svelte";
+  import Schedule from "./Schedule.svelte";
 
   let today = new Date();
 
@@ -26,24 +27,42 @@
     let day = parseInt(this.querySelector(".date-number").innerText);
     selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
   }
+
+  function handleFormatChange() {
+    format = this.id;
+  }
 </script>
 
 <div id="calendar-container">
   <div id="calendar-header">
     <div id="calendar-view-panel">
-      <button class="btn btn-square" aria-label="Switch to Weekly Schedule">
-        <Graphic width="6" height="6" pathWidth={448} path={"weeklyView"}
-        ></Graphic>
-      </button>
-      <button class="btn btn-square" aria-label="Switch to Monthly Calendar">
-        <Graphic width="6" height="6" pathWidth={448} path={"monthlyView"}
-        ></Graphic>
-      </button>
+      <div class="tooltip tooltip-bottom" data-tip="Schedule">
+        <button
+          id="weekly"
+          class="btn btn-square"
+          aria-label="Switch to Weekly Schedule"
+          onclick={handleFormatChange}
+        >
+          <Graphic width="6" height="6" pathWidth={448} path={"weeklyView"}
+          ></Graphic>
+        </button>
+      </div>
+      <div class="tooltip tooltip-bottom" data-tip="Calendar">
+        <button
+          id="monthly"
+          class="btn btn-square"
+          aria-label="Switch to Monthly Calendar"
+          onclick={handleFormatChange}
+        >
+          <Graphic width="6" height="6" pathWidth={448} path={"monthlyView"}
+          ></Graphic>
+        </button>
+      </div>
     </div>
     <div id="calendar-navigation">
       <button
-        aria-label="Previous"
-        class="cursor-pointer"
+        aria-label="Go to the previous month"
+        class="btn btn-sm"
         onclick={() => handleDateDisplayChange(-1)}
       >
         <Graphic
@@ -57,8 +76,8 @@
       </button>
       <div id="date-label">{months[mDisplayMonth]} {mDisplayYear}</div>
       <button
-        aria-label="Next"
-        class="cursor-pointer"
+        aria-label="Go to the next month"
+        class="btn btn-sm"
         onclick={() => handleDateDisplayChange(1)}
       >
         <Graphic
@@ -77,13 +96,15 @@
       {/each}
     </div>
   </div>
-  {#if format === "monthly"}
+  {#if format === "weekly"}
+    <Schedule />
+  {:else}
     <Calendar
       month={mDisplayMonth}
       year={mDisplayYear}
       {selectedDate}
       {handleDateClick}
-    ></Calendar>
+    />
   {/if}
 </div>
 
