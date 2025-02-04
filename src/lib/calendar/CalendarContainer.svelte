@@ -21,6 +21,11 @@
       mDisplayYear += 1;
     }
   }
+
+  function handleDateClick() {
+    let day = parseInt(this.querySelector(".date-number").innerText);
+    selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
+  }
 </script>
 
 <div id="calendar-container">
@@ -76,7 +81,11 @@
     </div>
   </div>
   {#if format === "monthly"}
-    <Calendar month={mDisplayMonth} year={mDisplayYear} {selectedDate}
+    <Calendar
+      month={mDisplayMonth}
+      year={mDisplayYear}
+      {selectedDate}
+      {handleDateClick}
     ></Calendar>
   {/if}
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { month, year, selectedDate } = $props();
+  let { month, year, selectedDate, handleDateClick } = $props();
 
   interface dateInfo {
     date: number;
@@ -29,7 +29,7 @@
       let currentDay = i - startDate;
       let dateData = {
         date: 0,
-        class: "day",
+        class: "day flex align-items-start",
       };
 
       // Get the background color of the date
@@ -38,7 +38,7 @@
           ? " selected"
           : "";
       dateData.class +=
-        todayOnDisplay && today.getDate() === currentDay ? " bg-lime-100" : "";
+        todayOnDisplay && today.getDate() === currentDay ? " today" : "";
 
       // Find the correct date number for the current cell
       if (i > startDate && currentDay <= lastDay) {
@@ -54,11 +54,11 @@
 
 <div id="calendar">
   {#each days as day}
-    <div class={day.class}>
-      {#if day.date > 0}
-        {day.date}
+    <button class={day.class} onclick={day.date ? handleDateClick : null}>
+      {#if day.date}
+        <div class="date-number w-full text-right">{day.date}</div>
       {/if}
-    </div>
+    </button>
   {/each}
 </div>
 
@@ -72,11 +72,14 @@
   .day {
     width: 100%;
     padding: 2px;
-    text-align: right;
     aspect-ratio: 1 / 1;
     box-sizing: border-box;
-    border: 1px solid var(--color-indigo-200);
+    border: 1px solid var(--color-stone-300);
     position: relative;
+
+    &.today {
+      background-color: var(--color-lime-100);
+    }
 
     &.selected::after {
       content: "";
@@ -90,6 +93,10 @@
       opacity: 0.3;
     }
 
+    &.blank {
+      cursor: default;
+    }
+
     &.blank::after {
       content: "";
       display: block;
@@ -98,7 +105,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: var(--color-indigo-100);
+      background-color: var(--color-stone-200);
     }
   }
 </style>
