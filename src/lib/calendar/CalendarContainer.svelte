@@ -124,8 +124,13 @@
       </button>
     </div>
     <div id="date-headings" class="border-1 text-white bg-primary">
-      {#each days as day}
-        <div class="ml-1">{first3(day)}</div>
+      {#each days as day, i}
+        <div class="ml-1">
+          {first3(day)}
+          {format === "weekly"
+            ? ` ${weekData[i].getDate()} ${first3(months[weekData[i].getMonth()])}`
+            : ""}
+        </div>
       {/each}
     </div>
   </div>
