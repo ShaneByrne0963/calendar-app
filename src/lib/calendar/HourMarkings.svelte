@@ -16,7 +16,8 @@
 <style>
   .hour-markings {
     position: absolute;
-    z-index: -1;
+    pointer-events: none;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -34,6 +35,7 @@
 
   .hour {
     height: calc(100% / 24);
+    pointer-events: none;
 
     &:not(:last-child) {
       border-bottom: 1px solid var(--color-stone-200);

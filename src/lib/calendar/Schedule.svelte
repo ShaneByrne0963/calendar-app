@@ -58,10 +58,5 @@
     box-sizing: border-box;
     border: 1px solid var(--color-stone-300);
     position: relative;
-
-    /* Allow the hour marks to appear over the day */
-    &.today {
-      z-index: -2;
-    }
   }
 </style>
