@@ -15,8 +15,12 @@
   let selectedDate = $state(today);
 
   // Get all of the days for the week's schedule
+  let dayOfWeek = today.getDay() - 1;
+  if (dayOfWeek < 0) {
+    dayOfWeek += 7;
+  }
   let wDisplayStart = $state(
-    new Date(year, month, today.getDate() - today.getDay() + 1)
+    new Date(year, month, today.getDate() - dayOfWeek)
   );
   let weekData = $derived.by(() => {
     let arr: Date[] = [wDisplayStart];
@@ -66,13 +70,13 @@
     } else {
       let day = parseInt(this.querySelector(".date-number").innerText);
       selectedDate = new Date(mDisplayYear, mDisplayMonth, day);
+      let selectedDay = selectedDate.getDay() - 1;
+      if (selectedDay < 0) {
+        selectedDay += 7;
+      }
 
       // Update the week display for the same reason
-      wDisplayStart = new Date(
-        mDisplayYear,
-        mDisplayMonth,
-        day - selectedDate.getDay() + 1
-      );
+      wDisplayStart = new Date(mDisplayYear, mDisplayMonth, day - selectedDay);
     }
   }
 
