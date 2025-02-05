@@ -2,8 +2,6 @@
   import Graphic from "../Graphic.svelte";
 
   let { handleBack, children, submenu = null } = $props();
-
-  $inspect(submenu);
 </script>
 
 <div
