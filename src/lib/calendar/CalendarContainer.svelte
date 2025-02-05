@@ -60,7 +60,7 @@
           aria-label="Switch to Weekly Schedule"
           onclick={handleFormatChange}
         >
-          <Graphic width="6" height="6" pathWidth={448} path={"weeklyView"}
+          <Graphic width="24" height="24" pathWidth={448} path={"weeklyView"}
           ></Graphic>
         </button>
       </div>
@@ -73,7 +73,7 @@
           aria-label="Switch to Monthly Calendar"
           onclick={handleFormatChange}
         >
-          <Graphic width="6" height="6" pathWidth={448} path={"monthlyView"}
+          <Graphic width="24" height="24" pathWidth={448} path={"monthlyView"}
           ></Graphic>
         </button>
       </div>
@@ -85,8 +85,8 @@
         onclick={() => handleDateDisplayChange(-1)}
       >
         <Graphic
-          width="6"
-          height="6"
+          width="24"
+          height="24"
           pathWidth={24}
           pathHeight={24}
           path={"back"}
@@ -104,8 +104,8 @@
         onclick={() => handleDateDisplayChange(1)}
       >
         <Graphic
-          width="6"
-          height="6"
+          width="24"
+          height="24"
           pathWidth={24}
           pathHeight={24}
           path={"forward"}
