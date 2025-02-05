@@ -5,11 +5,15 @@ body {
 }
 
 #container:has(#calendar) {
-  grid-template-columns: 1fr 100vh;
+  .schedule-only {
+    display: none
+  }
 }
 
 #container:has(#schedule) {
-  grid-template-columns: 1fr 4fr;
+  .calendar-only {
+    display: none;
+  }
 
   #date-headings {
     margin-left: 3em;

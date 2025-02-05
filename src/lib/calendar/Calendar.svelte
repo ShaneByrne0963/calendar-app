@@ -79,8 +79,7 @@
 
   .day {
     width: 100%;
-    padding: 2px;
-    aspect-ratio: 1 / 1;
+    padding: 0 4px;
     box-sizing: border-box;
     border: 1px solid var(--color-stone-300);
     position: relative;

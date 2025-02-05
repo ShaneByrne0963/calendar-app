@@ -11,6 +11,7 @@
 <style>
   #container {
     display: grid;
+    grid-template-columns: 1fr 4fr;
     padding: 0.75em;
   }
 </style>
