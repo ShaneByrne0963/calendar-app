@@ -3,7 +3,7 @@
   import AddItem from "./AddItem.svelte";
 
   let { itemType, handleBack } = $props();
-  let submenu = $state({ type: null, props: {} });
+  let submenu = $state({ component: null, props: {} });
 
   // Get the singular form of the item
   let singular = itemType.includes("ies")
@@ -11,12 +11,12 @@
     : itemType.slice(0, itemType.length - 1);
 
   function addItem() {
-    submenu.type = AddItem;
-    submenu.props = { itemType, handleBack };
+    submenu.component = AddItem;
+    submenu.props = { itemType, singular };
   }
 </script>
 
-<Submenu {handleBack}>
+<Submenu {handleBack} {submenu}>
   <div id="item-list">
     <div class="heading">
       <h1>{itemType}</h1>
@@ -27,9 +27,6 @@
       >
     </div>
   </div>
-  {#if submenu.type}
-    <submenu.type {...submenu.props}></submenu.type>
-  {/if}
 </Submenu>
 
 <style>
