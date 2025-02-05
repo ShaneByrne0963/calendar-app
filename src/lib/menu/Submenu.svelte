@@ -4,9 +4,11 @@
 
   let { children, handleBack } = $props();
   let submenu = $state(null);
+  let submenuProps = $state({});
 
   function handleSubmenuBack() {
     submenu = null;
+    submenuProps = {};
   }
 </script>
 
@@ -19,7 +21,7 @@
   {@render children()}
   {#if submenu}
     <Submenu handleBack={handleSubmenuBack}>
-      <submenu></submenu>
+      <submenu {submenu} {...submenuProps}></submenu>
     </Submenu>
   {/if}
 </div>

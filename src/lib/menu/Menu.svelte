@@ -5,10 +5,11 @@
 
   function handleBack() {
     menuData.submenu = null;
+    menuData.props = {};
   }
 </script>
 
-<div id="menu-container">
+<div id="menu-container" class="border-r-2 border-stone-900">
   <div id="menu">
     <MenuButton type="Activities" />
     <MenuButton type="Events" />
@@ -22,7 +23,7 @@
 
     {#if menuData.submenu}
       <Submenu {handleBack}>
-        <menuData.submenu></menuData.submenu>
+        <menuData.submenu {...menuData.props}></menuData.submenu>
       </Submenu>
     {/if}
   </div>

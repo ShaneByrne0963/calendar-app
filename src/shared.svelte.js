@@ -4,7 +4,8 @@ export const calendarData = $state({
 });
 
 export const menuData = $state({
-  submenu: null
+  submenu: null,
+  props: {}
 });
 
 export const mDisplay = $state({

@@ -1,4 +1,9 @@
 <script lang="ts">
+  import ItemList from "./ItemList.svelte";
+
+  let { submenu } = $props();
 </script>
 
-<h1>Hello World</h1>
+<ItemList itemType="Activities" {submenu}>
+  <h2>Hello World</h2>
+</ItemList>

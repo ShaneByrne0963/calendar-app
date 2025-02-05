@@ -1,15 +1,14 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
-  import ActivitiesList from "./item_lists/ActivitiesList.svelte";
+  import ItemList from "./item_lists/ItemList.svelte";
 
   let { type } = $props();
 
-  const submenus: object = {
-    ActivitiesList,
-  };
-
   function handleMenuClick() {
-    menuData.submenu = submenus[type + "List"];
+    menuData.submenu = ItemList;
+    menuData.props = {
+      itemType: type,
+    };
   }
 </script>
 
