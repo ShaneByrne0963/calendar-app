@@ -11,7 +11,7 @@
 
 <button
   id={format}
-  class="btn btn-square {calendarData.format === format
+  class="btn btn-square btn-sm lg:btn-md {calendarData.format === format
     ? 'btn-secondary'
     : 'btn-accent'}"
   aria-label={`Switch to ${format} format`}
