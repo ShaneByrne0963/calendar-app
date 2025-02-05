@@ -36,12 +36,6 @@ body {
   opacity: 0.2;
 }
 
-#menu:has(.submenu) {
-  left: calc(-100% - 0.75em) !important;
-  overflow: visible !important;
-}
-
-.submenu:has(.submenu) {
-  left: 0 !important;
+#menu:has(.submenu), .submenu:has(.submenu) {
   overflow: visible !important;
 }

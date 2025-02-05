@@ -5,7 +5,8 @@ export const calendarData = $state({
 
 export const menuData = $state({
   submenu: null,
-  props: {}
+  props: {},
+  closing: false
 });
 
 export const mDisplay = $state({

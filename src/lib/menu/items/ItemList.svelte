@@ -3,7 +3,21 @@
   import AddItem from "./AddItem.svelte";
 
   let { itemType, handleBack } = $props();
-  let submenu = $state({ component: null, props: {} });
+  let submenu = $state({
+    component: null,
+    props: {},
+    closing: false,
+    handleBack: () => {
+      submenu.closing = true;
+    },
+    handleTransitionEnd: (event: TransitionEvent) => {
+      if (submenu.closing && event.propertyName === "left") {
+        submenu.component = null;
+        submenu.props = {};
+        submenu.closing = false;
+      }
+    },
+  });
 
   // Get the singular form of the item
   let singular = itemType.includes("ies")

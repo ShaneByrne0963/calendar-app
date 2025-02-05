@@ -2,9 +2,8 @@
   import Submenu from "../Submenu.svelte";
 
   let { itemType, handleBack, singular } = $props();
-  let submenu = $state({ type: null, props: {} });
 </script>
 
-<Submenu {handleBack} {submenu}>
+<Submenu {handleBack}>
   <div id="item-list">Add Item</div>
 </Submenu>

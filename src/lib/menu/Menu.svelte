@@ -3,13 +3,25 @@
   import { menuData } from "../../shared.svelte";
 
   function handleBack() {
-    menuData.submenu = null;
-    menuData.props = {};
+    menuData.closing = true;
+  }
+
+  // Allows the submenu to remain visible while it closes
+  function handleTransitionEnd(event: TransitionEvent) {
+    if (menuData.closing && event.propertyName === "left") {
+      menuData.submenu = null;
+      menuData.props = {};
+      menuData.closing = false;
+    }
   }
 </script>
 
 <div id="menu-container" class="border-r-2 border-stone-900">
-  <div id="menu">
+  <div
+    id="menu"
+    class={menuData.closing ? " closing" : ""}
+    ontransitionend={handleTransitionEnd}
+  >
     <MenuButton type="Activities" />
     <MenuButton type="Events" />
     <MenuButton type="Tasks" />
@@ -38,9 +50,14 @@
   #menu {
     position: relative;
     top: 0;
-    left: 0;
+    left: calc(-100% - 0.75em);
     width: 100%;
     height: 100%;
     transition: left 0.4s ease-in-out;
+
+    &.closing,
+    &:not(:has(.submenu)) {
+      left: 0;
+    }
   }
 </style>
