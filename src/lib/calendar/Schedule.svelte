@@ -52,7 +52,11 @@
       data-year={data[i].getFullYear()}
       aria-label="Select Day"
       onclick={handleDateClick}
-    ></button>
+    >
+      {#if day.includes("today")}
+        <HourMarkings showNumbers={false} extraClass="cover-accent" />
+      {/if}
+    </button>
   {/each}
 </div>
 
@@ -70,5 +74,9 @@
     box-sizing: border-box;
     border: 1px solid var(--color-stone-300);
     position: relative;
+
+    &.today {
+      z-index: 1;
+    }
   }
 </style>

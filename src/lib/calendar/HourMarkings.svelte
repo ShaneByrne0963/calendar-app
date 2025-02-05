@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { extrude = false } = $props();
+  let { showNumbers = true, extrude = false, extraClass = "" } = $props();
   let hours: string[] = [];
 
   for (let i = 0; i < 24; i++) {
@@ -9,7 +9,9 @@
 
 <div class="hour-markings{extrude ? ' extrude' : ''}">
   {#each hours as hour}
-    <div class="hour">{hour}</div>
+    <div class={"hour" + (extraClass ? ` ${extraClass}` : "")}>
+      {showNumbers ? hour : ""}
+    </div>
   {/each}
 </div>
 
@@ -31,6 +33,13 @@
         border-top: 1px solid var(--color-stone-200);
       }
     }
+
+    &.cover-border {
+      top: -1px;
+      left: -1px;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+    }
   }
 
   .hour {
@@ -39,6 +48,10 @@
 
     &:not(:last-child) {
       border-bottom: 1px solid var(--color-stone-200);
+
+      &.cover-accent {
+        border-bottom-color: var(--color-teal-600);
+      }
     }
   }
 </style>

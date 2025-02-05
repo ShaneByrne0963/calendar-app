@@ -90,6 +90,7 @@
     &.blank {
       cursor: default;
       background-color: var(--color-stone-900);
+      border-color: var(--color-stone-700);
     }
   }
 </style>
