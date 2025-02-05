@@ -40,9 +40,7 @@
           ? " selected"
           : "";
       dateData.class +=
-        todayOnDisplay && today.getDate() === currentDay
-          ? " today bg-accent"
-          : "";
+        todayOnDisplay && today.getDate() === currentDay ? " today" : "";
 
       // Find the correct date number for the current cell
       if (i > startDate && currentDay <= lastDay) {
