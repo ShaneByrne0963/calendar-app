@@ -1,7 +1,6 @@
 <script lang="ts">
   import MenuButton from "./MenuButton.svelte";
   import { menuData } from "../../shared.svelte";
-  import Submenu from "./Submenu.svelte";
 
   function handleBack() {
     menuData.submenu = null;
@@ -22,9 +21,7 @@
     <MenuButton type="Preferences" />
 
     {#if menuData.submenu}
-      <Submenu {handleBack}>
-        <menuData.submenu {...menuData.props}></menuData.submenu>
-      </Submenu>
+      <menuData.submenu {...menuData.props} {handleBack}></menuData.submenu>
     {/if}
   </div>
 </div>

@@ -1,15 +1,7 @@
 <script lang="ts">
   import Graphic from "../Graphic.svelte";
-  import Submenu from "./Submenu.svelte";
 
-  let { children, handleBack } = $props();
-  let submenu = $state(null);
-  let submenuProps = $state({});
-
-  function handleSubmenuBack() {
-    submenu = null;
-    submenuProps = {};
-  }
+  let { handleBack, children } = $props();
 </script>
 
 <div class="submenu">
@@ -19,11 +11,6 @@
     Back
   </button>
   {@render children()}
-  {#if submenu}
-    <Submenu handleBack={handleSubmenuBack}>
-      <submenu {submenu} {...submenuProps}></submenu>
-    </Submenu>
-  {/if}
 </div>
 
 <style>
@@ -34,6 +21,7 @@
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    transition: left 0.4s ease-in-out;
   }
 
   .back-btn {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
-  import ItemList from "./item_lists/ItemList.svelte";
+  import ItemList from "./items/ItemList.svelte";
 
   let { type } = $props();
 

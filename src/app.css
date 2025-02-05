@@ -38,4 +38,10 @@ body {
 
 #menu:has(.submenu) {
   left: calc(-100% - 0.75em) !important;
+  overflow: visible !important;
+}
+
+.submenu:has(.submenu) {
+  left: 0 !important;
+  overflow: visible !important;
 }
