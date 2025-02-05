@@ -16,8 +16,8 @@ body {
   }
 }
 
-.day.today {
-  background-color: var(--color-lime-100);
+.day.today * {
+  color: black;
 }
 
 .day.selected::after {

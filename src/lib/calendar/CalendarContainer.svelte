@@ -5,6 +5,8 @@
   import Calendar from "./Calendar.svelte";
   import Schedule from "./Schedule.svelte";
   import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
+  import DateChanger from "./DateChanger.svelte";
+  import DateFormat from "./DateFormat.svelte";
 
   let today = new Date();
   let year = today.getFullYear();
@@ -22,96 +24,26 @@
     }
     return arr;
   });
-
-  function handleDateDisplayChange(direction: 1 | -1) {
-    if (calendarData.format === "weekly") {
-      let newWeek = new Date(
-        wDisplay.year,
-        wDisplay.month,
-        wDisplay.day + 7 * direction
-      );
-      wDisplay.set(newWeek);
-    } else {
-      mDisplay.month += direction;
-      if (mDisplay.month < 0) {
-        mDisplay.month += 12;
-        mDisplay.year -= 1;
-      } else if (mDisplay.month > 11) {
-        mDisplay.month -= 12;
-        mDisplay.year += 1;
-      }
-    }
-  }
-
-  function handleFormatChange() {
-    calendarData.format = this.id;
-  }
 </script>
 
 <div id="calendar-container">
   <div id="calendar-header">
     <div id="calendar-view-panel">
       <div class="tooltip tooltip-bottom" data-tip="Schedule">
-        <button
-          id="weekly"
-          class="btn btn-square{calendarData.format === 'weekly'
-            ? ' btn-accent'
-            : ''}"
-          aria-label="Switch to Weekly Schedule"
-          onclick={handleFormatChange}
-        >
-          <Graphic width="24" height="24" pathWidth={448} path={"weeklyView"}
-          ></Graphic>
-        </button>
+        <DateFormat format="weekly" />
       </div>
       <div class="tooltip tooltip-bottom" data-tip="Calendar">
-        <button
-          id="monthly"
-          class="btn btn-square{calendarData.format === 'monthly'
-            ? ' btn-accent'
-            : ''}"
-          aria-label="Switch to Monthly Calendar"
-          onclick={handleFormatChange}
-        >
-          <Graphic width="24" height="24" pathWidth={448} path={"monthlyView"}
-          ></Graphic>
-        </button>
+        <DateFormat format="monthly" />
       </div>
     </div>
     <div id="calendar-navigation">
-      <button
-        aria-label="Go to the previous month"
-        class="btn btn-sm"
-        onclick={() => handleDateDisplayChange(-1)}
-      >
-        <Graphic
-          width="24"
-          height="24"
-          pathWidth={24}
-          pathHeight={24}
-          path={"back"}
-          extraClass="fill-current"
-        ></Graphic>
-      </button>
+      <DateChanger direction={-1} />
       <div id="date-label">
         {calendarData.format === "weekly"
           ? `${weekData[0].getDate()} ${months[weekData[0].getMonth()]} ${weekData[0].getFullYear()} - ${weekData[6].getDate()} ${months[weekData[6].getMonth()]} ${weekData[6].getFullYear()}`
           : `${months[mDisplay.month]} ${mDisplay.year}`}
       </div>
-      <button
-        aria-label="Go to the next month"
-        class="btn btn-sm"
-        onclick={() => handleDateDisplayChange(1)}
-      >
-        <Graphic
-          width="24"
-          height="24"
-          pathWidth={24}
-          pathHeight={24}
-          path={"forward"}
-          extraClass="fill-current"
-        ></Graphic>
-      </button>
+      <DateChanger direction={1} />
     </div>
     <div id="date-headings" class="border-1 text-white bg-primary">
       {#each days as day, i}

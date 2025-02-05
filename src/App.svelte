@@ -3,7 +3,7 @@
   import Menu from "./lib/menu/Menu.svelte";
 </script>
 
-<div id="container">
+<div id="container" class="bg-neutral text-white">
   <Menu />
   <CalendarContainer />
 </div>

@@ -40,7 +40,9 @@
           ? " selected"
           : "";
       dateData.class +=
-        todayOnDisplay && today.getDate() === currentDay ? " today" : "";
+        todayOnDisplay && today.getDate() === currentDay
+          ? " today bg-accent"
+          : "";
 
       // Find the correct date number for the current cell
       if (i > startDate && currentDay <= lastDay) {
@@ -87,17 +89,7 @@
 
     &.blank {
       cursor: default;
-    }
-
-    &.blank::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--color-stone-200);
+      background-color: var(--color-stone-900);
     }
   }
 </style>

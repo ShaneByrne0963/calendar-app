@@ -17,5 +17,10 @@
 <style>
   #menu {
     margin-right: 0.75em;
+    overflow: hidden auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: left 0.3s ease-in-out;
   }
 </style>

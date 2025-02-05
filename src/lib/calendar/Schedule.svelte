@@ -24,7 +24,7 @@
         today.getDate() === currentDay;
 
       dayClass += isSelected ? " selected" : "";
-      dayClass += isToday ? " today" : "";
+      dayClass += isToday ? " today bg-accent" : "";
 
       arr.push(dayClass);
     }
