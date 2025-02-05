@@ -31,3 +31,7 @@ body {
   background-color: var(--color-teal-200);
   opacity: 0.2;
 }
+
+#menu:has(.submenu) {
+  left: calc(-100% - 0.75em) !important;
+}

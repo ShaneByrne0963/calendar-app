@@ -3,6 +3,10 @@ export const calendarData = $state({
   selected: new Date()
 });
 
+export const menuData = $state({
+  submenu: null
+});
+
 export const mDisplay = $state({
   month: 0,
   year: 0,
