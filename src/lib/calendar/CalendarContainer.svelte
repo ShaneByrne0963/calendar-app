@@ -1,13 +1,18 @@
 <script lang="ts">
   import { first3 } from "../../helpers";
   import { days, months } from "../../types";
-  import Graphic from "../Graphic.svelte";
   import Calendar from "./Calendar.svelte";
   import Schedule from "./Schedule.svelte";
-  import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
+  import {
+    userData,
+    calendarData,
+    mDisplay,
+    wDisplay,
+  } from "../../shared.svelte";
   import DateChanger from "./DateChanger.svelte";
   import DateFormat from "./DateFormat.svelte";
 
+  const hourPreference = userData.preferences.timeFormat;
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
@@ -57,7 +62,7 @@
     </div>
   </div>
   {#if calendarData.format === "weekly"}
-    <Schedule data={weekData} />
+    <Schedule data={weekData} hourFormat={hourPreference} />
   {:else}
     <Calendar />
   {/if}

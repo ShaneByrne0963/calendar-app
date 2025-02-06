@@ -1,10 +1,14 @@
 <script lang="ts">
   import { times } from "../../types";
+  import { userData } from "../../shared.svelte";
+
   let { showNumbers = true, extrude = false, extraClass = "" } = $props();
-  let hours: string[] = times.map((time) => time.format24);
+
+  const hourPreference = userData.preferences.timeFormat;
+  let hours: string[] = times.map((time) => time[hourPreference]);
 </script>
 
-<div class="hour-markings{extrude ? ' extrude' : ''}">
+<div class="hour-markings{extrude ? ' extrude' : ''} {hourPreference}">
   {#each hours as hour}
     <div class={"hour" + (extraClass ? ` ${extraClass}` : "")}>
       {showNumbers ? hour : ""}
@@ -28,6 +32,11 @@
 
       .hour:first-child {
         border-top: 1px solid var(--color-stone-200);
+      }
+
+      &.format12 {
+        width: calc(100% + 4em);
+        left: -4em;
       }
     }
 

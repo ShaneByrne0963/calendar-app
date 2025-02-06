@@ -14,9 +14,17 @@ body {
   .calendar-only {
     display: none;
   }
-
+  
+  &.format12 {
+    --hour-marking-margin: 4em;
+  }
+  
+  &.format24 {
+    --hour-marking-margin: 3em;
+  }
+  
   #date-headings {
-    margin-left: 3em;
+    margin-left: var(--hour-marking-margin);
   }
 }
 

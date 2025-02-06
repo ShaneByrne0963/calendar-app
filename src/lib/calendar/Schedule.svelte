@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
+  import { calendarData, mDisplay } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
-  let { data } = $props();
+
+  let { data, hourFormat } = $props();
 
   let days = $derived.by(() => {
     let arr: string[] = [];
@@ -42,7 +43,7 @@
   }
 </script>
 
-<div id="schedule">
+<div id="schedule" class={hourFormat}>
   <HourMarkings extrude={true} />
   {#each days as day, i}
     <button
@@ -64,6 +65,10 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     position: relative;
+
+    &.format12 {
+      margin-left: 4em;
+    }
   }
 
   .day {
