@@ -5,6 +5,7 @@
     value,
     options,
     disabled = false,
+    small = true,
     alignment = "y",
   } = $props();
 
@@ -19,7 +20,7 @@
     {id}
     name={id}
     value={value.value}
-    class="select select-sm select-bordered w-full"
+    class={`select${small ? " select-sm" : ""} select-bordered w-full`}
     {disabled}
     onchange={onChange}
   >

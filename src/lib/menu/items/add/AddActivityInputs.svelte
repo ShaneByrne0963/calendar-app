@@ -5,7 +5,7 @@
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
-  import { days } from "../../../../types";
+  import { days, times } from "../../../../types";
 
   let { handleBack, singular } = $props();
 
@@ -13,6 +13,7 @@
   let name = $state({ value: "" });
   const occurences = ["Fixed", "Varying", "Flexible"];
   let occurence = $state({ value: occurences[0] });
+  const hours = times.map((time) => time.format24);
 
   // Fixed activity occurences
   let startDate = $state({ value: dateToInputValue(calendarData.selected) });
@@ -20,6 +21,8 @@
   let fixedDays = $state(
     days.map((day) => ({ label: first3(day), value: false }))
   );
+  let fixedStartTime = $state({ value: hours[12] });
+  let fixedEndTime = $state({ value: hours[14] });
 
   function createItem() {
     console.log("Name:", name.value);
@@ -55,6 +58,29 @@
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
+
+    <div class="double-inputs">
+      <Select
+        id="start-time"
+        label="Start Time"
+        bind:value={fixedStartTime}
+        options={hours}
+      ></Select>
+      <Select
+        id="end-time"
+        label="End Time"
+        bind:value={fixedEndTime}
+        options={hours}
+      ></Select>
+    </div>
   {/if}
   <br />
 </AddItem>
+
+<style>
+  .double-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+</style>
