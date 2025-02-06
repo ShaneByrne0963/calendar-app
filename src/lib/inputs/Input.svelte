@@ -5,10 +5,14 @@
     label,
     required = true,
     placeholder = "",
-    value = "",
+    value,
     disabled = false,
     alignment = "y",
   } = $props();
+
+  const onInput = (e: Event) => {
+    value.value = (e.target as HTMLInputElement).value;
+  };
 </script>
 
 <div class={alignment + " mb-4"}>
@@ -18,10 +22,11 @@
     {id}
     name={id}
     placeholder={placeholder || label}
-    {value}
+    value={value.value}
     class="input input-bordered w-full"
     {required}
     {disabled}
+    oninput={onInput}
   />
 </div>
 
