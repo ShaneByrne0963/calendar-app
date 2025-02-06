@@ -22,15 +22,17 @@
     class={menuData.closing ? " closing" : ""}
     ontransitionend={handleTransitionEnd}
   >
-    <MenuButton type="Activities" />
-    <MenuButton type="Events" />
-    <MenuButton type="Tasks" />
-    <MenuButton type="Journal" />
-    <MenuButton type="Notes" />
-    <MenuButton type="Habits" />
-    <MenuButton type="Goals" />
-    <MenuButton type="Records" />
-    <MenuButton type="Preferences" />
+    <div id="menu-content">
+      <MenuButton type="Activities" />
+      <MenuButton type="Events" />
+      <MenuButton type="Tasks" />
+      <MenuButton type="Journal" />
+      <MenuButton type="Notes" />
+      <MenuButton type="Habits" />
+      <MenuButton type="Goals" />
+      <MenuButton type="Records" />
+      <MenuButton type="Preferences" />
+    </div>
 
     {#if menuData.submenu}
       <menuData.submenu {...menuData.props} {handleBack}></menuData.submenu>
@@ -42,11 +44,8 @@
   #menu-container {
     overflow: hidden;
     margin-right: 0.75em;
-
-    &:not(:has(.submenu)) {
-      overflow-y: auto;
-    }
   }
+
   #menu {
     position: relative;
     top: 0;
@@ -59,5 +58,10 @@
     &:not(:has(.submenu)) {
       left: 0;
     }
+  }
+
+  #menu-content {
+    height: 100%;
+    overflow: hidden auto;
   }
 </style>
