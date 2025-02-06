@@ -3,19 +3,14 @@
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
 
-  let { handleBack, singular } = $props();
-  let components = {
-    AddActivityInputs,
-  };
-  let component = {
-    selected: components[`Add${singular}Inputs`],
-  };
+  let { handleBack, children, singular, createItem } = $props();
 </script>
 
 <Submenu {handleBack}>
   <SubmenuHeading text={`New ${singular}`} />
   <div id="item-list">
-    <component.selected></component.selected>
+    {@render children()}
   </div>
-  <button class="btn btn-secondary">Add</button>
+  <button class="btn" onclick={handleBack}>Cancel</button>
+  <button class="btn btn-secondary" onclick={createItem}>Add</button>
 </Submenu>

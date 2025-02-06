@@ -1,7 +1,7 @@
 <script lang="ts">
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
-  import AddItem from "./AddItem.svelte";
+  import AddActivityInputs from "./add/AddActivityInputs.svelte";
 
   let { itemType, handleBack } = $props();
   let submenu = $state({
@@ -20,13 +20,20 @@
     },
   });
 
+  // Each component for adding new items
+  let addItemComponents = {
+    AddActivityInputs,
+  };
+
   // Get the singular form of the item
   let singular = itemType.includes("ies")
     ? itemType.replace("ies", "y")
-    : itemType.slice(0, itemType.length - 1);
+    : itemType[itemType.length - 1] === "s"
+      ? itemType.slice(0, itemType.length - 1)
+      : itemType;
 
   function addItem() {
-    submenu.component = AddItem;
+    submenu.component = addItemComponents[`Add${singular}Inputs`];
     submenu.props = { singular };
   }
 </script>
@@ -35,7 +42,7 @@
   <div id="item-list">
     <SubmenuHeading text={itemType}>
       <button
-        class="btn btn-sm"
+        class="btn btn-sm btn-secondary"
         aria-label={"Add " + singular}
         onclick={addItem}>+ New</button
       >
