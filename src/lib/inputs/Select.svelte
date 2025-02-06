@@ -19,7 +19,7 @@
     {id}
     name={id}
     value={value.value}
-    class="select select-bordered w-full"
+    class="select select-sm select-bordered w-full"
     {disabled}
     onchange={onChange}
   >
