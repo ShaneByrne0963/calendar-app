@@ -1,10 +1,7 @@
 <script lang="ts">
+  import { times } from "../../types";
   let { showNumbers = true, extrude = false, extraClass = "" } = $props();
-  let hours: string[] = [];
-
-  for (let i = 0; i < 24; i++) {
-    hours.push(`${i < 10 ? "0" : ""}${i}:00`);
-  }
+  let hours: string[] = times.map((time) => time.format24);
 </script>
 
 <div class="hour-markings{extrude ? ' extrude' : ''}">

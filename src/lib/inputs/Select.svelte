@@ -13,7 +13,7 @@
   };
 </script>
 
-<div class={alignment + " mb-4"}>
+<div class={alignment + " mb-5"}>
   <label for={id}>{label}</label>
   <select
     {id}

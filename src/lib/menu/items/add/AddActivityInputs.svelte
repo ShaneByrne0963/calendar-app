@@ -1,10 +1,11 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
   import { calendarData } from "../../../../shared.svelte";
-  import { dateToInputValue } from "../../../../helpers";
+  import { dateToInputValue, first3 } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
+  import { days } from "../../../../types";
 
   let { handleBack, singular } = $props();
 
@@ -16,15 +17,9 @@
   // Fixed activity occurences
   let startDate = $state({ value: dateToInputValue(calendarData.selected) });
   let endDate = $state({ value: "" });
-  let fixedDays = $state([
-    { label: "Mon", value: false },
-    { label: "Tue", value: false },
-    { label: "Wed", value: false },
-    { label: "Thu", value: false },
-    { label: "Fri", value: false },
-    { label: "Sat", value: false },
-    { label: "Sun", value: false },
-  ]);
+  let fixedDays = $state(
+    days.map((day) => ({ label: first3(day), value: false }))
+  );
 
   function createItem() {
     console.log("Name:", name.value);
