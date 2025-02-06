@@ -1,3 +1,17 @@
+export const userData = $state({
+  activities: [],
+  events: [],
+  tasks: [],
+  journal: {},
+  notes: [],
+  habits: [],
+  goals: [],
+  records: [],
+  preferences: {
+    timeFormat: "format12",
+  }
+});
+
 export const calendarData = $state({
   format: "weekly",
   selected: new Date()
