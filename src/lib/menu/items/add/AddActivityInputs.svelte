@@ -9,11 +9,15 @@
 
   let { handleBack, singular } = $props();
 
-  // The default value for the start date is the selected date
-  let name = $state({ value: "" });
+  // Constants
   const occurences = ["Fixed", "Varying", "Flexible"];
-  let occurence = $state({ value: occurences[0] });
   const hours = times.map((time) => time.format24);
+  const activityTypes = ["Work", "Leisure"];
+
+  // Input values
+  let name = $state({ value: "" });
+  let occurence = $state({ value: occurences[0] });
+  let activityType = $state({ value: activityTypes[0] });
 
   // Fixed activity occurences
   let startDate = $state({ value: dateToInputValue(calendarData.selected) });
@@ -75,6 +79,13 @@
     </div>
   {/if}
   <br />
+  <Select
+    id="activity-type"
+    label="Activity Type"
+    value={activityType}
+    options={activityTypes}
+    small={false}
+  ></Select>
 </AddItem>
 
 <style>
