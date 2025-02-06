@@ -27,7 +27,7 @@
 
   function addItem() {
     submenu.component = AddItem;
-    submenu.props = { itemType, singular };
+    submenu.props = { singular };
   }
 </script>
 

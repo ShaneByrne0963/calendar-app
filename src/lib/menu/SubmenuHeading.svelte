@@ -13,5 +13,7 @@
     align-items: center;
     justify-content: space-between;
     font-size: 2em;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid white;
   }
 </style>
