@@ -7,7 +7,7 @@
 <div>{label}</div>
 <div class="checkbox-list">
   {#each values as item}
-    <CheckBox label={item.label} checked={item.checked}></CheckBox>
+    <CheckBox label={item.label} bind:checked={item.value}></CheckBox>
   {/each}
 </div>
 

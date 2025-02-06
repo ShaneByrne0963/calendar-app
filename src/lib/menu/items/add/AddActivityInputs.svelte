@@ -59,7 +59,7 @@
       required={false}
     ></Input>
 
-    <CheckBoxList label="Days" values={fixedDays}></CheckBoxList>
+    <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
   {/if}
   <br />
 </AddItem>
