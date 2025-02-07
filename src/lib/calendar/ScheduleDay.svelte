@@ -29,7 +29,7 @@
 
 <button class={dayClass} aria-label="Select Day" onclick={handleDateClick}>
   {#each data.fixedActivities as activity}
-    <ScheduleSlot></ScheduleSlot>
+    <ScheduleSlot name={activity.name}></ScheduleSlot>
   {/each}
 </button>
 

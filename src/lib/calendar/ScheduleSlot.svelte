@@ -1,4 +1,8 @@
-<div class="slot bg-secondary">Hello World</div>
+<script lang="ts">
+  let { name } = $props();
+</script>
+
+<div class="slot bg-secondary">{name}</div>
 
 <style>
   .slot {
