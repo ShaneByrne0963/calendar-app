@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { compareDates } from "../../helpers";
+  import { compareDates, first3 } from "../../helpers";
   import { userData } from "../../shared.svelte";
+  import { days } from "../../types";
   import HourMarkings from "./HourMarkings.svelte";
   import ScheduleDay from "./ScheduleDay.svelte";
 
@@ -15,7 +16,10 @@
       let activities = fixedActivities.filter(
         (item) =>
           compareDates(day, item.startDate) !== "Before" &&
-          (!item.endDate || compareDates(day, item.endDate) !== "After")
+          (!item.endDate || compareDates(day, item.endDate) !== "After") &&
+          item.fixedDays.find(
+            (val: any) => val.value && val.label === first3(days[i])
+          )
       );
       return {
         date: day,

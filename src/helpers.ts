@@ -45,7 +45,7 @@ export function inputToDateDisplay(date: string) {
 
 // Converts a date format as an array [y, m, d] input to a user-friendly date format
 export function arrayToDateDisplay(dates: number[]) {
-  return `${dates[2]} ${first3(months[dates[1] - 1])} ${dates[0]}`;
+  return `${dates[2]} ${first3(months[dates[1]])} ${dates[0]}`;
 }
 
 // Converts a date object to an array of numbers [y, m, d]

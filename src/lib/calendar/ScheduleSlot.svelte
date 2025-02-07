@@ -16,5 +16,6 @@
     width: 95%;
     transform: translate(-50%, 0);
     border-radius: 16px;
+    z-index: 1;
   }
 </style>
