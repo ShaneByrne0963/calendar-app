@@ -1,7 +1,7 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
   import { userData, calendarData } from "../../../../shared.svelte";
-  import { dateToInputValue, first3 } from "../../../../helpers";
+  import { dateToInputValue, first3, inputToArray } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
@@ -38,10 +38,10 @@
     // For fixed activities
     if (occurence.value === occurences[0]) {
       // Parse the start and end dates
-      let pStartDate = startDate.value.split("-").map((item) => parseInt(item));
+      let pStartDate = inputToArray(startDate.value);
       let pEndDate = "";
       if (endDate.value) {
-        pEndDate = endDate.value.split("-").map((item) => parseInt(item));
+        pEndDate = inputToArray(endDate.value);
       }
 
       occurenceSpecific = {

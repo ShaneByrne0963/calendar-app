@@ -1,6 +1,7 @@
 <script>
   import { compareDates } from "../../helpers";
   import { calendarData, mDisplay } from "../../shared.svelte";
+  import ScheduleSlot from "./ScheduleSlot.svelte";
   let { data } = $props();
 
   let date = data.date.getDate();
@@ -27,6 +28,9 @@
 </script>
 
 <button class={dayClass} aria-label="Select Day" onclick={handleDateClick}>
+  {#each data.fixedActivities as activity}
+    <ScheduleSlot></ScheduleSlot>
+  {/each}
 </button>
 
 <style>

@@ -3,7 +3,6 @@
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
-  import ItemListItem from "./ItemListItem.svelte";
   import ActivityListItem from "./list/ActivityListItem.svelte";
 
   let { itemType, handleBack } = $props();
