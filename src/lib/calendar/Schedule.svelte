@@ -1,60 +1,30 @@
 <script lang="ts">
-  import { calendarData, mDisplay } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
+  import ScheduleDay from "./ScheduleDay.svelte";
 
-  let { data, hourFormat } = $props();
+  let { dates, hourFormat } = $props();
 
-  let days = $derived.by(() => {
-    let arr: string[] = [];
+  let data = $derived.by(() => {
+    let arr: Record<string, any>[] = [];
 
-    let today = new Date();
-
-    for (let day of data) {
-      let dayClass = "day";
-      let month = day.getMonth();
-      let year = day.getFullYear();
-      let currentDay = day.getDate();
-
-      let isSelected =
-        calendarData.selected.getMonth() === month &&
-        calendarData.selected.getFullYear() === year &&
-        calendarData.selected.getDate() === currentDay;
-      let isToday =
-        today.getMonth() === month &&
-        today.getFullYear() === year &&
-        today.getDate() === currentDay;
-
-      dayClass += isSelected ? " selected" : "";
-      dayClass += isToday ? " today" : "";
-
-      arr.push(dayClass);
+    for (let day of dates) {
+      arr.push({
+        date: day,
+      });
     }
-
     return arr;
   });
-
-  function handleDateClick() {
-    let day = parseInt(this.getAttribute("data-date"));
-    let month = parseInt(this.getAttribute("data-month"));
-    let year = parseInt(this.getAttribute("data-year"));
-    calendarData.selected = new Date(year, month, day);
-    // Update the month display to easily get to the selected date in the other format
-    mDisplay.set(calendarData.selected);
-  }
 </script>
 
 <div id="schedule" class={hourFormat}>
   <HourMarkings extrude={true} />
-  {#each days as day, i}
-    <button
-      class={day}
-      data-date={data[i].getDate()}
-      data-month={data[i].getMonth()}
-      data-year={data[i].getFullYear()}
-      aria-label="Select Day"
-      onclick={handleDateClick}
-    >
-    </button>
+  {#each data as item, i}
+    <ScheduleDay
+      date={item.date.getDate()}
+      month={item.date.getMonth()}
+      year={item.date.getFullYear()}
+      data={{}}
+    ></ScheduleDay>
   {/each}
 </div>
 
@@ -69,12 +39,5 @@
     &.format12 {
       margin-left: 4em;
     }
-  }
-
-  .day {
-    height: 100%;
-    box-sizing: border-box;
-    border: 1px solid var(--color-stone-400);
-    position: relative;
   }
 </style>

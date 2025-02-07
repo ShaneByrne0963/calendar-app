@@ -62,7 +62,7 @@
     </div>
   </div>
   {#if calendarData.format === "weekly"}
-    <Schedule data={weekData} hourFormat={hourPreference} />
+    <Schedule dates={weekData} hourFormat={hourPreference} />
   {:else}
     <Calendar />
   {/if}
