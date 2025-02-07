@@ -13,7 +13,9 @@
 
     return dates.map((day: Date, i: number) => {
       let activities = fixedActivities.filter(
-        (item) => compareDates(day, item.startDate) !== "Before"
+        (item) =>
+          compareDates(day, item.startDate) !== "Before" &&
+          (!item.endDate || compareDates(day, item.endDate) !== "After")
       );
       return {
         date: day,
