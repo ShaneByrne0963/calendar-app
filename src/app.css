@@ -68,3 +68,9 @@ body {
     justify-content: center;
   }
 }
+
+.divide-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

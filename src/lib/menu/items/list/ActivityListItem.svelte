@@ -23,6 +23,7 @@
       }))
       .filter((item) => item.value)
       .reduce((acc, item) => {
+        // Stack the days together if they are checked one after the other
         if (acc.length === 0 || item.start > acc[acc.length - 1].end + 1) {
           acc.push(item);
         } else {
@@ -33,13 +34,16 @@
         return acc;
       }, []);
     let formattedDays = "";
+    // Convert the data to a readable string format
     for (let day of parsedDays) {
       if (formattedDays !== "") {
         formattedDays += ", ";
       }
       formattedDays += day.startLabel;
       if (day.startLabel !== day.endLabel) {
-        formattedDays += " - " + day.endLabel;
+        // Only include the dash if the start day and end day are not beside each other
+        formattedDays +=
+          (day.end > day.start + 1 ? " - " : ", ") + day.endLabel;
       }
     }
     displayData.days = formattedDays;
@@ -51,7 +55,10 @@
     {data.occurence}{displayData.subtitle}
   </div>
   {#if data.occurence === "Fixed"}
-    <div class="text-xs">{displayData.days}</div>
+    <div class="text-xs divide-content">
+      <div>{displayData.days}</div>
+      <div>{data.fixedStartTime} - {data.fixedEndTime}</div>
+    </div>
   {/if}
   <div class="text-xs">{data.type}</div>
 </ItemListItem>

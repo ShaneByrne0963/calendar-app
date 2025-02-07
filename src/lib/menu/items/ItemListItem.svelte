@@ -3,7 +3,9 @@
 </script>
 
 <div class="item-list-item border-secondary mb-6">
-  <h2>{title}</h2>
+  <div class="divide-content">
+    <h2>{title}</h2>
+  </div>
   {@render children()}
 </div>
 
