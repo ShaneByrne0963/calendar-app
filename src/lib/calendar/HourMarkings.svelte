@@ -50,6 +50,7 @@
 
   .hour {
     height: calc(100% / 24);
+    box-sizing: border-box;
     pointer-events: none;
 
     &:not(:last-child) {

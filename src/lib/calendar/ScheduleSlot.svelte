@@ -2,12 +2,16 @@
   let { data } = $props();
 </script>
 
-<div class="slot bg-secondary">{data.name}</div>
+<div
+  class="slot bg-secondary"
+  style={`top: calc((100% / 24) * ${data.fixedStartTime}); height: calc((100% / 24) * ${data.fixedEndTime - data.fixedStartTime})`}
+>
+  {data.name}
+</div>
 
 <style>
   .slot {
     position: absolute;
-    top: 0;
     left: 50%;
     width: 95%;
     transform: translate(-50%, 0);
