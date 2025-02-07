@@ -4,10 +4,6 @@
   import ScheduleSlot from "./ScheduleSlot.svelte";
   let { data } = $props();
 
-  let date = data.date.getDate();
-  let month = data.date.getMonth();
-  let year = data.date.getFullYear();
-
   let dayClass = $derived.by(() => {
     let val = "day";
 
@@ -21,7 +17,7 @@
   });
 
   function handleDateClick() {
-    calendarData.selected = new Date(year, month, date);
+    calendarData.selected = data.date;
     // Update the month display to easily get to the selected date in the other format
     mDisplay.set(calendarData.selected);
   }
@@ -39,5 +35,6 @@
     box-sizing: border-box;
     border: 1px solid var(--color-stone-400);
     position: relative;
+    cursor: default;
   }
 </style>
