@@ -48,8 +48,8 @@
         startDate: pStartDate,
         endDate: pEndDate,
         fixedDays: [...fixedDays],
-        fixedStartTime: fixedStartTime.value,
-        fixedEndTime: fixedEndTime.value,
+        fixedStartTime: hours.indexOf(fixedStartTime.value),
+        fixedEndTime: hours.indexOf(fixedEndTime.value),
       };
     }
     userData.activities.push({ ...activity, ...occurenceSpecific });

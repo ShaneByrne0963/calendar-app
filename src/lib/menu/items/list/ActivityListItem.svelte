@@ -1,9 +1,14 @@
 <script>
   import { arrayToDateDisplay } from "../../../../helpers";
+  import { userData } from "../../../../shared.svelte";
+  import { times } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
 
   let { data } = $props();
 
+  let timeFormat = userData.preferences.timeFormat;
+  let startTime = times[data.fixedStartTime][timeFormat];
+  let endTime = times[data.fixedEndTime][timeFormat];
   let displayData = {};
 
   if (data.occurence === "Fixed") {
@@ -57,7 +62,9 @@
   {#if data.occurence === "Fixed"}
     <div class="text-xs divide-content">
       <div>{displayData.days}</div>
-      <div>{data.fixedStartTime} - {data.fixedEndTime}</div>
+      <div>
+        {startTime} - {endTime}
+      </div>
     </div>
   {/if}
   <div class="text-xs">{data.type}</div>
