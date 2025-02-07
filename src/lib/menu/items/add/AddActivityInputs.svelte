@@ -1,6 +1,6 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
-  import { calendarData } from "../../../../shared.svelte";
+  import { userData, calendarData } from "../../../../shared.svelte";
   import { dateToInputValue, first3 } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -11,7 +11,7 @@
 
   // Constants
   const occurences = ["Fixed", "Varying", "Flexible"];
-  const hours = times.map((time) => time.format24);
+  const hours = times.map((time) => time[userData.preferences.timeFormat]);
   const activityTypes = ["Work", "Leisure"];
 
   // Input values

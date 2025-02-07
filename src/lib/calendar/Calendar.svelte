@@ -81,12 +81,12 @@
     width: 100%;
     padding: 0 4px;
     box-sizing: border-box;
-    border: 1px solid var(--color-stone-300);
+    border: 1px solid var(--color-stone-400);
     position: relative;
 
     &.blank {
       cursor: default;
-      background-color: var(--color-stone-900);
+      background-color: black;
       border-color: var(--color-stone-700);
     }
   }

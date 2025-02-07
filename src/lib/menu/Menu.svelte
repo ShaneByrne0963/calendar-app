@@ -16,7 +16,7 @@
   }
 </script>
 
-<div id="menu-container" class="border-r-2 border-stone-900">
+<div id="menu-container">
   <div
     id="menu"
     class={menuData.closing ? " closing" : ""}

@@ -74,7 +74,7 @@
   .day {
     height: 100%;
     box-sizing: border-box;
-    border: 1px solid var(--color-stone-300);
+    border: 1px solid var(--color-stone-400);
     position: relative;
   }
 </style>

@@ -6,7 +6,7 @@
   const hourPreference = userData.preferences.timeFormat;
 </script>
 
-<div id="container" class="bg-neutral text-white {hourPreference}">
+<div id="container" class="bg-stone-900 text-white {hourPreference}">
   <Menu />
   <CalendarContainer />
 </div>

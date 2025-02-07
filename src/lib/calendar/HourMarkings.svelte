@@ -31,7 +31,7 @@
       left: -3em;
 
       .hour:first-child {
-        border-top: 1px solid var(--color-stone-200);
+        border-top: 1px solid var(--color-stone-600);
       }
 
       &.format12 {
@@ -53,7 +53,7 @@
     pointer-events: none;
 
     &:not(:last-child) {
-      border-bottom: 1px solid var(--color-stone-200);
+      border-bottom: 1px solid var(--color-stone-600);
 
       &.cover-accent {
         border-bottom-color: var(--color-teal-600);
