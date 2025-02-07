@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { userData } from "../../../shared.svelte";
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
@@ -39,13 +40,25 @@
 </script>
 
 <Submenu {handleBack} {submenu}>
-  <div id="item-list">
-    <SubmenuHeading text={itemType}>
+  <SubmenuHeading text={itemType}>
+    <button
+      class="btn btn-sm btn-secondary"
+      aria-label={"Add " + singular}
+      onclick={addItem}>+ New</button
+    >
+  </SubmenuHeading>
+  {#if userData[itemType.toLowerCase()].length > 0}
+    <div id="item-list">
+      <div>You have {itemType}</div>
+    </div>
+  {:else}
+    <div class="submenu-center">
+      <p class="pb-2">You do not have any {itemType}</p>
       <button
-        class="btn btn-sm btn-secondary"
+        class="btn btn-secondary"
         aria-label={"Add " + singular}
         onclick={addItem}>+ New</button
       >
-    </SubmenuHeading>
-  </div>
+    </div>
+  {/if}
 </Submenu>

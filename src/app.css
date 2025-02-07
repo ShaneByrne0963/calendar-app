@@ -55,3 +55,16 @@ body {
 #menu:has(.submenu), .submenu:has(.submenu) {
   overflow: visible !important;
 }
+
+.submenu-content:has(.submenu-center) {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  .submenu-center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

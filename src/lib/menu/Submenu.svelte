@@ -8,17 +8,12 @@
   class={"submenu" + (submenu?.closing ? " closing" : "")}
   ontransitionend={submenu?.handleTransitionEnd}
 >
+  <button class="btn btn-accent btn-sm back-btn" onclick={handleBack}>
+    <Graphic width={20} height={20} path={"back"} pathWidth={24} pathHeight={24}
+    ></Graphic>
+    Back
+  </button>
   <div class="submenu-content">
-    <button class="btn btn-accent btn-sm back-btn" onclick={handleBack}>
-      <Graphic
-        width={20}
-        height={20}
-        path={"back"}
-        pathWidth={24}
-        pathHeight={24}
-      ></Graphic>
-      Back
-    </button>
     {@render children()}
   </div>
   {#if submenu?.component}
@@ -44,7 +39,7 @@
   }
 
   .submenu-content {
-    height: 100%;
+    height: calc(100% - 4em);
     overflow: hidden auto;
   }
 
