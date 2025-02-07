@@ -29,9 +29,24 @@
   let fixedEndTime = $state({ value: hours[14] });
 
   function createItem() {
-    console.log("Name:", name.value);
-    console.log("Start:", startDate.value);
-    console.log("End:", endDate.value);
+    let activity = {
+      name: name.value,
+      occurence: occurence.value,
+      type: activityType.value,
+    };
+    let occurenceSpecific = {};
+    // For fixed activities
+    if (occurence.value === occurences[0]) {
+      occurenceSpecific = {
+        startDate: startDate.value,
+        endDate: endDate.value,
+        fixedDays: fixedDays.value,
+        fixedStartTime: fixedStartTime.value,
+        fixedEndTime: fixedEndTime.value,
+      };
+    }
+    userData.activities.push({ ...activity, ...occurenceSpecific });
+    handleBack();
   }
 </script>
 

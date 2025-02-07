@@ -3,6 +3,7 @@
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
+  import ItemListItem from "./ItemListItem.svelte";
 
   let { itemType, handleBack } = $props();
   let submenu = $state({
@@ -33,6 +34,8 @@
       ? itemType.slice(0, itemType.length - 1)
       : itemType;
 
+  let itemData = userData[itemType.toLowerCase()];
+
   function addItem() {
     submenu.component = addItemComponents[`Add${singular}Inputs`];
     submenu.props = { singular };
@@ -47,17 +50,25 @@
       onclick={addItem}>+ New</button
     >
   </SubmenuHeading>
-  {#if userData[itemType.toLowerCase()].length > 0}
+  {#if itemData.length > 0}
     <div id="item-list">
-      <div>You have {itemType}</div>
+      <div class="mb-3">
+        {itemData.length}
+        {(itemData.length === 1 ? singular : itemType).toLowerCase()}
+      </div>
+      {#each itemData as item}
+        <ItemListItem title={item.name}>
+          <div>This is an item</div>
+        </ItemListItem>
+      {/each}
     </div>
   {:else}
     <div class="submenu-center">
-      <p class="pb-2">You do not have any {itemType}</p>
+      <p class="pb-2">You do not have any {itemType.toLowerCase()}</p>
       <button
         class="btn btn-secondary"
-        aria-label={"Add " + singular}
-        onclick={addItem}>+ New</button
+        aria-label={"Add " + singular.toLowerCase()}
+        onclick={addItem}>+ Add</button
       >
     </div>
   {/if}
