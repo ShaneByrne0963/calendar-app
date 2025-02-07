@@ -4,6 +4,7 @@
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
   import ItemListItem from "./ItemListItem.svelte";
+  import ActivityListItem from "./list/ActivityListItem.svelte";
 
   let { itemType, handleBack } = $props();
   let submenu = $state({
@@ -23,6 +24,11 @@
   });
 
   // Each component for adding new items
+  let listItemComponents = {
+    ActivityListItem,
+  };
+
+  // Each component for adding new items
   let addItemComponents = {
     AddActivityInputs,
   };
@@ -35,6 +41,9 @@
       : itemType;
 
   let itemData = userData[itemType.toLowerCase()];
+  let listComponent = {
+    value: listItemComponents[`${singular}ListItem`],
+  };
 
   function addItem() {
     submenu.component = addItemComponents[`Add${singular}Inputs`];
@@ -57,9 +66,7 @@
         {(itemData.length === 1 ? singular : itemType).toLowerCase()}
       </div>
       {#each itemData as item}
-        <ItemListItem title={item.name}>
-          <div>This is an item</div>
-        </ItemListItem>
+        <listComponent.value data={item}></listComponent.value>
       {/each}
     </div>
   {:else}

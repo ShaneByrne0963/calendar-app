@@ -40,7 +40,7 @@
       occurenceSpecific = {
         startDate: startDate.value,
         endDate: endDate.value,
-        fixedDays: fixedDays.value,
+        fixedDays: [...fixedDays],
         fixedStartTime: fixedStartTime.value,
         fixedEndTime: fixedEndTime.value,
       };
