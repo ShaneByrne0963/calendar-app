@@ -1,30 +1,33 @@
 <script lang="ts">
+  import { compareDates } from "../../helpers";
+  import { userData } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
   import ScheduleDay from "./ScheduleDay.svelte";
 
   let { dates, hourFormat } = $props();
 
   let data = $derived.by(() => {
-    let arr: Record<string, any>[] = [];
+    let fixedActivities = userData.activities.filter(
+      (item) => item.occurence === "Fixed"
+    );
 
-    for (let day of dates) {
-      arr.push({
+    return dates.map((day: Date, i: number) => {
+      let activities = fixedActivities.filter(
+        (item) => compareDates(day, item.startDate) !== "After"
+      );
+      return {
         date: day,
-      });
-    }
-    return arr;
+        index: i,
+        fixedActivities: activities,
+      };
+    });
   });
 </script>
 
 <div id="schedule" class={hourFormat}>
   <HourMarkings extrude={true} />
-  {#each data as item, i}
-    <ScheduleDay
-      date={item.date.getDate()}
-      month={item.date.getMonth()}
-      year={item.date.getFullYear()}
-      data={{}}
-    ></ScheduleDay>
+  {#each data as item}
+    <ScheduleDay data={item}></ScheduleDay>
   {/each}
 </div>
 

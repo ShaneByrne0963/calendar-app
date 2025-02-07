@@ -37,9 +37,16 @@
     let occurenceSpecific = {};
     // For fixed activities
     if (occurence.value === occurences[0]) {
+      // Parse the start and end dates
+      let pStartDate = startDate.value.split("-").map((item) => parseInt(item));
+      let pEndDate = "";
+      if (endDate.value) {
+        pEndDate = endDate.value.split("-").map((item) => parseInt(item));
+      }
+
       occurenceSpecific = {
-        startDate: startDate.value,
-        endDate: endDate.value,
+        startDate: pStartDate,
+        endDate: pEndDate,
         fixedDays: [...fixedDays],
         fixedStartTime: fixedStartTime.value,
         fixedEndTime: fixedEndTime.value,

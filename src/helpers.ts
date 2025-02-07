@@ -21,7 +21,44 @@ export function dateToInputValue(date: Date) {
 export function inputToDateDisplay(date: string) {
   let dates = date.split("-").map(val => parseInt(val));
 
+  return arrayToDateDisplay(dates);
+}
+
+// Converts a date format as an array [y, m, d] input to a user-friendly date format
+export function arrayToDateDisplay(dates: number[]) {
   return `${dates[2]} ${first3(months[dates[1] - 1])} ${dates[0]}`;
+}
+
+// Converts a date object to an array of numbers [y, m, d]
+export function convertDateToArray(date: Date) {
+  return [date.getFullYear(), date.getMonth(), date.getDate()];
+}
+
+// Converts a date input to a [y, m, d] array
+export function inputToArray(input: string) {
+  let result = input.split("-").map((item) => parseInt(item));
+  // Subtract one month to account for the 0 start
+  result[1] -= 1;
+  return result
+}
+
+// Compares two dates, returning if the first date is before, the same as or after the second
+export function compareDates(date1: Date | number[], date2: Date | number[]) {
+  let pDate1 = (date1 instanceof Date ? convertDateToArray(date1) : date1);
+  let pDate2 = (date2 instanceof Date ? convertDateToArray(date2) : date1);
+  
+  for (let i = 0; i < 3; i++) {
+    let time1 = pDate1[i];
+    let time2 = pDate2[i];
+
+    if (time1 < time2) {
+      return "Before";
+    }
+    if (time1 > time2) {
+      return "After";
+    }
+  }
+  return "Equal";
 }
 
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code

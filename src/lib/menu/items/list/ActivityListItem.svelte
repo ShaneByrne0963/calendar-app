@@ -1,5 +1,5 @@
 <script>
-  import { inputToDateDisplay } from "../../../../helpers";
+  import { arrayToDateDisplay } from "../../../../helpers";
   import ItemListItem from "../ItemListItem.svelte";
 
   let { data } = $props();
@@ -7,9 +7,9 @@
   let displayData = {};
 
   if (data.occurence === "Fixed") {
-    displayData.subtitle = ", " + inputToDateDisplay(data.startDate);
+    displayData.subtitle = ", " + arrayToDateDisplay(data.startDate);
     if (data.endDate !== "") {
-      displayData.subtitle += "- " + inputToDateDisplay(data.endDate);
+      displayData.subtitle += "- " + arrayToDateDisplay(data.endDate);
     }
 
     // Format the days to be organised in a neat manner

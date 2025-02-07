@@ -1,19 +1,17 @@
 <script>
+  import { compareDates } from "../../helpers";
   import { calendarData, mDisplay } from "../../shared.svelte";
-  let { data, date, month, year } = $props();
+  let { data } = $props();
+
+  let date = data.date.getDate();
+  let month = data.date.getMonth();
+  let year = data.date.getFullYear();
 
   let dayClass = $derived.by(() => {
     let val = "day";
 
-    let isSelected =
-      calendarData.selected.getMonth() === month &&
-      calendarData.selected.getFullYear() === year &&
-      calendarData.selected.getDate() === date;
-    let today = new Date();
-    let isToday =
-      today.getMonth() === month &&
-      today.getFullYear() === year &&
-      today.getDate() === date;
+    let isSelected = compareDates(data.date, calendarData.selected) === "Equal";
+    let isToday = compareDates(data.date, new Date()) === "Equal";
 
     val += isSelected ? " selected" : "";
     val += isToday ? " today" : "";
