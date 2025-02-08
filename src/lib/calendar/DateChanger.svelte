@@ -40,12 +40,6 @@
   class="btn btn-sm btn-accent"
   onclick={() => handleDateDisplayChange(direction)}
 >
-  <Graphic
-    width="24"
-    height="24"
-    pathWidth={24}
-    pathHeight={24}
-    path={data.graphic}
-    extraClass="fill-current"
+  <Graphic width="24" height="24" path={data.graphic} extraClass="fill-current"
   ></Graphic>
 </button>

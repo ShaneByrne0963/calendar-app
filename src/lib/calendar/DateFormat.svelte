@@ -20,7 +20,6 @@
   <Graphic
     width="24"
     height="24"
-    pathWidth={448}
     path={format + "View"}
     fill={calendarData.format === format ? "#ffffff" : "#000000"}
   ></Graphic>

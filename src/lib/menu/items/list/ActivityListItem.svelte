@@ -2,8 +2,8 @@
   import { arrayToDateDisplay } from "../../../../helpers";
   import { userData } from "../../../../shared.svelte";
   import { times } from "../../../../types";
-  import Graphic from "../../../Graphic.svelte";
   import ItemListItem from "../ItemListItem.svelte";
+  import ListItemIcon from "../ListItemIcon.svelte";
 
   let { data } = $props();
 
@@ -69,7 +69,9 @@
     </div>
   {/if}
   <div class="text-xs mt-2 flex items-center">
-    <div class="badge badge-accent badge-sm mr-1">{data.type}</div>
-    <div class="badge badge-accent badge-sm">{data.setting}</div>
+    <ListItemIcon label={data.type} icon={data.type.toLowerCase()}
+    ></ListItemIcon>
+    <ListItemIcon label={data.setting} icon={data.setting.toLowerCase()}
+    ></ListItemIcon>
   </div>
 </ItemListItem>

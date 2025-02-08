@@ -9,14 +9,7 @@
   ontransitionend={submenu?.handleTransitionEnd}
 >
   <button class="btn btn-accent btn-sm back-btn" onclick={handleBack}>
-    <Graphic
-      width={20}
-      height={20}
-      path={"back"}
-      pathWidth={24}
-      pathHeight={24}
-      fill={"#000000"}
-    ></Graphic>
+    <Graphic width={20} height={20} path={"back"} fill={"#000000"}></Graphic>
     Back
   </button>
   <div class="submenu-content">
