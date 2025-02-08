@@ -1,15 +1,15 @@
 <script>
-  import { arrayToDateDisplay } from "../../../../helpers";
-  import { userData } from "../../../../shared.svelte";
-  import { times } from "../../../../types";
+  import {
+    arrayToDateDisplay,
+    convertTimeToDisplay,
+  } from "../../../../helpers";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";
 
   let { data } = $props();
 
-  let timeFormat = userData.preferences.timeFormat;
-  let startTime = data.startTime ? times[data.startTime][timeFormat] : "";
-  let endTime = data.endTime ? times[data.endTime][timeFormat] : "";
+  let startTime = data.startTime ? convertTimeToDisplay(data.startTime) : "";
+  let endTime = data.endTime ? convertTimeToDisplay(data.endTime) : "";
   let displayData = {};
 
   if (data.occurence === "Fixed") {

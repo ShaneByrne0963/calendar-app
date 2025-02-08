@@ -8,7 +8,6 @@
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import { days, times } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
-  import test from "node:test";
 
   let { handleBack, singular } = $props();
 
@@ -17,8 +16,6 @@
   const hours = times.map((time) => time[userData.preferences.timeFormat]);
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
-
-  let testTime = $state({ hours: 12, minutes: 0 });
 
   // Input values
   let name = $state({ value: "" });
@@ -32,8 +29,8 @@
   let fixedDays = $state(
     days.map((day) => ({ label: first3(day), value: false }))
   );
-  let startTime = $state({ value: hours[12] });
-  let endTime = $state({ value: hours[14] });
+  let startTime = $state({ hours: 12, minutes: 0 });
+  let endTime = $state({ hours: 12, minutes: 0 });
 
   // Data that will not be stored in the activity
   let varyingHasTime = $state(false);
@@ -59,8 +56,8 @@
         startDate: pStartDate,
         endDate: pEndDate,
         fixedDays: [...fixedDays],
-        startTime: hours.indexOf(startTime.value),
-        endTime: hours.indexOf(endTime.value),
+        startTime,
+        endTime,
       };
     }
     // For varying activities
@@ -104,14 +101,15 @@
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
-  {:else if occurence.value === "Varying"}
-    <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
-  {/if}
-  {#if occurence.value !== "Flexible"}
+
     <div class="double-inputs">
-      <TimeInput id="start-time" label="Start Time" bind:value={testTime}
+      <TimeInput id="start-time" label="Start Time" bind:value={startTime}
+      ></TimeInput>
+      <TimeInput id="end-time" label="End Time" bind:value={endTime}
       ></TimeInput>
     </div>
+  {:else if occurence.value === "Varying"}
+    <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
     <div class="double-inputs">
       <Select
         id="start-time"

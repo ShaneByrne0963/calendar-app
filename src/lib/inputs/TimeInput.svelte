@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { addZeroToNumber } from "../../helpers";
   import { userData } from "../../shared.svelte";
   import Select from "./Select.svelte";
 
   let { id, label, value } = $props();
-  let hours = $state({ value: "09" });
-  let minutes = $state({ value: "00" });
+  let hours = $state({ value: addZeroToNumber(value.hours) });
+  let minutes = $state({ value: addZeroToNumber(value.minutes) });
 
   let timeFormat = userData.preferences.timeFormat;
   let numHours = parseInt(timeFormat.replace("format", ""));

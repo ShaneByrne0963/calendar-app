@@ -1,4 +1,5 @@
 import { months } from "./types"
+import {userData} from "./shared.svelte";
 
 /**
  * Gets the first 3 letters of a string
@@ -78,6 +79,29 @@ export function compareDates(date1: Date | number[], date2: Date | number[]) {
     }
   }
   return "Equal";
+}
+
+// Returns a number as a string, adding a 0 to the beginning if it is only one digit
+export function addZeroToNumber(num: number) {
+  return `${num < 10 ? 0 : ""}${num}`;
+}
+
+// Converts a time object { hours, minutes } into a user-friendly text format
+export function convertTimeToDisplay(time: {hours: number, minutes: number}) {
+  let preference = userData.preferences.timeFormat;
+  let hour = time.hours;
+  let minute = time.minutes;
+  let parsedHour = "";
+  let suffix = "";
+  if (preference === "format12") {
+    parsedHour = "" + (hour === 0 ? 12 : hour);
+    suffix = hour < 12 ? "am" : "pm";
+  }
+  else {
+    parsedHour = addZeroToNumber(hour);
+  }
+  let parsedMinute = addZeroToNumber(minute);
+  return `${parsedHour}:${parsedMinute}${suffix}`;
 }
 
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code
