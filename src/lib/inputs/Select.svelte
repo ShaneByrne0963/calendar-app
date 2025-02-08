@@ -2,6 +2,7 @@
   let {
     id,
     label,
+    labelHidden = false,
     value,
     options,
     disabled = false,
@@ -15,7 +16,7 @@
 </script>
 
 <div class={alignment + " mb-5"}>
-  <label for={id}>{label}</label>
+  <label for={id} hidden={labelHidden}>{label}</label>
   <select
     {id}
     name={id}

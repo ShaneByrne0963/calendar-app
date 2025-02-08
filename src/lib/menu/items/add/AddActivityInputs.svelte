@@ -4,9 +4,11 @@
   import { dateToInputValue, first3, inputToArray } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
+  import TimeInput from "../../../inputs/TimeInput.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import { days, times } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
+  import test from "node:test";
 
   let { handleBack, singular } = $props();
 
@@ -15,6 +17,8 @@
   const hours = times.map((time) => time[userData.preferences.timeFormat]);
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
+
+  let testTime = $state({ hours: 12, minutes: 0 });
 
   // Input values
   let name = $state({ value: "" });
@@ -104,6 +108,10 @@
     <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
   {/if}
   {#if occurence.value !== "Flexible"}
+    <div class="double-inputs">
+      <TimeInput id="start-time" label="Start Time" bind:value={testTime}
+      ></TimeInput>
+    </div>
     <div class="double-inputs">
       <Select
         id="start-time"
