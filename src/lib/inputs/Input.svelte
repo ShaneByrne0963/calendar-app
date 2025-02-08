@@ -26,6 +26,7 @@
     class="input input-bordered w-full"
     {required}
     {disabled}
+    autocomplete="off"
     oninput={onInput}
   />
 </div>

@@ -27,8 +27,8 @@
   {#each data.fixedActivities as activity}
     <ScheduleSlot
       data={activity}
-      start={activity.fixedStartTime}
-      end={activity.fixedEndTime}
+      start={activity.startTime}
+      end={activity.endTime}
     ></ScheduleSlot>
   {/each}
 </button>

@@ -6,6 +6,7 @@
   import Select from "../../../inputs/Select.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import { days, times } from "../../../../types";
+  import CheckBox from "../../../inputs/CheckBox.svelte";
 
   let { handleBack, singular } = $props();
 
@@ -27,8 +28,11 @@
   let fixedDays = $state(
     days.map((day) => ({ label: first3(day), value: false }))
   );
-  let fixedStartTime = $state({ value: hours[12] });
-  let fixedEndTime = $state({ value: hours[14] });
+  let startTime = $state({ value: hours[12] });
+  let endTime = $state({ value: hours[14] });
+
+  // Data that will not be stored in the activity
+  let varyingHasTime = $state(false);
 
   function createItem() {
     let activity = {
@@ -51,9 +55,18 @@
         startDate: pStartDate,
         endDate: pEndDate,
         fixedDays: [...fixedDays],
-        fixedStartTime: hours.indexOf(fixedStartTime.value),
-        fixedEndTime: hours.indexOf(fixedEndTime.value),
+        startTime: hours.indexOf(startTime.value),
+        endTime: hours.indexOf(endTime.value),
       };
+    }
+    // For varying activities
+    else if (occurence.value === occurences[1]) {
+      if (varyingHasTime) {
+        occurenceSpecific = {
+          startTime: hours.indexOf(startTime.value),
+          endTime: hours.indexOf(endTime.value),
+        };
+      }
     }
     userData.activities.push({ ...activity, ...occurenceSpecific });
     handleBack();
@@ -87,19 +100,24 @@
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
-
+  {:else if occurence.value === "Varying"}
+    <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
+  {/if}
+  {#if occurence.value !== "Flexible"}
     <div class="double-inputs">
       <Select
         id="start-time"
         label="Start Time"
-        bind:value={fixedStartTime}
+        bind:value={startTime}
         options={hours}
+        disabled={occurence.value === "Varying" && !varyingHasTime}
       ></Select>
       <Select
         id="end-time"
         label="End Time"
-        bind:value={fixedEndTime}
+        bind:value={endTime}
         options={hours}
+        disabled={occurence.value === "Varying" && !varyingHasTime}
       ></Select>
     </div>
   {/if}

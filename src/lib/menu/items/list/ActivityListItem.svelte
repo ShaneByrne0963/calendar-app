@@ -8,8 +8,8 @@
   let { data } = $props();
 
   let timeFormat = userData.preferences.timeFormat;
-  let startTime = times[data.fixedStartTime][timeFormat];
-  let endTime = times[data.fixedEndTime][timeFormat];
+  let startTime = data.startTime ? times[data.startTime][timeFormat] : "";
+  let endTime = data.endTime ? times[data.endTime][timeFormat] : "";
   let displayData = {};
 
   if (data.occurence === "Fixed") {
@@ -53,6 +53,10 @@
       }
     }
     displayData.days = formattedDays;
+  } else if (data.occurence === "Varying") {
+    if (startTime) {
+      displayData.subtitle = ", " + startTime + " - " + endTime;
+    }
   }
 </script>
 
