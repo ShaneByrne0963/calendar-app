@@ -13,11 +13,13 @@
   const occurences = ["Fixed", "Varying", "Flexible"];
   const hours = times.map((time) => time[userData.preferences.timeFormat]);
   const activityTypes = ["Work", "Leisure"];
+  const settings = ["Indoors", "Outdoors"];
 
   // Input values
   let name = $state({ value: "" });
   let occurence = $state({ value: occurences[0] });
   let activityType = $state({ value: activityTypes[0] });
+  let setting = $state({ value: settings[0] });
 
   // Fixed activity occurences
   let startDate = $state({ value: dateToInputValue(calendarData.selected) });
@@ -33,6 +35,7 @@
       name: name.value,
       occurence: occurence.value,
       type: activityType.value,
+      setting: setting.value,
     };
     let occurenceSpecific = {};
     // For fixed activities
@@ -106,6 +109,13 @@
     label="Activity Type"
     value={activityType}
     options={activityTypes}
+    small={false}
+  ></Select>
+  <Select
+    id="activity-setting"
+    label="Setting"
+    value={setting}
+    options={settings}
     small={false}
   ></Select>
 </AddItem>

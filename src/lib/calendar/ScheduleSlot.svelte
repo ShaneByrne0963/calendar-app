@@ -1,10 +1,10 @@
 <script lang="ts">
-  let { data } = $props();
+  let { data, start, end } = $props();
 </script>
 
 <div
-  class="slot bg-secondary"
-  style={`top: calc((100% / 24) * ${data.fixedStartTime}); height: calc((100% / 24) * ${data.fixedEndTime - data.fixedStartTime})`}
+  class="slot bg-accent text-black"
+  style={`top: calc((100% / 24) * ${start}); height: calc((100% / 24) * ${end - start})`}
 >
   {data.name}
 </div>

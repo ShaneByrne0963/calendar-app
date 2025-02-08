@@ -2,6 +2,7 @@
   import { arrayToDateDisplay } from "../../../../helpers";
   import { userData } from "../../../../shared.svelte";
   import { times } from "../../../../types";
+  import Graphic from "../../../Graphic.svelte";
   import ItemListItem from "../ItemListItem.svelte";
 
   let { data } = $props();
@@ -67,5 +68,8 @@
       </div>
     </div>
   {/if}
-  <div class="text-xs">{data.type}</div>
+  <div class="text-xs mt-2 flex items-center">
+    <div class="badge badge-accent badge-sm mr-1">{data.type}</div>
+    <div class="badge badge-accent badge-sm">{data.setting}</div>
+  </div>
 </ItemListItem>
