@@ -7,7 +7,7 @@
     return (
       [
         `left: ${calendarData.itemAddData.mouseX - width / 2}px`,
-        `top: ${calendarData.itemAddData.mouseY - height / 3}px`,
+        `top: ${calendarData.itemAddData.mouseY - height / 2}px`,
         `width: ${width}px`,
         `height: ${height}px`,
       ].join("; ") + ";"
@@ -32,7 +32,8 @@
     z-index: 2;
     opacity: 0.5;
     scale: 0;
-    transition: scale 0.2s ease-in-out;
+    transform: translate(0, 30%);
+    transition: scale 0.3s ease-in-out;
     cursor: grabbing;
 
     &.visible {

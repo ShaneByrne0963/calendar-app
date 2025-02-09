@@ -2,6 +2,7 @@
   import {
     arrayToDateDisplay,
     convertTimeToDisplay,
+    timeAsNumber,
   } from "../../../../helpers";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";
@@ -62,9 +63,16 @@
     let mins = data.duration.minutes;
     displayData.subtitle += `${hrs} hr${hrs != 1 ? "s" : ""}${mins ? " " + mins + " mins" : ""}`;
   }
+
+  let duration =
+    data.occurence === "Fixed"
+      ? timeAsNumber(data.endTime) - timeAsNumber(data.startTime)
+      : data.occurence === "Varying"
+        ? timeAsNumber(data.duration)
+        : 1;
 </script>
 
-<ItemListItem title={data.name}>
+<ItemListItem title={data.name} {duration}>
   <div class="text-xs">
     {data.occurence}{displayData.subtitle}
   </div>

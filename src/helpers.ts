@@ -104,6 +104,11 @@ export function convertTimeToDisplay(time: {hours: number, minutes: number}) {
   return `${parsedHour}:${parsedMinute}${suffix}`;
 }
 
+// Converts a time object { hours, minutes } to a decimal number between 0 and 24
+export function timeAsNumber(time: {hours: number, minutes: number}) {
+  return time.hours + (time.minutes / 60);
+}
+
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code
 /*
 let submenu = $state({

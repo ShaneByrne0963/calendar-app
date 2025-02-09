@@ -1,6 +1,6 @@
 <script lang="ts">
   import { calendarData } from "../../../shared.svelte";
-  let { children, title } = $props();
+  let { children, title, duration } = $props();
 
   function onmousedown(e: MouseEvent) {
     calendarData.itemAdding = true;
@@ -22,8 +22,8 @@
       title,
       mouseX: e.clientX,
       mouseY: e.clientY,
-      width: dayRef.width * 0.9,
-      height: dayRef.width,
+      width: dayRef.width * 0.95,
+      height: (dayRef.height / 24) * duration,
     };
   }
 
