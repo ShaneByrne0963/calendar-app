@@ -1,6 +1,6 @@
 <script lang="ts">
   import { calendarData } from "../../../shared.svelte";
-  let { children, title, duration } = $props();
+  let { children, title, duration, startTime = null } = $props();
 
   function onmousedown(e: MouseEvent) {
     calendarData.itemAdding = true;
@@ -30,6 +30,9 @@
       left: dayRef.left,
       top: dayRef.top,
     };
+    if (startTime) {
+      calendarData.itemAddData.startTime = startTime;
+    }
   }
 
   function mouseUp() {

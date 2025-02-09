@@ -3,7 +3,7 @@
   import { clamp } from "../../helpers";
 
   let style = $derived.by(() => {
-    let data = calendarData.itemAddData;
+    let data: any = calendarData.itemAddData;
     let width = data.width;
     let height = data.height;
     let hourHeight = data.dayHeight / 24;
@@ -13,19 +13,27 @@
       data.day >= 0
         ? data.left + width * 0.025 + data.day * width
         : calendarData.itemAddData.mouseX - width / 2;
-    let top =
-      data.day >= 0
-        ? clamp(
-            data.top +
-              Math.floor(
-                (data.mouseY - data.height * 0.3 - data.top) /
-                  (hourHeight / steps)
-              ) *
-                (hourHeight / steps),
-            data.top,
-            data.top + data.dayHeight - height
-          )
-        : calendarData.itemAddData.mouseY - height / 2;
+    let top = 0;
+    if (data.day >= 0) {
+      if ("startTime" in data && data) {
+        top =
+          data.top +
+          (data.startTime.hours + data.startTime.minutes / 60) * hourHeight;
+      } else {
+        top = clamp(
+          data.top +
+            Math.floor(
+              (data.mouseY - data.height * 0.3 - data.top) /
+                (hourHeight / steps)
+            ) *
+              (hourHeight / steps),
+          data.top,
+          data.top + data.dayHeight - height
+        );
+      }
+    } else {
+      top = calendarData.itemAddData.mouseY - height / 2;
+    }
     return (
       [
         `left: ${left}px`,

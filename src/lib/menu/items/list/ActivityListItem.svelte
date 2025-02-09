@@ -72,7 +72,7 @@
         : 1;
 </script>
 
-<ItemListItem title={data.name} {duration}>
+<ItemListItem title={data.name} {duration} startTime={data.startTime}>
   <div class="text-xs">
     {data.occurence}{displayData.subtitle}
   </div>
