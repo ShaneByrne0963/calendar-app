@@ -25,8 +25,10 @@
       mouseY: e.clientY,
       width: dayRef.width,
       height: (dayRef.height / 24) * duration,
+      dayHeight: dayRef.height,
       day: currentDay,
-      dayStart: dayRef.left,
+      left: dayRef.left,
+      top: dayRef.top,
     };
   }
 

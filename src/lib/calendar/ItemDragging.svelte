@@ -5,15 +5,25 @@
     let data = calendarData.itemAddData;
     let width = data.width;
     let height = data.height;
+    let hourHeight = data.dayHeight / 24;
+    let steps = 4;
 
     let left =
       data.day >= 0
-        ? data.dayStart + width * 0.025 + data.day * width
+        ? data.left + width * 0.025 + data.day * width
         : calendarData.itemAddData.mouseX - width / 2;
+    let top =
+      data.day >= 0
+        ? data.top +
+          Math.floor(
+            (data.mouseY - data.height * 0.3 - data.top) / (hourHeight / steps)
+          ) *
+            (hourHeight / steps)
+        : calendarData.itemAddData.mouseY - height / 2;
     return (
       [
         `left: ${left}px`,
-        `top: ${calendarData.itemAddData.mouseY - height / 2}px`,
+        `top: ${top}px`,
         `width: ${width * 0.95}px`,
         `height: ${height}px`,
       ].join("; ") + ";"
@@ -50,6 +60,8 @@
 
     &.snapped {
       transition: left 0.2s ease-in-out;
+      transform: translate(0, 0);
+      opacity: 1;
     }
   }
 </style>
