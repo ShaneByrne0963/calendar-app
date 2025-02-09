@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { calendarData } from "../../../shared.svelte";
+  import { dateToInputValue, numberAsTime } from "../../../helpers";
+  import { calendarData, userData, wDisplay } from "../../../shared.svelte";
   let { children, title, duration, startTime = null } = $props();
 
   function onmousedown(e: MouseEvent) {
@@ -35,7 +36,46 @@
     }
   }
 
+  // Adds an item to the schedule when the mouse is released
   function mouseUp() {
+    let data = calendarData.itemAddData;
+    let day = data.day;
+    if (day >= 0) {
+      // Find the start time of the newly created item
+      const draggedItem = document
+        .querySelector("#item-drag")
+        .getBoundingClientRect();
+      const dayRef = document
+        .querySelector("#schedule .day")
+        .getBoundingClientRect();
+
+      let startTime = numberAsTime(
+        Math.round(((draggedItem.top - dayRef.top) / (dayRef.height / 24)) * 60)
+      );
+      let duration = numberAsTime(
+        Math.round((data.height / (dayRef.height / 24)) * 60)
+      );
+
+      // Add the created item to the data
+      let date = dateToInputValue(
+        new Date(wDisplay.year, wDisplay.month, wDisplay.day + day)
+      );
+      let itemData = {
+        title: data.title,
+        startTime,
+        duration,
+      };
+
+      if (date in userData.calendar) {
+        userData.calendar[date].userEntered.push(itemData);
+      } else {
+        userData.calendar[date] = {
+          userEntered: [itemData],
+        };
+      }
+      console.log(userData);
+    }
+
     calendarData.itemAdding = false;
     calendarData.itemAddData = { day: -1 };
     document.removeEventListener("mousemove", mouseMove);

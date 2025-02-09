@@ -9,7 +9,8 @@ export const userData = $state({
   records: [],
   preferences: {
     timeFormat: "format24",
-  }
+  },
+  calendar: {}
 });
 
 export const calendarData = $state({

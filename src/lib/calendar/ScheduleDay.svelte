@@ -1,6 +1,6 @@
 <script>
-  import { compareDates } from "../../helpers";
-  import { calendarData, mDisplay } from "../../shared.svelte";
+  import { compareDates, dateToInputValue } from "../../helpers";
+  import { calendarData, mDisplay, userData } from "../../shared.svelte";
   import ScheduleSlot from "./ScheduleSlot.svelte";
   let { data, index } = $props();
 
@@ -14,6 +14,15 @@
     val += isToday ? " today" : "";
 
     return val;
+  });
+
+  let userActivities = $derived.by(() => {
+    let key = dateToInputValue(data.date);
+
+    if (key in userData.calendar) {
+      return userData.calendar[key].userEntered;
+    }
+    return [];
   });
 
   function handleDateClick() {
@@ -42,9 +51,17 @@
 >
   {#each data.fixedActivities as activity}
     <ScheduleSlot
-      data={activity}
+      title={activity.name}
       start={activity.startTime}
       end={activity.endTime}
+      isDuration={false}
+    ></ScheduleSlot>
+  {/each}
+  {#each userActivities as activity}
+    <ScheduleSlot
+      title={activity.title}
+      start={activity.startTime}
+      end={activity.duration}
     ></ScheduleSlot>
   {/each}
 </button>

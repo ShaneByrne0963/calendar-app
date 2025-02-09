@@ -109,9 +109,15 @@ export function convertTimeToDisplay(time: {hours: number, minutes: number}) {
   return `${parsedHour}:${parsedMinute}${suffix}`;
 }
 
-// Converts a time object { hours, minutes } to a decimal number between 0 and 24
-export function timeAsNumber(time: {hours: number, minutes: number}) {
-  return time.hours + (time.minutes / 60);
+// Converts a time object { hours, minutes } to a decimal number between 0 and 24, or a whole number of minutes
+export function timeAsNumber(time: {hours: number, minutes: number}, inMinutes = false) {
+  return inMinutes ? time.hours * 60 + time.minutes : time.hours + (time.minutes / 60);
+}
+
+// Converts a value in minutes to a time object { hours, minutes }
+export function numberAsTime(value: number) {
+  let minutes = value % 60;
+  return { hours: Math.round((value - minutes) / 60), minutes };
 }
 
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code

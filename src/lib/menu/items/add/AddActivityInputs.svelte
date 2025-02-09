@@ -6,7 +6,7 @@
   import Select from "../../../inputs/Select.svelte";
   import TimeInput from "../../../inputs/TimeInput.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
-  import { days, times } from "../../../../types";
+  import { days } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import TimeLength from "../../../inputs/TimeLength.svelte";
 
@@ -123,14 +123,14 @@
   <Select
     id="activity-type"
     label="Activity Type"
-    value={activityType}
+    bind:value={activityType}
     options={activityTypes}
     small={false}
   ></Select>
   <Select
     id="activity-setting"
     label="Setting"
-    value={setting}
+    bind:value={setting}
     options={settings}
     small={false}
   ></Select>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { data, start, end } = $props();
+  let { title, start, end, isDuration = true } = $props();
 
   let pStart = $derived(start.hours + start.minutes / 60);
   let pEnd = $derived(end.hours + end.minutes / 60);
@@ -7,9 +7,9 @@
 
 <div
   class="slot bg-accent text-black"
-  style={`top: calc((100% / 24) * ${pStart}); height: calc((100% / 24) * ${pEnd - pStart})`}
+  style={`top: calc((100% / 24) * ${pStart}); height: calc((100% / 24) * ${isDuration ? pEnd : pEnd - pStart})`}
 >
-  {data.name}
+  {title}
 </div>
 
 <style>
