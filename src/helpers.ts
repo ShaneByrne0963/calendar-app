@@ -10,6 +10,11 @@ export function first3(val: string) {
   return val.slice(0, 3);
 }
 
+// Clamps a number between min and max
+export function clamp(val: number, min: number, max: number) {
+  return Math.min(Math.max(val, min), max);
+}
+
 // Converts a possible proxy array into an array that can be used
 export function removeProxy(val: any) {
   if (val[0]) {

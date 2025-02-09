@@ -1,5 +1,6 @@
 <script lang="ts">
   import { calendarData } from "../../shared.svelte";
+  import { clamp } from "../../helpers";
 
   let style = $derived.by(() => {
     let data = calendarData.itemAddData;
@@ -14,11 +15,16 @@
         : calendarData.itemAddData.mouseX - width / 2;
     let top =
       data.day >= 0
-        ? data.top +
-          Math.floor(
-            (data.mouseY - data.height * 0.3 - data.top) / (hourHeight / steps)
-          ) *
-            (hourHeight / steps)
+        ? clamp(
+            data.top +
+              Math.floor(
+                (data.mouseY - data.height * 0.3 - data.top) /
+                  (hourHeight / steps)
+              ) *
+                (hourHeight / steps),
+            data.top,
+            data.top + data.dayHeight - height
+          )
         : calendarData.itemAddData.mouseY - height / 2;
     return (
       [
