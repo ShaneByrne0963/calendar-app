@@ -54,9 +54,13 @@
     }
     displayData.days = formattedDays;
   } else if (data.occurence === "Varying") {
+    displayData.subtitle = ", ";
     if (startTime) {
-      displayData.subtitle = ", " + startTime + " - " + endTime;
+      displayData.subtitle += startTime + ", ";
     }
+    let hrs = data.duration.hours;
+    let mins = data.duration.minutes;
+    displayData.subtitle += `${hrs} hr${hrs != 1 ? "s" : ""}${mins ? " " + mins + " mins" : ""}`;
   }
 </script>
 

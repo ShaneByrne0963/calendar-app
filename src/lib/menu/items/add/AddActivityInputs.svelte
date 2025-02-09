@@ -14,8 +14,6 @@
 
   // Constants
   const occurences = ["Fixed", "Varying", "Flexible"];
-  let timeFormat = $derived(userData.preferences.timeFormat);
-  const hours = $derived(times.map((time) => time[timeFormat]));
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
 
@@ -65,10 +63,13 @@
     }
     // For varying activities
     else if (occurence.value === occurences[1]) {
+      occurenceSpecific = {
+        duration: varyingDuration,
+      };
       if (varyingHasTime) {
         occurenceSpecific = {
-          startTime: hours.indexOf(startTime.value),
-          endTime: hours.indexOf(endTime.value),
+          ...occurenceSpecific,
+          startTime,
         };
       }
     }
@@ -104,35 +105,21 @@
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
-
-    <div class={timeFormat === "format24" ? "double-inputs" : ""}>
-      <TimeInput id="start-time" label="Start Time" bind:value={startTime}
-      ></TimeInput>
-      <TimeInput id="end-time" label="End Time" bind:value={endTime}
-      ></TimeInput>
-    </div>
+    <TimeInput id="start-time" label="Start Time" bind:value={startTime}
+    ></TimeInput>
+    <TimeInput id="end-time" label="End Time" bind:value={endTime}></TimeInput>
   {:else if occurence.value === "Varying"}
     <TimeLength id="duration" label="Duration" bind:value={varyingDuration}
     ></TimeLength>
-    <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
-    <div class="double-inputs">
-      <Select
-        id="start-time"
-        label="Start Time"
-        bind:value={startTime}
-        options={hours}
-        disabled={occurence.value === "Varying" && !varyingHasTime}
-      ></Select>
-      <Select
-        id="end-time"
-        label="End Time"
-        bind:value={endTime}
-        options={hours}
-        disabled={occurence.value === "Varying" && !varyingHasTime}
-      ></Select>
-    </div>
+    <CheckBox label="Fixed Start Time" bind:checked={varyingHasTime}></CheckBox>
+    <TimeInput
+      id="start-time"
+      label="Start Time"
+      bind:value={startTime}
+      disabled={!varyingHasTime}
+    ></TimeInput>
   {/if}
-  <br />
+  <hr />
   <Select
     id="activity-type"
     label="Activity Type"
@@ -150,9 +137,7 @@
 </AddItem>
 
 <style>
-  .double-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  hr {
+    margin: 0 0 2em 0;
   }
 </style>

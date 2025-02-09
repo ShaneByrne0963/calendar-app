@@ -3,7 +3,7 @@
   import { userData } from "../../shared.svelte";
   import Select from "./Select.svelte";
 
-  let { id, label, value } = $props();
+  let { id, label, value, disabled = false } = $props();
   let numHours = $derived(
     parseInt(userData.preferences.timeFormat.replace("format", ""))
   );
@@ -54,6 +54,7 @@
       labelHidden={true}
       bind:value={hours}
       options={hourOptions}
+      {disabled}
     ></Select>
     <div class="text-lg mx-1">:</div>
     <Select
@@ -62,6 +63,7 @@
       labelHidden={true}
       bind:value={minutes}
       options={minuteOptions}
+      {disabled}
     ></Select>
     {#if numHours === 12}
       <span></span>
@@ -71,6 +73,7 @@
         labelHidden={true}
         bind:value={time}
         options={["AM", "PM"]}
+        {disabled}
       ></Select>
     {/if}
   </div>
