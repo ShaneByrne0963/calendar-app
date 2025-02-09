@@ -17,19 +17,22 @@
     let dayRef = document
       .querySelector("#schedule .day")
       .getBoundingClientRect();
+    let currentDay = calendarData.itemAddData.day;
 
     calendarData.itemAddData = {
       title,
       mouseX: e.clientX,
       mouseY: e.clientY,
-      width: dayRef.width * 0.95,
+      width: dayRef.width,
       height: (dayRef.height / 24) * duration,
+      day: currentDay,
+      dayStart: dayRef.left,
     };
   }
 
   function mouseUp() {
     calendarData.itemAdding = false;
-    calendarData.itemAddData = {};
+    calendarData.itemAddData = { day: -1 };
     document.removeEventListener("mousemove", mouseMove);
     document.removeEventListener("mouseup", mouseUp);
   }

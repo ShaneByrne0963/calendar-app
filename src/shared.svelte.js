@@ -16,7 +16,7 @@ export const calendarData = $state({
   format: "weekly",
   selected: new Date(),
   itemAdding: false,
-  itemAddData: {}
+  itemAddData: { day: -1 }
 });
 
 export const menuData = $state({

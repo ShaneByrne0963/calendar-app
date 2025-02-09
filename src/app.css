@@ -26,6 +26,10 @@ body {
   #date-headings {
     margin-left: var(--hour-marking-margin);
   }
+
+  &:has(#item-drag) {
+    cursor: grabbing;
+  }
 }
 
 .day.today::before {

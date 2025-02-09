@@ -2,7 +2,7 @@
   import { compareDates } from "../../helpers";
   import { calendarData, mDisplay } from "../../shared.svelte";
   import ScheduleSlot from "./ScheduleSlot.svelte";
-  let { data } = $props();
+  let { data, index } = $props();
 
   let dayClass = $derived.by(() => {
     let val = "day";
@@ -21,9 +21,25 @@
     // Update the month display to easily get to the selected date in the other format
     mDisplay.set(calendarData.selected);
   }
+
+  function onmouseenter() {
+    calendarData.itemAddData.day = index;
+  }
+
+  function onmouseleave() {
+    if (calendarData.itemAddData.day === index) {
+      calendarData.itemAddData.day = -1;
+    }
+  }
 </script>
 
-<button class={dayClass} aria-label="Select Day" onclick={handleDateClick}>
+<button
+  class={dayClass}
+  aria-label="Select Day"
+  onclick={handleDateClick}
+  {onmouseenter}
+  {onmouseleave}
+>
   {#each data.fixedActivities as activity}
     <ScheduleSlot
       data={activity}

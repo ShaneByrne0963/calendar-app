@@ -32,8 +32,8 @@
 
 <div id="schedule" class={hourFormat}>
   <HourMarkings extrude={true} />
-  {#each data as item}
-    <ScheduleDay data={item}></ScheduleDay>
+  {#each data as item, index}
+    <ScheduleDay data={item} {index}></ScheduleDay>
   {/each}
 </div>
 
