@@ -40,6 +40,7 @@
   .submenu-content {
     height: calc(100% - 4em);
     overflow: hidden auto;
+    padding-right: 0.75em;
   }
 
   .back-btn {

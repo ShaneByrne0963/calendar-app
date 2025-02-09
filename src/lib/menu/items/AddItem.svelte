@@ -7,7 +7,7 @@
 
 <Submenu {handleBack}>
   <SubmenuHeading text={`New ${singular}`} />
-  <div id="item-list">
+  <div id="add-item">
     {@render children()}
   </div>
   <button class="btn" onclick={handleBack}>Cancel</button>

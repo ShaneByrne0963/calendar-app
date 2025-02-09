@@ -13,7 +13,8 @@
 
   // Constants
   const occurences = ["Fixed", "Varying", "Flexible"];
-  const hours = times.map((time) => time[userData.preferences.timeFormat]);
+  let timeFormat = $derived(userData.preferences.timeFormat);
+  const hours = $derived(times.map((time) => time[timeFormat]));
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
 
@@ -102,7 +103,7 @@
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
 
-    <div class="double-inputs">
+    <div class={timeFormat === "format24" ? "double-inputs" : ""}>
       <TimeInput id="start-time" label="Start Time" bind:value={startTime}
       ></TimeInput>
       <TimeInput id="end-time" label="End Time" bind:value={endTime}

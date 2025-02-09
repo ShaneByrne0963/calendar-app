@@ -8,7 +8,7 @@ export const userData = $state({
   goals: [],
   records: [],
   preferences: {
-    timeFormat: "format24",
+    timeFormat: "format12",
   }
 });
 

@@ -3,7 +3,7 @@
     id,
     label,
     labelHidden = false,
-    value,
+    value = $bindable(),
     options,
     disabled = false,
     small = true,

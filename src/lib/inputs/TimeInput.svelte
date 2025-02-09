@@ -4,30 +4,50 @@
   import Select from "./Select.svelte";
 
   let { id, label, value } = $props();
-  let hours = $state({ value: addZeroToNumber(value.hours) });
+  let numHours = $derived(
+    parseInt(userData.preferences.timeFormat.replace("format", ""))
+  );
+  let hours = $state({
+    value:
+      userData.preferences.timeFormat === "format12"
+        ? `${value.hours}`
+        : addZeroToNumber(value.hours),
+  });
   let minutes = $state({ value: addZeroToNumber(value.minutes) });
+  let time = $state({ value: "PM" });
 
-  let timeFormat = userData.preferences.timeFormat;
-  let numHours = parseInt(timeFormat.replace("format", ""));
-
-  let hourOptions = [];
+  let hourOptions = $derived.by(() => {
+    let arr = [];
+    for (let i = 0; i < numHours; i++) {
+      arr.push(numHours === 24 ? `${i < 10 ? 0 : ""}${i}` : `${i + 1}`);
+    }
+    return arr;
+  });
   let minuteOptions = [];
-  for (let i = 0; i < numHours; i++) {
-    hourOptions.push(numHours === 24 ? `${i < 10 ? 0 : ""}${i}` : i + 1);
-  }
   for (let i = 0; i < 60; i += 5) {
     minuteOptions.push(`${i < 10 ? 0 : ""}${i}`);
   }
 
   $effect(() => {
-    value.hours = parseInt(hours.value);
+    const hrs = parseInt(hours.value);
+    if (numHours === 24) {
+      value.hours = hrs;
+    } else {
+      if (hrs === 12 && time.value === "AM") {
+        value.hours = 0;
+      } else if (time.value === "PM") {
+        value.hours = hrs + 12;
+      } else {
+        value.hours = hrs;
+      }
+    }
     value.minutes = parseInt(minutes.value);
   });
 </script>
 
 <div>
-  <label>{label}</label>
-  <div class="grid grid-cols-2">
+  <div>{label}</div>
+  <div class="grid format-{numHours}">
     <Select
       id="{id}-hours"
       label="{label} (Hours)"
@@ -35,6 +55,7 @@
       bind:value={hours}
       options={hourOptions}
     ></Select>
+    <div class="text-lg mx-1">:</div>
     <Select
       id="{id}-minutes"
       label="{label} (Minutes)"
@@ -42,5 +63,25 @@
       bind:value={minutes}
       options={minuteOptions}
     ></Select>
+    {#if numHours === 12}
+      <span></span>
+      <Select
+        id="{id}-time"
+        label="AM or PM"
+        labelHidden={true}
+        bind:value={time}
+        options={["AM", "PM"]}
+      ></Select>
+    {/if}
   </div>
 </div>
+
+<style>
+  .grid.format-12 {
+    grid-template-columns: 3fr auto 3fr 4px 2fr;
+  }
+
+  .grid.format-24 {
+    grid-template-columns: 1fr auto 1fr;
+  }
+</style>
