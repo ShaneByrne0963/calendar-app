@@ -19,7 +19,7 @@
   let hourOptions = $derived.by(() => {
     let arr = [];
     for (let i = 0; i < numHours; i++) {
-      arr.push(numHours === 24 ? `${i < 10 ? 0 : ""}${i}` : `${i + 1}`);
+      arr.push(numHours === 24 ? `${addZeroToNumber(i)}` : `${i + 1}`);
     }
     return arr;
   });

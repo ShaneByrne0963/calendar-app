@@ -8,6 +8,7 @@
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import { days, times } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
+  import TimeLength from "../../../inputs/TimeLength.svelte";
 
   let { handleBack, singular } = $props();
 
@@ -33,7 +34,8 @@
   let startTime = $state({ hours: 12, minutes: 0 });
   let endTime = $state({ hours: 12, minutes: 0 });
 
-  // Data that will not be stored in the activity
+  // Varying activity occurences
+  let varyingDuration = $state({ hours: 1, minutes: 0 });
   let varyingHasTime = $state(false);
 
   function createItem() {
@@ -110,6 +112,8 @@
       ></TimeInput>
     </div>
   {:else if occurence.value === "Varying"}
+    <TimeLength id="duration" label="Duration" bind:value={varyingDuration}
+    ></TimeLength>
     <CheckBox label="Fixed Time" bind:checked={varyingHasTime}></CheckBox>
     <div class="double-inputs">
       <Select
