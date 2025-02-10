@@ -4,8 +4,8 @@
 </script>
 
 <div class="toast toast-top toast-end">
-  {#each toasts as toast}
-    <Toast type={toast.type}>
+  {#each toasts as toast, i}
+    <Toast type={toast.type} {i}>
       {toast.text}
     </Toast>
   {/each}

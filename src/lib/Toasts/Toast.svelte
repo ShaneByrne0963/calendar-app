@@ -1,12 +1,18 @@
 <script lang="ts">
+  import { toasts } from "../../shared.svelte";
   import Graphic from "../global/Graphic.svelte";
 
-  let { type, children } = $props();
+  let { type, i, children } = $props();
+
+  function onclick() {
+    toasts.splice(i, 1);
+  }
 </script>
 
 <div class="alert alert-{type}">
   <Graphic width={24} height={24} path={type} fill="#000000"></Graphic>
   <span>{@render children()}</span>
+  <button aria-label="Close" class="close" {onclick}>&times;</button>
 </div>
 
 <style>
