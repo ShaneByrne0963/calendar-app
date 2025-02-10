@@ -1,6 +1,7 @@
 <script lang="ts">
   import MenuButton from "./MenuButton.svelte";
   import { menuData } from "../../shared.svelte";
+  import MenuActionBar from "./MenuActionBar.svelte";
 
   function handleBack() {
     menuData.closing = true;
@@ -22,6 +23,7 @@
     class={menuData.closing ? " closing" : ""}
     ontransitionend={handleTransitionEnd}
   >
+    <MenuActionBar></MenuActionBar>
     <div id="menu-content">
       <MenuButton type="Activities" />
       <MenuButton type="Events" />
