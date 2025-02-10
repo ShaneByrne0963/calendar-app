@@ -1,6 +1,6 @@
 <script lang="ts">
   import { calendarData, mDisplay, wDisplay } from "../../shared.svelte";
-  import Graphic from "../Graphic.svelte";
+  import Graphic from "../global/Graphic.svelte";
 
   const { direction } = $props();
   let data =

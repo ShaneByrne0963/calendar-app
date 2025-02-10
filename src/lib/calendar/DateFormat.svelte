@@ -1,6 +1,6 @@
 <script lang="ts">
   import { calendarData } from "../../shared.svelte";
-  import Graphic from "../Graphic.svelte";
+  import Graphic from "../global/Graphic.svelte";
 
   let { format } = $props();
 

@@ -9,6 +9,7 @@
   import { days } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import TimeLength from "../../../inputs/TimeLength.svelte";
+  import Info from "../../../global/Info.svelte";
 
   let { handleBack, singular } = $props();
 
@@ -131,6 +132,11 @@
     <input type="checkbox" />
     <div class="collapse-title text-xl font-medium">Advanced Properties</div>
     <div class="collapse-content">
+      <Info>
+        The following options are not required, but can give the schedule
+        generator a better understanding of your day-to-day activities,
+        providing a healthier and more balanced lifestyle
+      </Info>
       <Select
         id="activity-type"
         label="Activity Type"

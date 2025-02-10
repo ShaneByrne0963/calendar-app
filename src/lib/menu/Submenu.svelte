@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Graphic from "../Graphic.svelte";
+  import Graphic from "../global/Graphic.svelte";
 
   let { handleBack, children, submenu = null } = $props();
 </script>
