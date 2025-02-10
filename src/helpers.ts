@@ -120,6 +120,23 @@ export function numberAsTime(value: number) {
   return { hours: Math.round((value - minutes) / 60), minutes };
 }
 
+// Downloads a file to the user's computer
+export function downloadTextFile(filename: string, text: string) {
+  let element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code
 /*
 let submenu = $state({

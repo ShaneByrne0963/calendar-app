@@ -11,6 +11,7 @@
   } from "../../shared.svelte";
   import DateChanger from "./DateChanger.svelte";
   import DateFormat from "./DateFormat.svelte";
+  import ToolTip from "../global/ToolTip.svelte";
 
   const hourPreference = userData.preferences.timeFormat;
   let today = new Date();
@@ -34,12 +35,12 @@
 <div id="calendar-container">
   <div id="calendar-header">
     <div id="calendar-view-panel">
-      <div class="tooltip tooltip-bottom" data-tip="Schedule">
+      <ToolTip text="Schedule">
         <DateFormat format="weekly" />
-      </div>
-      <div class="tooltip tooltip-bottom" data-tip="Calendar">
+      </ToolTip>
+      <ToolTip text="Calendar">
         <DateFormat format="monthly" />
-      </div>
+      </ToolTip>
     </div>
     <div id="calendar-navigation">
       <DateChanger direction={-1} />

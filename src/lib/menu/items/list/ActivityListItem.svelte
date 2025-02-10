@@ -2,8 +2,10 @@
   import {
     arrayToDateDisplay,
     convertTimeToDisplay,
+    first3,
     timeAsNumber,
   } from "../../../../helpers";
+  import { days } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";
 
@@ -21,14 +23,12 @@
 
     // Format the days to be organised in a neat manner
     let parsedDays = data.fixedDays
-      .map((item, index) => ({
-        start: index,
-        end: index,
-        startLabel: item.label,
-        endLabel: item.label,
-        value: item.value,
+      .map((item) => ({
+        start: item,
+        end: item,
+        startLabel: first3(days[item]),
+        endLabel: first3(days[item]),
       }))
-      .filter((item) => item.value)
       .reduce((acc, item) => {
         // Stack the days together if they are checked one after the other
         if (acc.length === 0 || item.start > acc[acc.length - 1].end + 1) {

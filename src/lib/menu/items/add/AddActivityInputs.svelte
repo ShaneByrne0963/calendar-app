@@ -59,11 +59,15 @@
       if (endDate.value) {
         pEndDate = inputToArray(endDate.value);
       }
+      // Get the indices of every selected day
+      let pFixedDays = fixedDays
+        .filter((item) => item.value)
+        .map((item) => days.findIndex((day) => item.label === first3(day)));
 
       occurenceSpecific = {
         startDate: pStartDate,
         endDate: pEndDate,
-        fixedDays: [...fixedDays],
+        fixedDays: pFixedDays,
         startTime,
         endTime,
       };

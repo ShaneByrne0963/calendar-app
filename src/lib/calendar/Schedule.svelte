@@ -17,9 +17,7 @@
         (item) =>
           compareDates(day, item.startDate) !== "Before" &&
           (!item.endDate || compareDates(day, item.endDate) !== "After") &&
-          item.fixedDays.find(
-            (val: any) => val.value && val.label === first3(days[i])
-          )
+          item.fixedDays.includes(i)
       );
       return {
         date: day,

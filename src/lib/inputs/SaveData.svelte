@@ -1,10 +1,12 @@
 <script>
+  import { userData } from "../../shared.svelte";
   import Graphic from "../global/Graphic.svelte";
   import ToolTip from "../global/ToolTip.svelte";
   import MenuAction from "../menu/MenuAction.svelte";
 
   function onclick() {
-    console.log("Saved");
+    let parsedData = JSON.stringify(userData);
+    console.log(parsedData);
   }
 </script>
 
