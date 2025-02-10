@@ -3,7 +3,8 @@
   import { userData } from "../../shared.svelte";
   import Select from "./Select.svelte";
 
-  let { id, label, value, disabled = false } = $props();
+  let { id, label, value, disabled = false, validation = null } = $props();
+
   let numHours = $derived(
     parseInt(userData.preferences.timeFormat.replace("format", ""))
   );
@@ -28,7 +29,7 @@
     minuteOptions.push(`${i < 10 ? 0 : ""}${i}`);
   }
 
-  $effect(() => {
+  function onchange() {
     const hrs = parseInt(hours.value);
     if (numHours === 24) {
       value.hours = hrs;
@@ -42,10 +43,16 @@
       }
     }
     value.minutes = parseInt(minutes.value);
-  });
+
+    // Validation
+    if ("feedback" in value) {
+      value.feedback = "";
+    }
+    validation?.();
+  }
 </script>
 
-<div>
+<div class="mb-5">
   <div>{label}</div>
   <div class="grid format-{numHours}">
     <Select
@@ -54,7 +61,9 @@
       labelHidden={true}
       bind:value={hours}
       options={hourOptions}
+      margin={false}
       {disabled}
+      {onchange}
     ></Select>
     <div class="text-lg mx-1">:</div>
     <Select
@@ -63,7 +72,9 @@
       labelHidden={true}
       bind:value={minutes}
       options={minuteOptions}
+      margin={false}
       {disabled}
+      {onchange}
     ></Select>
     {#if numHours === 12}
       <span></span>
@@ -74,9 +85,13 @@
         bind:value={time}
         options={["AM", "PM"]}
         {disabled}
+        {onchange}
       ></Select>
     {/if}
   </div>
+  {#if value.feedback}
+    <p class="text-error text-xs">{value.feedback}</p>
+  {/if}
 </div>
 
 <style>

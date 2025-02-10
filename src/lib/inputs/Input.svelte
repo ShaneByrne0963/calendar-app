@@ -42,7 +42,7 @@
       name={id}
       placeholder={placeholder || label}
       value={value.value}
-      class="input input-bordered w-full{value.feedback ? ' invalid' : ''}"
+      class="input input-bordered w-full"
       {required}
       {disabled}
       autocomplete="off"

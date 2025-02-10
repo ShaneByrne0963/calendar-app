@@ -1,7 +1,12 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
   import { userData, calendarData, addToast } from "../../../../shared.svelte";
-  import { dateToInputValue, first3, inputToArray } from "../../../../helpers";
+  import {
+    dateToInputValue,
+    first3,
+    inputToArray,
+    timeAsNumber,
+  } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import TimeInput from "../../../inputs/TimeInput.svelte";
@@ -20,13 +25,6 @@
   const settings = ["Indoors", "Outdoors"];
   const blankText = "Please Select";
 
-  let isValid = $derived(name.feedback === "" && startDate.feedback === "");
-
-  // Ensures the start date is before the end date
-  function validateStartDate() {
-    startDate.feedback = handleDateOrder(startDate.value, endDate.value);
-  }
-
   // Input values
   let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
@@ -42,12 +40,36 @@
   let fixedDays = $state(
     days.map((day) => ({ label: first3(day), value: "" }))
   );
-  let startTime = $state({ hours: 12, minutes: 0 });
-  let endTime = $state({ hours: 12, minutes: 0 });
+  let startTime = $state({
+    hours: 12,
+    minutes: 0,
+    feedback: "",
+  });
+  let endTime = $state({ hours: 14, minutes: 0 });
 
   // Varying activity occurences
   let varyingDuration = $state({ hours: 1, minutes: 0 });
   let varyingHasTime = $state(false);
+
+  // Validation
+  let isValid = $derived(
+    !name.feedback && !startDate.feedback && !startTime.feedback
+  );
+
+  // Ensures the start date is before the end date
+  function validateStartDate() {
+    startDate.feedback = handleDateOrder(startDate.value, endDate.value);
+  }
+
+  // Ensures the start time and end time are not equal
+  function validateStartTime() {
+    let pStartTime = { hours: startTime.hours, minutes: startTime.minutes };
+    let pEndTime = { hours: endTime.hours, minutes: endTime.minutes };
+    startTime.feedback =
+      timeAsNumber(pStartTime) === timeAsNumber(pEndTime)
+        ? inputFeedback.time
+        : "";
+  }
 
   function createItem() {
     let activity = {
@@ -130,9 +152,18 @@
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
-    <TimeInput id="start-time" label="Start Time" bind:value={startTime}
+    <TimeInput
+      id="start-time"
+      label="Start Time"
+      bind:value={startTime}
+      validation={validateStartTime}
     ></TimeInput>
-    <TimeInput id="end-time" label="End Time" bind:value={endTime}></TimeInput>
+    <TimeInput
+      id="end-time"
+      label="End Time"
+      bind:value={endTime}
+      validation={validateStartTime}
+    ></TimeInput>
   {:else if occurence.value === "Varying"}
     <TimeLength id="duration" label="Duration" bind:value={varyingDuration}
     ></TimeLength>

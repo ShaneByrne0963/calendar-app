@@ -8,15 +8,18 @@
     blankText = "",
     disabled = false,
     small = true,
+    margin = true,
     alignment = "y",
+    onchange = null,
   } = $props();
 
   const onChange = (e: Event) => {
     value.value = (e.target as HTMLInputElement).value;
+    onchange?.();
   };
 </script>
 
-<div class={alignment + " mb-5"}>
+<div class={alignment + (margin ? " mb-5" : "")}>
   <label for={id} hidden={labelHidden}>{label}</label>
   <select
     {id}
