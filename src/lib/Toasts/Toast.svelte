@@ -3,6 +3,18 @@
   import Graphic from "../global/Graphic.svelte";
 
   let { type, i, children } = $props();
+  let timer = $state(0);
+
+  function count() {
+    timer++;
+    console.log(timer);
+    if (timer >= 10) {
+      onclick();
+    } else {
+      setTimeout(count, 1000);
+    }
+  }
+  count();
 
   function onclick() {
     toasts.splice(i, 1);
