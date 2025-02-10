@@ -26,4 +26,11 @@ export const times = [
   { format12: "9:00pm", format24: "21:00" },
   { format12: "10:00pm", format24: "22:00" },
   { format12: "11:00pm", format24: "23:00" },
-]
+];
+
+export const typeColors = {
+  success: "#01a96e",
+  info: "#00b8ff",
+  warning: "#ffc100",
+  error: "#fd5a5f",
+};

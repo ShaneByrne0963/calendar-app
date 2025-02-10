@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { typeColors } from "../../types";
   import Graphic from "./Graphic.svelte";
 
   let { children, closable = true } = $props();
@@ -22,7 +23,12 @@
     {closing ? ' closing' : ''}{closed ? ' closed' : ''}"
   {ontransitionend}
 >
-  <Graphic width={24} height={24} path="info" fill="#00b8ff" extraClass="mr-2"
+  <Graphic
+    width={24}
+    height={24}
+    path="info"
+    fill={typeColors.info}
+    extraClass="mr-2"
   ></Graphic>
   <p>{@render children()}</p>
   {#if closable}

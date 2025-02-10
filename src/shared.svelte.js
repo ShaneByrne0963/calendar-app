@@ -32,6 +32,12 @@ export const menuData = $state({
   closing: false
 });
 
+export const toasts = $state([]);
+
+export function addToast(type, text) {
+  toasts.push({ type, text });
+}
+
 export const mDisplay = $state({
   month: 0,
   year: 0,

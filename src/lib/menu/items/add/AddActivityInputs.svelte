@@ -1,6 +1,6 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
-  import { userData, calendarData } from "../../../../shared.svelte";
+  import { userData, calendarData, addToast } from "../../../../shared.svelte";
   import { dateToInputValue, first3, inputToArray } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -86,6 +86,7 @@
     }
     userData.activities.push({ ...activity, ...occurenceSpecific });
     handleBack();
+    addToast("success", "Activity created successfully!");
   }
 </script>
 
