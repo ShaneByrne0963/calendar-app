@@ -1,7 +1,7 @@
 <script lang="ts">
   let { label, checked = $bindable(false), type = "checkbox" } = $props();
 
-  function onchange(e: Event) {
+  function onChange(e: Event) {
     checked = (e.target as HTMLInputElement).checked;
   }
 </script>
@@ -12,7 +12,7 @@
       type="checkbox"
       {checked}
       class={`${type} ${type}-accent`}
-      {onchange}
+      onchange={onChange}
     />
     <span class="label-text ml-2">{label}</span>
   </label>

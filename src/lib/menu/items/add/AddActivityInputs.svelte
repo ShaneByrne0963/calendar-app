@@ -53,7 +53,11 @@
 
   // Validation
   let isValid = $derived(
-    !name.feedback && !startDate.feedback && !startTime.feedback
+    !name.feedback &&
+      (!occurence.value === "Fixed" ||
+        (!startDate.feedback &&
+          !startTime.feedback &&
+          fixedDays.filter((item) => item.value).length > 0))
   );
 
   // Ensures the start date is before the end date
@@ -151,7 +155,8 @@
       validation={validateStartDate}
     ></Input>
 
-    <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
+    <CheckBoxList label="Days" bind:values={fixedDays} required={true}
+    ></CheckBoxList>
     <TimeInput
       id="start-time"
       label="Start Time"

@@ -1,10 +1,15 @@
 <script lang="ts">
   import CheckBox from "./CheckBox.svelte";
 
-  let { label, values } = $props();
+  let { label, values, required = false } = $props();
+
+  let hasOne = $derived(values.filter((item: any) => item.value).length > 0);
 </script>
 
 <div>{label}</div>
+{#if required && !hasOne}
+  <p class="text-xs">Please select at least 1</p>
+{/if}
 <div class="checkbox-list mb-5">
   {#each values as item}
     <CheckBox label={item.label} bind:checked={item.value}></CheckBox>
