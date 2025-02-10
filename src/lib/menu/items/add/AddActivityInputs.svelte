@@ -48,7 +48,7 @@
   let endTime = $state({ hours: 14, minutes: 0 });
 
   // Varying activity occurences
-  let varyingDuration = $state({ hours: 1, minutes: 0 });
+  let varyingDuration = $state({ hours: 1, minutes: 0, feedback: "" });
   let varyingHasTime = $state(false);
 
   // Validation
@@ -68,6 +68,12 @@
         return false;
       }
     }
+    // Inputs for varying activity types
+    if (occurence.value === "Varying") {
+      if (varyingDuration.feedback) {
+        return false;
+      }
+    }
     return true;
   });
 
@@ -78,10 +84,8 @@
 
   // Ensures the start time and end time are not equal
   function validateStartTime() {
-    let pStartTime = { hours: startTime.hours, minutes: startTime.minutes };
-    let pEndTime = { hours: endTime.hours, minutes: endTime.minutes };
     startTime.feedback =
-      timeAsNumber(pStartTime) === timeAsNumber(pEndTime)
+      timeAsNumber(startTime) === timeAsNumber(endTime)
         ? inputFeedback.time
         : "";
   }

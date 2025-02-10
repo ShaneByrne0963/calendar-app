@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { timeAsNumber } from "../../helpers";
+  import { inputFeedback } from "../../validation";
   import Select from "./Select.svelte";
 
   let { id, label, value } = $props();
@@ -14,13 +16,20 @@
     minuteOptions.push(`${i}`);
   }
 
-  $effect(() => {
-    value.hours = parseInt(hours.value);
-    value.minutes = parseInt(minutes.value);
-  });
+  function onchange() {
+    const hrs = parseInt(hours.value);
+    const mins = parseInt(minutes.value);
+    value.hours = hrs;
+    value.minutes = mins;
+
+    value.feedback =
+      timeAsNumber({ hours: hrs, minutes: mins }) === 0
+        ? inputFeedback.zeroDuration
+        : "";
+  }
 </script>
 
-<div>
+<div class="mb-5">
   <div>{label}</div>
   <div class="grid grid-cols-4">
     <Select
@@ -28,7 +37,9 @@
       label="{label} (Hours)"
       labelHidden={true}
       bind:value={hours}
+      margin={false}
       options={hourOptions}
+      {onchange}
     ></Select>
     <div class="ml-1 mt-1">hour{parseInt(hours.value) !== 1 ? "s" : ""}</div>
     <Select
@@ -36,10 +47,15 @@
       label="{label} (Minutes)"
       labelHidden={true}
       bind:value={minutes}
+      margin={false}
       options={minuteOptions}
+      {onchange}
     ></Select>
     <div class="ml-1 mt-1">minutes</div>
   </div>
+  {#if value.feedback}
+    <p class="text-error text-xs">{value.feedback}</p>
+  {/if}
 </div>
 
 <style>

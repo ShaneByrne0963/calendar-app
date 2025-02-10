@@ -3,7 +3,8 @@ import {compareDates, inputToArray} from "./helpers";
 export const inputFeedback = {
   required: "Please fill out this field",
   date: "Start date cannot be after end date",
-  time: "Start time cannot be equal to end time"
+  time: "Start time cannot be equal to end time",
+  zeroDuration: "Duration cannot be zero",
 }
 
 // Returns a feedback message if an input is empty
