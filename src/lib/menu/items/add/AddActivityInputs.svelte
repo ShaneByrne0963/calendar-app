@@ -16,6 +16,7 @@
   import TimeLength from "../../../inputs/TimeLength.svelte";
   import Info from "../../../global/Info.svelte";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
+  import Slider from "../../../inputs/Slider.svelte";
 
   let { handleBack, singular } = $props();
 
@@ -30,6 +31,7 @@
   let occurence = $state({ value: occurences[0] });
   let activityType = $state({ value: "" });
   let setting = $state({ value: "" });
+  let intensity = $state({ value: 0 });
 
   // Fixed activity occurences
   let startDate = $state({
@@ -101,6 +103,9 @@
     }
     if (setting.value) {
       activity.setting = setting.value;
+    }
+    if (intensity.value) {
+      activity.intensity = intensity.value;
     }
     let occurenceSpecific = {};
     // For fixed activities
@@ -222,6 +227,12 @@
         small={false}
         {blankText}
       ></Select>
+      <Slider
+        id="intensity"
+        label="Energy Intensity"
+        bind:value={intensity}
+        theme="intensity"
+      ></Slider>
     </div>
   </div>
 </AddItem>

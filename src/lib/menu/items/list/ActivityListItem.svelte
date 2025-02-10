@@ -5,7 +5,7 @@
     first3,
     timeAsNumber,
   } from "../../../../helpers";
-  import { days } from "../../../../types";
+  import { days, sliderThemeData } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";
 
@@ -75,10 +75,22 @@
     let arr = [];
 
     if ("type" in data) {
-      arr.push(data.type);
+      arr.push({
+        label: data.type,
+        icon: data.type.toLowerCase(),
+      });
     }
     if ("setting" in data) {
-      arr.push(data.setting);
+      arr.push({
+        label: data.setting,
+        icon: data.setting.toLowerCase(),
+      });
+    }
+    if ("intensity" in data) {
+      arr.push({
+        label: sliderThemeData.intensity[data.intensity].label,
+        icon: "exercise",
+      });
     }
     return arr;
   });
@@ -99,7 +111,7 @@
   {#if iconList.length > 0}
     <div class="text-xs mt-2 flex items-center">
       {#each iconList as icon}
-        <ListItemIcon label={icon} icon={icon.toLowerCase()}></ListItemIcon>
+        <ListItemIcon label={icon.label} icon={icon.icon}></ListItemIcon>
       {/each}
     </div>
   {/if}
