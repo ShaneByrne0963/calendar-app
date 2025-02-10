@@ -7,7 +7,6 @@
 
   function count() {
     timer++;
-    console.log(timer);
     if (timer >= 10) {
       onclick();
     } else {

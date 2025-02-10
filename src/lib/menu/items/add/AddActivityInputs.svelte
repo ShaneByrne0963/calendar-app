@@ -10,6 +10,7 @@
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import TimeLength from "../../../inputs/TimeLength.svelte";
   import Info from "../../../global/Info.svelte";
+  import { handleDateOrder, inputFeedback } from "../../../../validation";
 
   let { handleBack, singular } = $props();
 
@@ -19,17 +20,27 @@
   const settings = ["Indoors", "Outdoors"];
   const blankText = "Please Select";
 
+  let isValid = $derived(name.feedback === "" && startDate.feedback === "");
+
+  // Ensures the start date is before the end date
+  function validateStartDate() {
+    startDate.feedback = handleDateOrder(startDate.value, endDate.value);
+  }
+
   // Input values
-  let name = $state({ value: "" });
+  let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
   let activityType = $state({ value: "" });
   let setting = $state({ value: "" });
 
   // Fixed activity occurences
-  let startDate = $state({ value: dateToInputValue(calendarData.selected) });
+  let startDate = $state({
+    value: dateToInputValue(calendarData.selected),
+    feedback: "",
+  });
   let endDate = $state({ value: "" });
   let fixedDays = $state(
-    days.map((day) => ({ label: first3(day), value: false }))
+    days.map((day) => ({ label: first3(day), value: "" }))
   );
   let startTime = $state({ hours: 12, minutes: 0 });
   let endTime = $state({ hours: 12, minutes: 0 });
@@ -84,13 +95,13 @@
         };
       }
     }
-    userData.activities.push({ ...activity, ...occurenceSpecific });
+    userData.activities.unshift({ ...activity, ...occurenceSpecific });
     handleBack();
     addToast("success", "Activity created successfully!");
   }
 </script>
 
-<AddItem {handleBack} {singular} {createItem}>
+<AddItem {handleBack} {singular} {createItem} {isValid}>
   <Input id="item-name" label="Name" bind:value={name}></Input>
   <Select
     id="item-occurence"
@@ -106,6 +117,7 @@
       label="Start Date"
       alignment="x"
       bind:value={startDate}
+      validation={validateStartDate}
     ></Input>
     <Input
       id="item-end-date"
@@ -114,6 +126,7 @@
       alignment="x"
       bind:value={endDate}
       required={false}
+      validation={validateStartDate}
     ></Input>
 
     <CheckBoxList label="Days" bind:values={fixedDays}></CheckBoxList>
