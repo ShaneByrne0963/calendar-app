@@ -52,13 +52,24 @@
   let varyingHasTime = $state(false);
 
   // Validation
-  let isValid = $derived(
-    !name.feedback &&
-      (!occurence.value === "Fixed" ||
-        (!startDate.feedback &&
-          !startTime.feedback &&
-          fixedDays.filter((item) => item.value).length > 0))
-  );
+  let isValid = $derived.by(() => {
+    // Inputs for all activity types
+    if (name.feedback) {
+      return false;
+    }
+    // Inputs for fixed activity types
+    if (occurence.value === "Fixed") {
+      let checkedDays = fixedDays.filter((item) => item.value);
+      if (
+        startDate.feedback ||
+        startTime.feedback ||
+        checkedDays.length === 0
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
 
   // Ensures the start date is before the end date
   function validateStartDate() {
