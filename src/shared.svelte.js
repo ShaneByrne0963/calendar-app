@@ -13,6 +13,12 @@ export const userData = $state({
   calendar: {}
 });
 
+export function setUserData(data) {
+  for (let [key, value] of Object.entries(data)) {
+    userData[key] = value;
+  }
+}
+
 export const calendarData = $state({
   format: "weekly",
   selected: new Date(),

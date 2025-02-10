@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { userData } from "../../shared.svelte";
   import { downloadTextFile } from "../../helpers";
   import Graphic from "../global/Graphic.svelte";
