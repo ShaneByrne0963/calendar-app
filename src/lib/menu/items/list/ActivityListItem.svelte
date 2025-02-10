@@ -87,9 +87,11 @@
       });
     }
     if ("intensity" in data) {
+      let theme = sliderThemeData.intensity[data.intensity];
       arr.push({
-        label: sliderThemeData.intensity[data.intensity].label,
+        label: theme.label,
         icon: "exercise",
+        color: theme.color,
       });
     }
     return arr;
@@ -110,8 +112,8 @@
   {/if}
   {#if iconList.length > 0}
     <div class="text-xs mt-2 flex items-center">
-      {#each iconList as icon}
-        <ListItemIcon label={icon.label} icon={icon.icon}></ListItemIcon>
+      {#each iconList as data}
+        <ListItemIcon {data}></ListItemIcon>
       {/each}
     </div>
   {/if}

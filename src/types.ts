@@ -40,9 +40,9 @@ export const sliderThemeData = {
   intensity: [
     {label: "N/A", color: "#ffffff"},
     {label: "None", color: "rgb(0, 255, 0)"},
-    {label: "Low", color: "rgb(193, 214, 96)"},
+    {label: "Low", color: "rgb(208, 255, 0)"},
     {label: "Medium", color: "rgb(255, 255, 0)"},
-    {label: "High", color: "rgb(248, 184, 65)"},
-    {label: "Intense", color: "rgb(255, 112, 112)"}
+    {label: "High", color: "rgb(255, 166, 0)"},
+    {label: "Intense", color: "rgb(255, 73, 73)"}
   ]
 };
