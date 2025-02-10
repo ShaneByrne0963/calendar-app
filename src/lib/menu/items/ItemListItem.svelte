@@ -73,7 +73,6 @@
           userEntered: [itemData],
         };
       }
-      console.log(userData);
     }
 
     calendarData.itemAdding = false;

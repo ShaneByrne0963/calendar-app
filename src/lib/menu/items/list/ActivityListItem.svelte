@@ -70,6 +70,18 @@
       : data.occurence === "Varying"
         ? timeAsNumber(data.duration)
         : 1;
+
+  let iconList = $derived.by(() => {
+    let arr = [];
+
+    if ("type" in data) {
+      arr.push(data.type);
+    }
+    if ("setting" in data) {
+      arr.push(data.setting);
+    }
+    return arr;
+  });
 </script>
 
 <ItemListItem title={data.name} {duration} startTime={data.startTime}>
@@ -84,10 +96,11 @@
       </div>
     </div>
   {/if}
-  <div class="text-xs mt-2 flex items-center">
-    <ListItemIcon label={data.type} icon={data.type.toLowerCase()}
-    ></ListItemIcon>
-    <ListItemIcon label={data.setting} icon={data.setting.toLowerCase()}
-    ></ListItemIcon>
-  </div>
+  {#if iconList.length > 0}
+    <div class="text-xs mt-2 flex items-center">
+      {#each iconList as icon}
+        <ListItemIcon label={icon} icon={icon.toLowerCase()}></ListItemIcon>
+      {/each}
+    </div>
+  {/if}
 </ItemListItem>

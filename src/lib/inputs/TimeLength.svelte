@@ -6,7 +6,7 @@
   let minutes = $state({ value: "" + value.minutes });
 
   let hourOptions = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i <= 20; i++) {
     hourOptions.push(`${i}`);
   }
   let minuteOptions = [];

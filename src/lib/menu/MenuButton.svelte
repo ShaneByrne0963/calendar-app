@@ -13,7 +13,7 @@
 </script>
 
 <button
-  class="btn btn-accent btn-block btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+  class="btn btn-accent btn-block btn-xs sm:btn-sm md:btn-md"
   onclick={handleMenuClick}>{type}</button
 >
 

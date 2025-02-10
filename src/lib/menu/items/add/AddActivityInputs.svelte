@@ -16,12 +16,13 @@
   const occurences = ["Fixed", "Varying", "Flexible"];
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
+  const blankText = "Please Select";
 
   // Input values
   let name = $state({ value: "" });
   let occurence = $state({ value: occurences[0] });
-  let activityType = $state({ value: activityTypes[0] });
-  let setting = $state({ value: settings[0] });
+  let activityType = $state({ value: "" });
+  let setting = $state({ value: "" });
 
   // Fixed activity occurences
   let startDate = $state({ value: dateToInputValue(calendarData.selected) });
@@ -40,9 +41,14 @@
     let activity = {
       name: name.value,
       occurence: occurence.value,
-      type: activityType.value,
-      setting: setting.value,
     };
+    // Advanced options. Only add the ones that have been entered by the user
+    if (activityType.value) {
+      activity.type = activityType.value;
+    }
+    if (setting.value) {
+      activity.setting = setting.value;
+    }
     let occurenceSpecific = {};
     // For fixed activities
     if (occurence.value === occurences[0]) {
@@ -120,20 +126,29 @@
     ></TimeInput>
   {/if}
   <hr />
-  <Select
-    id="activity-type"
-    label="Activity Type"
-    bind:value={activityType}
-    options={activityTypes}
-    small={false}
-  ></Select>
-  <Select
-    id="activity-setting"
-    label="Setting"
-    bind:value={setting}
-    options={settings}
-    small={false}
-  ></Select>
+
+  <div class="collapse collapse-plus bg-neutral mb-6">
+    <input type="checkbox" />
+    <div class="collapse-title text-xl font-medium">Advanced Properties</div>
+    <div class="collapse-content">
+      <Select
+        id="activity-type"
+        label="Activity Type"
+        bind:value={activityType}
+        options={activityTypes}
+        small={false}
+        {blankText}
+      ></Select>
+      <Select
+        id="activity-setting"
+        label="Setting"
+        bind:value={setting}
+        options={settings}
+        small={false}
+        {blankText}
+      ></Select>
+    </div>
+  </div>
 </AddItem>
 
 <style>

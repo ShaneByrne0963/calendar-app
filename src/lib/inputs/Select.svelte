@@ -5,6 +5,7 @@
     labelHidden = false,
     value = $bindable(),
     options,
+    blankText = "",
     disabled = false,
     small = true,
     alignment = "y",
@@ -25,6 +26,9 @@
     {disabled}
     onchange={onChange}
   >
+    {#if blankText}
+      <option value="">{blankText}</option>
+    {/if}
     {#each options as opt}
       <option>{opt}</option>
     {/each}

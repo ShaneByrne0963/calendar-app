@@ -50,7 +50,7 @@
       </div>
       <DateChanger direction={1} />
     </div>
-    <div id="date-headings" class="border-1 text-white bg-primary">
+    <div id="date-headings" class="border-1 text-white bg-neutral">
       {#each days as day, i}
         <div class="ml-1">
           {first3(day)}
