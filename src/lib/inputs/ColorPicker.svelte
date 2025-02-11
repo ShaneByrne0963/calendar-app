@@ -71,7 +71,7 @@
   setTimeout(() => document.addEventListener("click", clickAway));
 
   function onclick(e: Event) {
-    let val = (e.target as HTMLElement).classList[1].replace("bg-", "");
+    let val = (e.target as HTMLElement).classList[1].replace("col-", "");
 
     menuData.colorPicker.onSelect?.(val);
     close();
@@ -85,19 +85,28 @@
 >
   <div class="row mb-3">
     {#each mainColors as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      <button
+        aria-label="Select color"
+        class="background col-{col} rounded-sm"
+        {onclick}
       ></button>
     {/each}
   </div>
   <div class="row mb-3">
     {#each getColorList(colorList1) as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      <button
+        aria-label="Select color"
+        class="background col-{col} rounded-sm"
+        {onclick}
       ></button>
     {/each}
   </div>
   <div class="row">
     {#each getColorList(colorList2) as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      <button
+        aria-label="Select color"
+        class="background col-{col} rounded-sm"
+        {onclick}
       ></button>
     {/each}
   </div>
@@ -131,7 +140,7 @@
       gap: 2px;
 
       .btn,
-      .bg {
+      .background {
         width: 100%;
         height: auto;
         min-height: auto;

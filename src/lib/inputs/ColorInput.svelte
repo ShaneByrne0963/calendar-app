@@ -19,7 +19,7 @@
 <div class="mb-5">
   <button
     aria-label="Select a color"
-    class="color-input bg bg-{value.value}"
+    class="color-input background col-{value.value}"
     {onclick}
   >
     Colour

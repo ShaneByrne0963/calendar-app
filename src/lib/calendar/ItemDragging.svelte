@@ -47,7 +47,7 @@
 
 <div
   id="item-drag"
-  class="bg bg-{calendarData.itemAddData.color}{'width' in
+  class="background col-{calendarData.itemAddData.color}{'width' in
   calendarData.itemAddData
     ? ' visible'
     : ''}{calendarData.itemAddData.day >= 0 ? ' snapped' : ''}"

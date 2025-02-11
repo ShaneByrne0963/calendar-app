@@ -6,7 +6,7 @@
 </script>
 
 <div
-  class="slot bg-{color} text-black"
+  class="slot background col-{color} text-black"
   style={`top: calc((100% / 24) * ${pStart}); height: calc((100% / 24) * ${isDuration ? pEnd : pEnd - pStart})`}
 >
   {title}
