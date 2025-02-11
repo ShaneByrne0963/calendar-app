@@ -1,6 +1,7 @@
 .background {
   background-color: var(--col);
-  color: black;
+  color: var(--col-text);
+  --col-text: black;
 }
 
 .text {
@@ -13,7 +14,7 @@
 
 .col-secondary {
   --col: rgb(254, 0, 210);
-  color: white;
+  --col-text: white;
 }
 
 .col-accent {
@@ -34,6 +35,10 @@
 
 .col-error {
   --col: #fd5a5f;
+}
+
+.col-white {
+  --col: white;
 }
 
 .col-red-100 {

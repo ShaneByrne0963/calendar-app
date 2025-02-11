@@ -92,7 +92,7 @@
   aria-label="Pick Up Item"
 >
   <div class="divide-content">
-    <h2 class="text col-{color}">{title}</h2>
+    <h2>{title}</h2>
   </div>
   {@render children()}
 </div>
