@@ -17,6 +17,7 @@
   import Info from "../../../global/Info.svelte";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
   import Slider from "../../../inputs/Slider.svelte";
+  import ColorInput from "../../../inputs/ColorInput.svelte";
 
   let { handleBack, singular } = $props();
 
@@ -149,6 +150,7 @@
 
 <AddItem {handleBack} {singular} {createItem} {isValid}>
   <Input id="item-name" label="Name" bind:value={name}></Input>
+  <ColorInput></ColorInput>
   <Select
     id="item-occurence"
     label="Occurence"
