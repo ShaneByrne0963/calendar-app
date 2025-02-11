@@ -144,7 +144,7 @@
         };
       }
     }
-    userData.activities.unshift({ ...activity, ...occurenceSpecific });
+    userData.activities.push({ ...activity, ...occurenceSpecific });
     handleBack();
     addToast("success", "Activity created successfully!");
   }

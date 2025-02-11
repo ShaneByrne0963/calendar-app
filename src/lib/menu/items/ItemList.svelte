@@ -39,7 +39,7 @@
       ? itemType.slice(0, itemType.length - 1)
       : itemType;
 
-  let itemData = userData[itemType.toLowerCase()];
+  let itemData = $derived(userData[itemType.toLowerCase()]);
   let listComponent = {
     value: listItemComponents[`${singular}ListItem`],
   };
@@ -59,11 +59,11 @@
     >
   </SubmenuHeading>
   {#if itemData.length > 0}
+    <div class="mb-3">
+      {itemData.length}
+      {(itemData.length === 1 ? singular : itemType).toLowerCase()}
+    </div>
     <div id="item-list">
-      <div class="mb-3">
-        {itemData.length}
-        {(itemData.length === 1 ? singular : itemType).toLowerCase()}
-      </div>
       {#each itemData as item}
         <listComponent.value data={item}></listComponent.value>
       {/each}
@@ -79,3 +79,10 @@
     </div>
   {/if}
 </Submenu>
+
+<style>
+  #item-list {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+</style>
