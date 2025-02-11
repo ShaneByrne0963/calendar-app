@@ -97,6 +97,7 @@
   function createItem() {
     let activity = {
       name: name.value,
+      color: color.value,
       occurence: occurence.value,
     };
     // Advanced options. Only add the ones that have been entered by the user

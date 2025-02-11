@@ -98,7 +98,12 @@
   });
 </script>
 
-<ItemListItem title={data.name} {duration} startTime={data.startTime}>
+<ItemListItem
+  title={data.name}
+  color={data.color}
+  {duration}
+  startTime={data.startTime}
+>
   <div class="text-xs">
     {data.occurence}{displayData.subtitle}
   </div>

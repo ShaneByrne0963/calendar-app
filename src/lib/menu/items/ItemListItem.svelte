@@ -1,7 +1,7 @@
 <script lang="ts">
   import { dateToInputValue, numberAsTime } from "../../../helpers";
   import { calendarData, userData, wDisplay } from "../../../shared.svelte";
-  let { children, title, duration, startTime = null } = $props();
+  let { children, title, color, duration, startTime = null } = $props();
 
   function onmousedown(e: MouseEvent) {
     calendarData.itemAdding = true;
@@ -22,6 +22,7 @@
 
     calendarData.itemAddData = {
       title,
+      color,
       mouseX: e.clientX,
       mouseY: e.clientY,
       width: dayRef.width,
@@ -62,6 +63,7 @@
       );
       let itemData = {
         title: data.title,
+        color: data.color,
         startTime,
         duration,
       };

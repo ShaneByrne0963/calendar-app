@@ -47,7 +47,8 @@
 
 <div
   id="item-drag"
-  class="bg-accent{'width' in calendarData.itemAddData
+  class="bg bg-{calendarData.itemAddData.color}{'width' in
+  calendarData.itemAddData
     ? ' visible'
     : ''}{calendarData.itemAddData.day >= 0 ? ' snapped' : ''}"
   {style}
@@ -57,7 +58,6 @@
 
 <style>
   #item-drag {
-    color: black;
     position: absolute;
     text-align: center;
     border-radius: 16px;

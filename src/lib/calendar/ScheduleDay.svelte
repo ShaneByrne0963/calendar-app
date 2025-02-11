@@ -52,6 +52,7 @@
   {#each data.fixedActivities as activity}
     <ScheduleSlot
       title={activity.name}
+      color={activity.color}
       start={activity.startTime}
       end={activity.endTime}
       isDuration={false}
@@ -60,6 +61,7 @@
   {#each userActivities as activity}
     <ScheduleSlot
       title={activity.title}
+      color={activity.color}
       start={activity.startTime}
       end={activity.duration}
     ></ScheduleSlot>
