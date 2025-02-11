@@ -29,7 +29,7 @@ export const calendarData = $state({
 export const menuData = $state({
   submenu: null,
   props: {},
-  colorPicker: { x: -1, y: -1 },
+  colorPicker: { x: -1, y: -1, onSelect: null },
   closing: false
 });
 

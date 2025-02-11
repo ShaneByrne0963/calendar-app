@@ -52,18 +52,30 @@
     return arr;
   }
 
+  function close() {
+    menuData.colorPicker = {
+      x: -1,
+      y: -1,
+      onSelect: null,
+    };
+    document.removeEventListener("click", clickAway);
+  }
+
   // Closes the color picker when the user clicks away
   function clickAway(e: Event) {
     let target = e.target as HTMLElement;
     if (!target.closest(".color-picker") && !target.closest(".color-input")) {
-      menuData.colorPicker = {
-        x: -1,
-        y: -1,
-      };
-      document.removeEventListener("click", clickAway);
+      close();
     }
   }
   setTimeout(() => document.addEventListener("click", clickAway));
+
+  function onclick(e: Event) {
+    let val = (e.target as HTMLElement).classList[1].replace("bg-", "");
+
+    menuData.colorPicker.onSelect?.(val);
+    close();
+  }
 </script>
 
 <div
@@ -73,17 +85,20 @@
 >
   <div class="row mb-3">
     {#each mainColors as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm"></button>
+      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      ></button>
     {/each}
   </div>
   <div class="row mb-3">
     {#each getColorList(colorList1) as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm"></button>
+      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      ></button>
     {/each}
   </div>
   <div class="row">
     {#each getColorList(colorList2) as col}
-      <button aria-label="Select color" class="bg bg-{col} rounded-sm"></button>
+      <button aria-label="Select color" class="bg bg-{col} rounded-sm" {onclick}
+      ></button>
     {/each}
   </div>
 </div>

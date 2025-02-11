@@ -29,6 +29,7 @@
 
   // Input values
   let name = $state({ value: "", feedback: inputFeedback.required });
+  let color = $state({ value: "secondary" });
   let occurence = $state({ value: occurences[0] });
   let activityType = $state({ value: "" });
   let setting = $state({ value: "" });
@@ -150,7 +151,7 @@
 
 <AddItem {handleBack} {singular} {createItem} {isValid}>
   <Input id="item-name" label="Name" bind:value={name}></Input>
-  <ColorInput></ColorInput>
+  <ColorInput bind:value={color}></ColorInput>
   <Select
     id="item-occurence"
     label="Occurence"
