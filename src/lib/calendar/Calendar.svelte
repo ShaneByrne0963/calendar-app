@@ -23,7 +23,7 @@
     let selectedOnDisplay =
       calendarData.selected.getMonth() === mDisplay.month &&
       calendarData.selected.getFullYear() === mDisplay.year;
-    let today = new Date();
+    let today = calendarData.today;
     let todayOnDisplay =
       today.getMonth() === mDisplay.month &&
       today.getFullYear() === mDisplay.year;

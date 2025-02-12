@@ -2,13 +2,14 @@
   import { compareDates, dateToInputValue } from "../../helpers";
   import { calendarData, mDisplay, userData } from "../../shared.svelte";
   import ScheduleSlot from "./ScheduleSlot.svelte";
+  import TimeMarker from "./TimeMarker.svelte";
   let { data, index } = $props();
 
   let dayClass = $derived.by(() => {
     let val = "day";
 
     let isSelected = compareDates(data.date, calendarData.selected) === "Equal";
-    let isToday = compareDates(data.date, new Date()) === "Equal";
+    let isToday = compareDates(data.date, calendarData.today) === "Equal";
 
     val += isSelected ? " selected" : "";
     val += isToday ? " today" : "";
@@ -66,6 +67,9 @@
       end={activity.duration}
     ></ScheduleSlot>
   {/each}
+  {#if dayClass.includes("today")}
+    <TimeMarker></TimeMarker>
+  {/if}
 </button>
 
 <style>

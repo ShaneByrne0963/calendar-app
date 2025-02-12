@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { menuData } from "../../shared.svelte";
+  import { calendarData, menuData } from "../../shared.svelte";
   import { colorList1, colorList2, colorShades } from "../../types";
 
   function getColorList(colors: string[]) {

@@ -21,6 +21,9 @@ export function setUserData(data) {
 
 export const calendarData = $state({
   format: "weekly",
+  today: new Date(),
+  hours: 0,
+  minutes: 0,
   selected: new Date(),
   itemAdding: false,
   itemAddData: { day: -1 }
