@@ -68,7 +68,7 @@
     ></ScheduleSlot>
   {/each}
   {#if dayClass.includes("today")}
-    <TimeMarker></TimeMarker>
+    <TimeMarker {index}></TimeMarker>
   {/if}
 </button>
 
