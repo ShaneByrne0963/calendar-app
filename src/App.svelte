@@ -35,8 +35,8 @@
   {#if calendarData.itemAdding}
     <ItemDragging></ItemDragging>
   {/if}
-  {#if menuData.colorPicker.x >= 0}
-    <ColorPicker></ColorPicker>
+  {#if menuData.clickWindow.component}
+    <menuData.clickWindow.component></menuData.clickWindow.component>
   {/if}
   <ToastContainer></ToastContainer>
 </div>

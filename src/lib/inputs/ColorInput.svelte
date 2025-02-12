@@ -1,18 +1,20 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
+  import ColorPicker from "./ColorPicker.svelte";
 
   let { value } = $props();
 
+  function onSelect(val: string) {
+    value.value = val;
+  }
+
   function onclick(e: MouseEvent) {
-    menuData.colorPicker = {
+    menuData.clickWindow = {
+      component: ColorPicker,
       x: e.clientX,
       y: e.clientY,
       onSelect,
     };
-  }
-
-  function onSelect(val: string) {
-    value.value = val;
   }
 </script>
 
