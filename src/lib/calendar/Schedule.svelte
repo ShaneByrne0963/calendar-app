@@ -6,6 +6,8 @@
 
   let { dates, hourFormat } = $props();
 
+  let fit = $derived(userData.preferences.fitEntireSchedule);
+
   let data = $derived.by(() => {
     let fixedActivities = userData.activities.filter(
       (item) => item.occurence === "Fixed"
@@ -25,13 +27,18 @@
       };
     });
   });
+
+  // Scroll to the bottom of the timetable if it's spread out
+  if (!userData.preferences.fitEntireSchedule) {
+    setTimeout(() => {
+      const el = document.getElementById("calendar-main");
+      el.scrollTo(0, el.scrollHeight);
+    });
+  }
 </script>
 
-<div
-  id="schedule"
-  class="{hourFormat}{userData.preferences.fitEntireSchedule ? ' fit' : ''}"
->
-  <HourMarkings extrude={true} fit={userData.preferences.fitEntireSchedule} />
+<div id="schedule" class="{hourFormat}{fit ? ' fit' : ''}">
+  <HourMarkings extrude={true} {fit} />
   {#each data as item, index}
     <ScheduleDay data={item} {index}></ScheduleDay>
   {/each}
