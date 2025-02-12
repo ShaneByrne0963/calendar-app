@@ -1,14 +1,27 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
   import ItemList from "./items/ItemList.svelte";
+  import JournalList from "./items/list/JournalList.svelte";
 
   let { type } = $props();
 
+  const submenus = {
+    Journal: {
+      component: JournalList,
+      props: {},
+    },
+  };
+
   function handleMenuClick() {
-    menuData.submenu = ItemList;
-    menuData.props = {
-      itemType: type,
-    };
+    if (type in submenus) {
+      menuData.submenu = submenus[type].component;
+      menuData.props = submenus[type].props;
+    } else {
+      menuData.submenu = ItemList;
+      menuData.props = {
+        itemType: type,
+      };
+    }
   }
 </script>
 
