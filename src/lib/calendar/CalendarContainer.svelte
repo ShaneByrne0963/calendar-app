@@ -51,6 +51,8 @@
       </div>
       <DateChanger direction={1} />
     </div>
+  </div>
+  <div id="calendar-main">
     <div id="date-headings" class="border-1 text-white bg-neutral">
       {#each days as day, i}
         <div class="ml-1">
@@ -61,27 +63,32 @@
         </div>
       {/each}
     </div>
+    {#if calendarData.format === "weekly"}
+      <Schedule dates={weekData} hourFormat={hourPreference} />
+    {:else}
+      <Calendar />
+    {/if}
   </div>
-  {#if calendarData.format === "weekly"}
-    <Schedule dates={weekData} hourFormat={hourPreference} />
-  {:else}
-    <Calendar />
-  {/if}
 </div>
 
 <style>
   #calendar-container {
     height: calc(100vh - 1.5em);
     display: grid;
-    grid-template-rows: 6.6em 1fr;
+    grid-template-rows: 5.1em 1fr;
   }
 
   #calendar-header {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
   }
 
   #date-headings {
+    height: 1.5em;
+    position: sticky;
+    right: 0;
+    top: 0;
+    z-index: 4;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }
@@ -95,5 +102,10 @@
   #date-label {
     min-width: 30%;
     text-align: center;
+  }
+
+  #calendar-main {
+    position: relative;
+    overflow-y: auto;
   }
 </style>

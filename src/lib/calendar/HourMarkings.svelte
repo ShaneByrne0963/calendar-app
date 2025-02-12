@@ -2,13 +2,22 @@
   import { times } from "../../types";
   import { userData } from "../../shared.svelte";
 
-  let { showNumbers = true, extrude = false, extraClass = "" } = $props();
+  let {
+    showNumbers = true,
+    extrude = false,
+    fit = true,
+    extraClass = "",
+  } = $props();
 
   const hourPreference = userData.preferences.timeFormat;
   let hours: string[] = times.map((time) => time[hourPreference]);
 </script>
 
-<div class="hour-markings{extrude ? ' extrude' : ''} {hourPreference}">
+<div
+  class="hour-markings{extrude ? ' extrude' : ''}{fit
+    ? ' fit'
+    : ''} {hourPreference}"
+>
   {#each hours as hour}
     <div class={"hour" + (extraClass ? ` ${extraClass}` : "")}>
       {showNumbers ? hour : ""}
@@ -24,7 +33,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% / (15 / 24));
 
     &.extrude {
       width: calc(100% + 3em);
@@ -38,6 +47,10 @@
         width: calc(100% + 4em);
         left: -4em;
       }
+    }
+
+    &.fit {
+      height: 100%;
     }
 
     &.cover-border {

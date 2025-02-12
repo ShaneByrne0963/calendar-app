@@ -9,6 +9,7 @@ export const userData = $state({
   records: [],
   preferences: {
     timeFormat: "format24",
+    fitEntireSchedule: false,
   },
   calendar: {}
 });

@@ -27,8 +27,11 @@
   });
 </script>
 
-<div id="schedule" class={hourFormat}>
-  <HourMarkings extrude={true} />
+<div
+  id="schedule"
+  class="{hourFormat}{userData.preferences.fitEntireSchedule ? ' fit' : ''}"
+>
+  <HourMarkings extrude={true} fit={userData.preferences.fitEntireSchedule} />
   {#each data as item, index}
     <ScheduleDay data={item} {index}></ScheduleDay>
   {/each}
@@ -37,7 +40,7 @@
 <style>
   #schedule {
     margin-left: 3em;
-    height: 100%;
+    height: calc(100% - 1.5em);
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     position: relative;

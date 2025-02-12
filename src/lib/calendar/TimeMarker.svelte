@@ -21,15 +21,15 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px;
     transform: translate(0, -1px);
     z-index: 2;
   }
   .clock-marker {
     position: absolute;
-    width: 0.75em;
-    height: 0.75em;
-    transform: translate(-0.375em, -0.375em);
+    width: 12px;
+    height: 12px;
+    transform: translate(-6px, -6px);
     position: absolute;
     border-radius: 50%;
     z-index: 2;

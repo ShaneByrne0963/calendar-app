@@ -13,6 +13,7 @@
 
     val += isSelected ? " selected" : "";
     val += isToday ? " today" : "";
+    val += userData.preferences.fitEntireSchedule ? " full" : "";
 
     return val;
   });
@@ -74,10 +75,14 @@
 
 <style>
   .day {
-    height: 100%;
+    height: calc(100% / (15 / 24));
     box-sizing: border-box;
     border: 1px solid var(--color-stone-400);
     position: relative;
     cursor: default;
+
+    &.full {
+      height: 100%;
+    }
   }
 </style>
