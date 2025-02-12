@@ -1,7 +1,6 @@
 .background {
   background-color: var(--col);
-  color: var(--col-text);
-  --col-text: black;
+  color: black;
 }
 
 .text {
@@ -10,31 +9,6 @@
 
 .border {
   border: 1px solid var(--col);
-}
-
-.col-secondary {
-  --col: rgb(254, 0, 210);
-  --col-text: white;
-}
-
-.col-accent {
-  --col: #05dac0;
-}
-
-.col-success {
-  --col: #01a96e;
-}
-
-.col-info {
-  --col: #00b8ff;
-}
-
-.col-warning {
-  --col: #ffc100;
-}
-
-.col-error {
-  --col: #fd5a5f;
 }
 
 .col-red-200 {
