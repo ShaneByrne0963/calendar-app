@@ -75,7 +75,7 @@
 
 <style>
   .day {
-    height: calc(100% / (15 / 24));
+    height: calc(100% * 24 / (24 - var(--hidden-morning-hours)));
     box-sizing: border-box;
     border: 1px solid var(--color-stone-400);
     position: relative;

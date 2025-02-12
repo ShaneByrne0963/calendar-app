@@ -9,7 +9,7 @@ export const userData = $state({
   records: [],
   preferences: {
     timeFormat: "format24",
-    fitEntireSchedule: false,
+    hiddenMorningHours: 8,
   },
   calendar: {}
 });

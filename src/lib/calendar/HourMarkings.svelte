@@ -13,11 +13,7 @@
   let hours: string[] = times.map((time) => time[hourPreference]);
 </script>
 
-<div
-  class="hour-markings{extrude ? ' extrude' : ''}{fit
-    ? ' fit'
-    : ''} {hourPreference}"
->
+<div class="hour-markings{extrude ? ' extrude' : ''} {hourPreference}">
   {#each hours as hour}
     <div class={"hour" + (extraClass ? ` ${extraClass}` : "")}>
       {showNumbers ? hour : ""}
@@ -33,7 +29,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% / (15 / 24));
+    height: calc(100% * 24 / (24 - var(--hidden-morning-hours)));
 
     &.extrude {
       width: calc(100% + 3em);
@@ -47,10 +43,6 @@
         width: calc(100% + 4em);
         left: -4em;
       }
-    }
-
-    &.fit {
-      height: 100%;
     }
 
     &.cover-border {

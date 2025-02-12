@@ -61,7 +61,7 @@
     position: absolute;
     text-align: center;
     border-radius: 16px;
-    z-index: 2;
+    z-index: 3;
     opacity: 0.5;
     scale: 0;
     transform: translate(0, 30%);

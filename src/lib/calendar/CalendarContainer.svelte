@@ -88,7 +88,7 @@
     position: sticky;
     right: 0;
     top: 0;
-    z-index: 4;
+    z-index: 2;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }

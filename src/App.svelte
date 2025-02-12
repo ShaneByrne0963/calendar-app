@@ -25,7 +25,11 @@
   tick();
 </script>
 
-<div id="container" class="bg-stone-900 text-white {hourPreference}">
+<div
+  id="container"
+  class="bg-stone-900 text-white {hourPreference}"
+  style="--hidden-morning-hours: {userData.preferences.hiddenMorningHours}"
+>
   <Menu />
   <CalendarContainer />
   {#if calendarData.itemAdding}
