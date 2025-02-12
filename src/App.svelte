@@ -3,7 +3,7 @@
   import ItemDragging from "./lib/calendar/ItemDragging.svelte";
   import ColorPicker from "./lib/inputs/ColorPicker.svelte";
   import Menu from "./lib/menu/Menu.svelte";
-  import ToastContainer from "./lib/Toasts/ToastContainer.svelte";
+  import ToastContainer from "./lib/toasts/ToastContainer.svelte";
   import { userData, calendarData, menuData } from "./shared.svelte";
 
   const hourPreference = userData.preferences.timeFormat;

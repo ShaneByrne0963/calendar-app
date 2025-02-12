@@ -1,17 +1,6 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
 
-  // The main colors of DaisyUI
-  const mainColors = [
-    "secondary",
-    "accent",
-    "success",
-    "info",
-    "warning",
-    "error",
-    "white",
-  ];
-
   // The list of Tailwind colors, divided into 2 sections
   const colorList1 = [
     "red",
@@ -42,7 +31,7 @@
 
   function getColorList(colors: string[]) {
     let arr = [];
-    const shades = [100, 200, 300, 400, 500];
+    const shades = [200, 300, 400, 500];
 
     for (let shd of shades) {
       for (let col of colors) {
@@ -84,15 +73,6 @@
     16}px"
 >
   <div class="row mb-3">
-    {#each mainColors as col}
-      <button
-        aria-label="Select color"
-        class="background col-{col} rounded-sm"
-        {onclick}
-      ></button>
-    {/each}
-  </div>
-  <div class="row mb-3">
     {#each getColorList(colorList1) as col}
       <button
         aria-label="Select color"
@@ -119,7 +99,7 @@
     width: 480px;
     min-height: 360px;
     border-radius: 16px;
-    padding: 8px;
+    padding: 12px;
 
     &::before {
       content: "";
