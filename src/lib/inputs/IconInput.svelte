@@ -1,10 +1,22 @@
 <script lang="ts">
+  import { menuData } from "../../shared.svelte";
+  import IconPicker from "./IconPicker.svelte";
+
   let { label = "Icon" } = $props();
+
+  function onclick(e: MouseEvent) {
+    menuData.clickWindow = {
+      component: IconPicker,
+      x: e.clientX,
+      y: e.clientY,
+      onSelect: null,
+    };
+  }
 </script>
 
 <div class="icon-divider mb-5">
   <span>{label}</span>
-  <button class="icon-container" aria-label="Select icon"></button>
+  <button class="icon-container" aria-label="Select icon" {onclick}></button>
 </div>
 
 <style>
