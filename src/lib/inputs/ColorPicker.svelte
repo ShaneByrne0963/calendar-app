@@ -1,39 +1,11 @@
 <script lang="ts">
   import { menuData } from "../../shared.svelte";
-
-  // The list of Tailwind colors, divided into 2 sections
-  const colorList1 = [
-    "red",
-    "orange",
-    "amber",
-    "yellow",
-    "lime",
-    "green",
-    "emerald",
-    "teal",
-    "cyan",
-    "sky",
-    "blue",
-  ];
-  const colorList2 = [
-    "indigo",
-    "violet",
-    "purple",
-    "fuchsia",
-    "pink",
-    "rose",
-    "slate",
-    "gray",
-    "zinc",
-    "neutral",
-    "stone",
-  ];
+  import { colorList1, colorList2, colorShades } from "../../types";
 
   function getColorList(colors: string[]) {
     let arr = [];
-    const shades = [200, 300, 400, 500];
 
-    for (let shd of shades) {
+    for (let shd of colorShades) {
       for (let col of colors) {
         arr.push(`${col}-${shd}`);
       }

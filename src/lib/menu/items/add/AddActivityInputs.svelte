@@ -5,13 +5,14 @@
     dateToInputValue,
     first3,
     inputToArray,
+    pickFrom,
     timeAsNumber,
   } from "../../../../helpers";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import TimeInput from "../../../inputs/TimeInput.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
-  import { days } from "../../../../types";
+  import { days, colorList1, colorList2, colorShades } from "../../../../types";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import TimeLength from "../../../inputs/TimeLength.svelte";
   import Info from "../../../global/Info.svelte";
@@ -27,10 +28,12 @@
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
   const blankText = "Please Select";
+  const colors = [...colorList1, ...colorList2];
+  const startingColor = pickFrom(colors) + "-" + pickFrom(colorShades);
 
   // Input values
   let name = $state({ value: "", feedback: inputFeedback.required });
-  let color = $state({ value: "secondary" });
+  let color = $state({ value: startingColor });
   let occurence = $state({ value: occurences[0] });
   let activityType = $state({ value: "" });
   let setting = $state({ value: "" });

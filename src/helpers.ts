@@ -15,6 +15,11 @@ export function clamp(val: number, min: number, max: number) {
   return Math.min(Math.max(val, min), max);
 }
 
+// Picks a random item from an array and returns it
+export function pickFrom(arr: any[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 // Converts a possible proxy array into an array that can be used
 export function removeProxy(val: any) {
   if (val[0]) {

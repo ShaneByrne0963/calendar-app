@@ -46,3 +46,34 @@ export const sliderThemeData = {
     {label: "Intense", color: "rgb(255, 73, 73)"}
   ]
 };
+
+// For the color picker
+
+export const colorList1 = [
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "emerald",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+];
+export const colorList2 = [
+  "indigo",
+  "violet",
+  "purple",
+  "fuchsia",
+  "pink",
+  "rose",
+  "slate",
+  "gray",
+  "zinc",
+  "neutral",
+  "stone",
+];
+
+export const colorShades = [200, 300, 400, 500];
