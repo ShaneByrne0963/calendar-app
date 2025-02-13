@@ -15,9 +15,3 @@
     >Add</button
   >
 </Submenu>
-
-<style>
-  button[disabled] {
-    color: gray;
-  }
-</style>

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { compareDates } from "../../../../helpers";
-  import { calendarData } from "../../../../shared.svelte";
+  import { compareDates, dateToInputValue } from "../../../../helpers";
+  import { calendarData, userData } from "../../../../shared.svelte";
+  import { days } from "../../../../types";
   import DateController from "../../../calendar/DateController.svelte";
   import Submenu from "../../Submenu.svelte";
   import SubmenuHeading from "../../SubmenuHeading.svelte";
@@ -21,14 +22,54 @@
       );
     }
   }
+
+  let text = $derived.by(() => {
+    const date = dateToInputValue(selectedDate);
+    if (date in userData.journal) {
+      return userData.journal[date];
+    }
+    return "";
+  });
 </script>
 
 <Submenu {handleBack}>
   <SubmenuHeading text="Journal"></SubmenuHeading>
-  <DateController
-    dateLength="d"
-    startDate={selectedDate}
-    {onDateChange}
-    rightDisabled={compareDates(selectedDate, calendarData.today) !== "Before"}
-  ></DateController>
+  <div id="journal-list">
+    <DateController
+      dateLength="d"
+      startDate={selectedDate}
+      {onDateChange}
+      rightDisabled={compareDates(selectedDate, calendarData.today) !==
+        "Before"}
+    ></DateController>
+    <div class="journal-content">
+      {#if text}
+        {text}
+      {:else}
+        <div class="submenu-center">
+          You have no journal entry for
+          {#if compareDates(calendarData.today, selectedDate) === "Equal"}
+            today
+            <div class="py-1"></div>
+            <button class="btn btn-secondary">+ Add</button>
+          {:else}
+            this day
+          {/if}
+        </div>
+      {/if}
+    </div>
+  </div>
 </Submenu>
+
+<style>
+  #journal-list {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .journal-content {
+    height: 100%;
+    overflow-y: auto;
+  }
+</style>
