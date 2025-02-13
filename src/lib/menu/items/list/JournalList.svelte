@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { compareDates } from "../../../../helpers";
+  import { calendarData } from "../../../../shared.svelte";
   import DateController from "../../../calendar/DateController.svelte";
   import Submenu from "../../Submenu.svelte";
   import SubmenuHeading from "../../SubmenuHeading.svelte";
@@ -8,16 +10,25 @@
   let selectedDate = $state(new Date());
 
   function onDateChange(direction: 1 | -1) {
-    selectedDate = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate() + direction
-    );
+    if (
+      direction === -1 ||
+      compareDates(selectedDate, calendarData.today) === "Before"
+    ) {
+      selectedDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate() + direction
+      );
+    }
   }
 </script>
 
 <Submenu {handleBack}>
   <SubmenuHeading text="Journal"></SubmenuHeading>
-  <DateController dateLength="d" startDate={selectedDate} {onDateChange}
+  <DateController
+    dateLength="d"
+    startDate={selectedDate}
+    {onDateChange}
+    rightDisabled={compareDates(selectedDate, calendarData.today) !== "Before"}
   ></DateController>
 </Submenu>

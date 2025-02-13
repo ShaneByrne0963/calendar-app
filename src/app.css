@@ -5,6 +5,10 @@ body {
   overflow: hidden;
 }
 
+button[disabled] {
+  color: gray;
+}
+
 #container:has(#calendar) {
   .schedule-only {
     display: none

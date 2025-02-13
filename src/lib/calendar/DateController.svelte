@@ -2,11 +2,18 @@
   import { months } from "../../types";
   import DateChanger from "./DateChanger.svelte";
 
-  let { dateLength, startDate, endDate = null, onDateChange } = $props();
+  let {
+    dateLength,
+    startDate,
+    endDate = null,
+    onDateChange,
+    leftDisabled = false,
+    rightDisabled = false,
+  } = $props();
 </script>
 
 <div class="date-controller">
-  <DateChanger direction={-1} onclick={onDateChange} />
+  <DateChanger direction={-1} onclick={onDateChange} disabled={leftDisabled} />
   <div class="date-controller-label mx-4">
     {#if dateLength === "d"}
       {startDate.getDate()}
@@ -23,7 +30,7 @@
       {startDate.getFullYear()}
     {/if}
   </div>
-  <DateChanger direction={1} onclick={onDateChange} />
+  <DateChanger direction={1} onclick={onDateChange} disabled={rightDisabled} />
 </div>
 
 <style>
