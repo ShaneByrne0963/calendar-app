@@ -12,6 +12,39 @@
   let { className, date } = $props();
   let currentDate = $derived(new Date(mDisplay.year, mDisplay.month, date));
 
+  let specialDays = $derived.by(() => {
+    let arr = [];
+    // January Holidays
+    if (mDisplay.month === 0) {
+      if (date === 1) arr.push("New Year's Day");
+    }
+
+    // February Holidays
+    else if (mDisplay.month === 1) {
+      if (date === 14) arr.push("Valentine's Day");
+    }
+
+    // March Holidays
+    else if (mDisplay.month === 2) {
+      if (date === 17) arr.push("St. Patrick's Day");
+    }
+
+    // October Holidays
+    else if (mDisplay.month === 9) {
+      if (date === 31) arr.push("Halloween");
+    }
+
+    // December Holidays
+    else if (mDisplay.month === 11) {
+      if (date === 24) arr.push("Christmas Eve");
+      else if (date === 25) arr.push("Christmas Day");
+      else if (date === 26) arr.push("St. Stephens' Day");
+      else if (date === 31) arr.push("New Year's Eve");
+    }
+
+    return arr;
+  });
+
   function handleDateClick(e: Event) {
     if ((e.target as HTMLElement).closest(".day-journal")) {
       // If the journal list is selected, show the journal for the selected day
@@ -31,7 +64,18 @@
 
 <button class={className} onclick={date ? handleDateClick : null}>
   {#if date}
-    <div class="date-number">{date}</div>
+    <div class="day-header text-left">
+      <div>
+        {#if specialDays.length}
+          <p class="badge badge-outline badge-sm badge-accent">
+            {specialDays[0]}
+            {#if specialDays.length > 1}
+              + {specialDays.length - 1}{/if}
+          </p>
+        {/if}
+      </div>
+      <p>{date}</p>
+    </div>
   {/if}
   <div class="day-content"></div>
   <div class="day-icons">
@@ -61,10 +105,9 @@
       border-color: var(--color-stone-700);
     }
 
-    .date-number {
-      position: absolute;
-      top: 2px;
-      right: 4px;
+    .day-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
     }
 
     .day-icons {
