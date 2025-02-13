@@ -2,7 +2,14 @@
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
 
-  let { handleBack, children, singular, createItem, isValid } = $props();
+  let {
+    handleBack,
+    children,
+    singular,
+    createItem,
+    isValid,
+    submitText = "Add",
+  } = $props();
 </script>
 
 <Submenu {handleBack}>
@@ -12,6 +19,6 @@
   </div>
   <button class="btn" onclick={handleBack}>Cancel</button>
   <button class="btn btn-secondary" onclick={createItem} disabled={!isValid}
-    >Add</button
+    >{submitText}</button
   >
 </Submenu>

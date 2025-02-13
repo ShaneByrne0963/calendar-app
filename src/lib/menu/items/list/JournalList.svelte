@@ -1,12 +1,27 @@
 <script lang="ts">
   import { compareDates, dateToInputValue } from "../../../../helpers";
   import { calendarData, userData } from "../../../../shared.svelte";
-  import { days } from "../../../../types";
   import DateController from "../../../calendar/DateController.svelte";
   import Submenu from "../../Submenu.svelte";
   import SubmenuHeading from "../../SubmenuHeading.svelte";
+  import AddJournalInputs from "../add/AddJournalInputs.svelte";
 
   let { handleBack } = $props();
+  let submenu = $state({
+    component: null,
+    props: {},
+    closing: false,
+    handleBack: () => {
+      submenu.closing = true;
+    },
+    handleTransitionEnd: (event: TransitionEvent) => {
+      if (submenu.closing && event.propertyName === "left") {
+        submenu.component = null;
+        submenu.props = {};
+        submenu.closing = false;
+      }
+    },
+  });
 
   let selectedDate = $state(new Date());
 
@@ -30,10 +45,21 @@
     }
     return "";
   });
+
+  let today = $derived(
+    compareDates(calendarData.today, selectedDate) === "Equal"
+  );
+
+  function addItem() {
+    submenu.component = AddJournalInputs;
+    submenu.props = {};
+  }
 </script>
 
-<Submenu {handleBack}>
-  <SubmenuHeading text="Journal"></SubmenuHeading>
+<Submenu {handleBack} {submenu}>
+  <SubmenuHeading text="Journal">
+    <button class="btn btn-sm btn-secondary" onclick={addItem}>+ Write</button>
+  </SubmenuHeading>
   <div id="journal-list">
     <DateController
       dateLength="d"
@@ -48,10 +74,10 @@
       {:else}
         <div class="submenu-center">
           You have no journal entry for
-          {#if compareDates(calendarData.today, selectedDate) === "Equal"}
+          {#if today}
             today
             <div class="py-1"></div>
-            <button class="btn btn-secondary">+ Add</button>
+            <button class="btn btn-secondary" onclick={addItem}>+ Add</button>
           {:else}
             this day
           {/if}

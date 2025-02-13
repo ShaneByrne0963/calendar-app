@@ -6,7 +6,7 @@ body {
 }
 
 button[disabled] {
-  color: gray;
+  color: gray !important;
 }
 
 #container:has(#calendar) {
