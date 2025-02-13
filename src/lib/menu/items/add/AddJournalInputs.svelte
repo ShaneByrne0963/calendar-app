@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { dateToInputValue } from "../../../../helpers";
+  import { addToast, userData } from "../../../../shared.svelte";
   import Input from "../../../inputs/Input.svelte";
   import AddItem from "../AddItem.svelte";
 
@@ -7,7 +9,10 @@
   let isValid = $derived(body.value);
 
   function createItem() {
-    console.log(body.value);
+    let key = dateToInputValue(new Date());
+    userData.journal[key] = body.value;
+    addToast("success", "Your journal entry has been added!");
+    handleBack();
   }
 </script>
 

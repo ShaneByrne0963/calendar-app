@@ -41,9 +41,9 @@
   let text = $derived.by(() => {
     const date = dateToInputValue(selectedDate);
     if (date in userData.journal) {
-      return userData.journal[date];
+      return userData.journal[date].split("\n");
     }
-    return "";
+    return [];
   });
 
   let today = $derived(
@@ -69,8 +69,15 @@
         "Before"}
     ></DateController>
     <div class="journal-content">
-      {#if text}
-        {text}
+      {#if text.length > 0}
+        <div class="mt-6">
+          {#each text as p, i}
+            {p}
+            {#if i < text.length - 1}
+              <br />
+            {/if}
+          {/each}
+        </div>
       {:else}
         <div class="submenu-center">
           You have no journal entry for
@@ -89,13 +96,12 @@
 
 <style>
   #journal-list {
-    height: 100%;
+    height: auto-fill;
     display: grid;
     grid-template-rows: auto 1fr;
   }
 
-  .journal-content {
+  .journal-content:has(.submenu-center) {
     height: 100%;
-    overflow-y: auto;
   }
 </style>
