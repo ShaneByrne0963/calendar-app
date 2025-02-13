@@ -1,5 +1,6 @@
 <script lang="ts">
   import { calendarData, wDisplay, mDisplay } from "../../shared.svelte";
+  import CalendarDay from "./CalendarDay.svelte";
 
   interface dateInfo {
     date: number;
@@ -52,24 +53,11 @@
     }
     return arr;
   });
-
-  function handleDateClick() {
-    let day = parseInt(this.querySelector(".date-number").innerText);
-    calendarData.selected = new Date(mDisplay.year, mDisplay.month, day);
-    wDisplay.set(calendarData.selected);
-
-    // If the journal list is selected, show the journal for the selected day
-    calendarData.updateJournal?.();
-  }
 </script>
 
 <div id="calendar">
   {#each days as day}
-    <button class={day.class} onclick={day.date ? handleDateClick : null}>
-      {#if day.date}
-        <div class="date-number w-full text-right">{day.date}</div>
-      {/if}
-    </button>
+    <CalendarDay className={day.class} date={day.date}></CalendarDay>
   {/each}
 </div>
 
@@ -79,19 +67,5 @@
     height: calc(100% - 1.5em);
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
-  }
-
-  .day {
-    width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
-    border: 1px solid var(--color-stone-400);
-    position: relative;
-
-    &.blank {
-      cursor: default;
-      background-color: black;
-      border-color: var(--color-stone-700);
-    }
   }
 </style>

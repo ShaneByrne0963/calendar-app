@@ -56,9 +56,9 @@
   }
 
   // Allows the user to quickly select a day's journal by clicking the calendar
-  function calendarClick() {
-    if (compareDates(new Date(), calendarData.selected) !== "Before") {
-      selectedDate = calendarData.selected;
+  function calendarClick(date: Date) {
+    if (compareDates(new Date(), date) !== "Before") {
+      selectedDate = date;
     }
   }
   calendarData.updateJournal = calendarClick;
