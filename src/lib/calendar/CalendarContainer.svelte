@@ -31,6 +31,26 @@
     }
     return arr;
   });
+
+  function handleDateDisplayChange(direction: 1 | -1) {
+    if (calendarData.format === "weekly") {
+      let newWeek = new Date(
+        wDisplay.year,
+        wDisplay.month,
+        wDisplay.day + 7 * direction
+      );
+      wDisplay.set(newWeek);
+    } else {
+      mDisplay.month += direction;
+      if (mDisplay.month < 0) {
+        mDisplay.month += 12;
+        mDisplay.year -= 1;
+      } else if (mDisplay.month > 11) {
+        mDisplay.month -= 12;
+        mDisplay.year += 1;
+      }
+    }
+  }
 </script>
 
 <div id="calendar-container">
@@ -49,6 +69,7 @@
         ? weekData[0]
         : new Date(mDisplay.year, mDisplay.month, 1)}
       endDate={weekData[6]}
+      onDateChange={handleDateDisplayChange}
     ></DateController>
   </div>
   <div id="calendar-main">

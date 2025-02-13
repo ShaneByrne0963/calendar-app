@@ -2,11 +2,11 @@
   import { months } from "../../types";
   import DateChanger from "./DateChanger.svelte";
 
-  let { dateLength, startDate, endDate = null } = $props();
+  let { dateLength, startDate, endDate = null, onDateChange } = $props();
 </script>
 
 <div class="date-controller">
-  <DateChanger direction={-1} />
+  <DateChanger direction={-1} onclick={onDateChange} />
   <div class="date-controller-label">
     {#if dateLength === "d"}
       Day
@@ -21,7 +21,7 @@
       {startDate.getFullYear()}
     {/if}
   </div>
-  <DateChanger direction={1} />
+  <DateChanger direction={1} onclick={onDateChange} />
 </div>
 
 <style>
