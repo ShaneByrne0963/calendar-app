@@ -12,6 +12,7 @@
   import DateChanger from "./DateChanger.svelte";
   import DateFormat from "./DateFormat.svelte";
   import ToolTip from "../global/ToolTip.svelte";
+  import DateController from "./DateController.svelte";
 
   const hourPreference = userData.preferences.timeFormat;
   let today = new Date();
@@ -42,15 +43,13 @@
         <DateFormat format="monthly" />
       </ToolTip>
     </div>
-    <div id="calendar-navigation">
-      <DateChanger direction={-1} />
-      <div id="date-label">
-        {calendarData.format === "weekly"
-          ? `${weekData[0].getDate()} ${months[weekData[0].getMonth()]} ${weekData[0].getFullYear()} - ${weekData[6].getDate()} ${months[weekData[6].getMonth()]} ${weekData[6].getFullYear()}`
-          : `${months[mDisplay.month]} ${mDisplay.year}`}
-      </div>
-      <DateChanger direction={1} />
-    </div>
+    <DateController
+      dateLength={calendarData.format[0]}
+      startDate={calendarData.format === "weekly"
+        ? weekData[0]
+        : new Date(mDisplay.year, mDisplay.month, 1)}
+      endDate={weekData[6]}
+    ></DateController>
   </div>
   <div id="calendar-main">
     <div id="date-headings" class="border-1 text-white bg-neutral">
@@ -91,17 +90,6 @@
     z-index: 2;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-  }
-
-  #calendar-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #date-label {
-    min-width: 30%;
-    text-align: center;
   }
 
   #calendar-main {
