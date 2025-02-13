@@ -54,9 +54,23 @@
     submenu.component = AddJournalInputs;
     submenu.props = {};
   }
+
+  // Allows the user to quickly select a day's journal by clicking the calendar
+  function calendarClick() {
+    if (compareDates(new Date(), calendarData.selected) !== "Before") {
+      selectedDate = calendarData.selected;
+    }
+  }
+  calendarData.updateJournal = calendarClick;
+
+  // Also remove the journal selected day update when the user exits the journal menu
+  function customBack() {
+    calendarData.updateJournal = null;
+    handleBack();
+  }
 </script>
 
-<Submenu {handleBack} {submenu}>
+<Submenu handleBack={customBack} {submenu}>
   <SubmenuHeading text="Journal">
     <button class="btn btn-sm btn-secondary" onclick={addItem}>+ Write</button>
   </SubmenuHeading>

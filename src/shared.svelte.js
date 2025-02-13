@@ -27,7 +27,8 @@ export const calendarData = $state({
   minutes: 0,
   selected: new Date(),
   itemAdding: false,
-  itemAddData: { day: -1 }
+  itemAddData: { day: -1 },
+  updateJournal: null,
 });
 
 export const menuData = $state({

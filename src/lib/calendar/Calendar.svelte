@@ -57,6 +57,9 @@
     let day = parseInt(this.querySelector(".date-number").innerText);
     calendarData.selected = new Date(mDisplay.year, mDisplay.month, day);
     wDisplay.set(calendarData.selected);
+
+    // If the journal list is selected, show the journal for the selected day
+    calendarData.updateJournal?.();
   }
 </script>
 
