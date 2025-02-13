@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { calendarData, wDisplay, mDisplay } from "../../shared.svelte";
+  import { calculateEaster } from "../../helpers";
+  import { calendarData, mDisplay } from "../../shared.svelte";
   import CalendarDay from "./CalendarDay.svelte";
 
   interface dateInfo {
@@ -53,11 +54,15 @@
     }
     return arr;
   });
+
+  let data = $derived({
+    easter: calculateEaster(mDisplay.year),
+  });
 </script>
 
 <div id="calendar">
   {#each days as day}
-    <CalendarDay className={day.class} date={day.date}></CalendarDay>
+    <CalendarDay className={day.class} date={day.date} {data}></CalendarDay>
   {/each}
 </div>
 

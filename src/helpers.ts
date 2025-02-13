@@ -96,6 +96,25 @@ export function addZeroToNumber(num: number) {
   return `${num < 10 ? 0 : ""}${num}`;
 }
 
+// Calculates the date of Easter Sunday for a given year
+export function calculateEaster(year: number) {
+  let c = Math.floor(year / 100);
+  let n = year - 19 * Math.floor( year / 19 );
+  let k = Math.floor(( c - 17 ) / 25);
+  let i = c - Math.floor(c / 4) - Math.floor(( c - k ) / 3) + 19 * n + 15;
+  i = i - 30 * Math.floor( i / 30 );
+  i = i - Math.floor( i / 28 ) * ( 1 - Math.floor( i / 28 )
+      * Math.floor( 29 / ( i + 1 ) )
+      * Math.floor( ( 21 - n ) / 11 ) );
+  let j = year + Math.floor(year / 4) + i + 2 - c + Math.floor(c / 4);
+  j = j - 7 * Math.floor( j / 7 );
+  let l = i - j;
+  let month = 3 + Math.floor(( l + 40 ) / 44);
+  let day = l + 28 - 31 * Math.floor( month / 4 );
+
+  return [year, month - 1, day];
+}
+
 // Converts a time object { hours, minutes } into a user-friendly text format
 export function convertTimeToDisplay(time: {hours: number, minutes: number}) {
   let preference = userData.preferences.timeFormat;

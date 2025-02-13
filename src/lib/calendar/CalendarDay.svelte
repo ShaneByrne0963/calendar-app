@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dateToInputValue } from "../../helpers";
+  import { calculateEaster, dateToInputValue } from "../../helpers";
   import {
     calendarData,
     mDisplay,
@@ -9,7 +9,7 @@
   import Graphic from "../global/Graphic.svelte";
   import ToolTip from "../global/ToolTip.svelte";
 
-  let { className, date } = $props();
+  let { className, date, data } = $props();
   let currentDate = $derived(new Date(mDisplay.year, mDisplay.month, date));
 
   let specialDays = $derived.by(() => {
@@ -40,6 +40,23 @@
       else if (date === 25) arr.push("Christmas Day");
       else if (date === 26) arr.push("St. Stephens' Day");
       else if (date === 31) arr.push("New Year's Eve");
+    }
+
+    // Easter
+    if (data.easter[1] === mDisplay.month && data.easter[2] === date) {
+      arr.push("Easter Sunday");
+    }
+    // Ash Wednesday
+    let ashWednesday = new Date(
+      data.easter[0],
+      data.easter[1],
+      data.easter[2] - 46
+    );
+    if (
+      mDisplay.month === ashWednesday.getMonth() &&
+      date === ashWednesday.getDate()
+    ) {
+      arr.push("Ash Wednesday");
     }
 
     return arr;
