@@ -7,9 +7,11 @@
 
 <div class="date-controller">
   <DateChanger direction={-1} onclick={onDateChange} />
-  <div class="date-controller-label">
+  <div class="date-controller-label mx-4">
     {#if dateLength === "d"}
-      Day
+      {startDate.getDate()}
+      {months[startDate.getMonth()]}
+      {startDate.getFullYear()}
     {:else if dateLength === "w"}
       {startDate.getDate()}
       {months[startDate.getMonth()]}
@@ -32,7 +34,8 @@
   }
 
   .date-controller-label {
-    min-width: 30%;
+    min-width: 20%;
     text-align: center;
+    box-sizing: border-box;
   }
 </style>
