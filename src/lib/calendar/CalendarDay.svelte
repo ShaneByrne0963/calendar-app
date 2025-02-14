@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { calculateEaster, dateToInputValue } from "../../helpers";
+  import { dateToInputValue, forceSubmenu } from "../../helpers";
   import {
     calendarData,
     mDisplay,
@@ -8,6 +8,7 @@
   } from "../../shared.svelte";
   import Graphic from "../global/Graphic.svelte";
   import ToolTip from "../global/ToolTip.svelte";
+  import JournalList from "../menu/items/list/JournalList.svelte";
 
   let { className, date, data } = $props();
   let currentDate = $derived(new Date(mDisplay.year, mDisplay.month, date));
@@ -65,7 +66,7 @@
   function handleDateClick(e: Event) {
     if ((e.target as HTMLElement).closest(".day-journal")) {
       // If the journal list is selected, show the journal for the selected day
-      calendarData.updateJournal?.(currentDate);
+      forceSubmenu(JournalList, {});
       return;
     }
 

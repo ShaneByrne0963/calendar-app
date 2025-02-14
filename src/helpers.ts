@@ -1,5 +1,5 @@
 import { months } from "./types"
-import {userData} from "./shared.svelte";
+import {menuData, userData} from "./shared.svelte";
 
 /**
  * Gets the first 3 letters of a string
@@ -37,6 +37,18 @@ export function removeProxy(val: any) {
     }
   }
   return result.push(...storage.map(item => item.value));
+}
+
+// Allows the insertion of a submenu into any submenu.
+// This is useful for opening menus that aren't triggered through the menu, like opening the day details menu
+export function forceSubmenu(component: any, props = {}) {
+  if (menuData.forceSubmenu) {
+    menuData.forceSubmenu(component, props);
+  }
+  else {
+    menuData.submenu = component;
+    menuData.props = props;
+  }
 }
 
 // Converts a date to a string format that can be used in an input value
@@ -175,7 +187,15 @@ let submenu = $state({
       submenu.component = null;
       submenu.props = {};
       submenu.closing = false;
+      setAsFreeSubmenu();
     }
   },
+  setAsFreeSubmenu: () => {
+    // Allows any submenu to be inserted into the current submenu
+    menuData.forceSubmenu = (component: Component, props = {}) => {
+      submenu.component = component;
+      submenu.props = props;
+    }
+  }
 });
 */

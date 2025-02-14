@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userData } from "../../../shared.svelte";
+  import { userData, menuData } from "../../../shared.svelte";
   import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
@@ -18,9 +18,18 @@
         submenu.component = null;
         submenu.props = {};
         submenu.closing = false;
+        submenu.setAsFreeSubmenu();
       }
     },
+    setAsFreeSubmenu: () => {
+      // Allows any submenu to be inserted into the current submenu
+      menuData.forceSubmenu = (component: any, props = {}) => {
+        submenu.component = component;
+        submenu.props = props;
+      };
+    },
   });
+  submenu.setAsFreeSubmenu();
 
   // Each component for adding new items
   let listItemComponents = {

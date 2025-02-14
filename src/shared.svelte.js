@@ -35,7 +35,8 @@ export const menuData = $state({
   submenu: null,
   props: {},
   clickWindow: { component: null, x: -1, y: -1, onSelect: null },
-  closing: false
+  closing: false,
+  forceSubmenu: null,
 });
 
 export const toasts = $state([]);

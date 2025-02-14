@@ -13,6 +13,7 @@
       menuData.submenu = null;
       menuData.props = {};
       menuData.closing = false;
+      menuData.forceSubmenu = null;
     }
   }
 </script>
