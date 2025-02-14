@@ -1,26 +1,25 @@
 <script lang="ts">
-  import { menuData } from "../../shared.svelte";
+  import { openSubmenu } from "../../helpers.js";
+  import { calendarData } from "../../shared.svelte";
   import ItemList from "./items/ItemList.svelte";
   import JournalList from "./items/list/JournalList.svelte";
 
   let { type } = $props();
 
-  const submenus = {
+  const submenus = $derived({
     Journal: {
       component: JournalList,
-      props: {},
+      props: {
+        selectedDate: calendarData.today,
+      },
     },
-  };
+  });
 
   function handleMenuClick() {
     if (type in submenus) {
-      menuData.submenu = submenus[type].component;
-      menuData.props = submenus[type].props;
+      openSubmenu(submenus[type].component, submenus[type].props);
     } else {
-      menuData.submenu = ItemList;
-      menuData.props = {
-        itemType: type,
-      };
+      openSubmenu(ItemList, { itemType: type });
     }
   }
 </script>

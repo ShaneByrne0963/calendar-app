@@ -4,7 +4,7 @@
     convertTimeToDisplay,
     first3,
     timeAsNumber,
-  } from "../../../../helpers";
+  } from "../../../../helpers.js";
   import { days, sliderThemeData } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";

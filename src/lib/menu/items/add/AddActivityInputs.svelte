@@ -7,7 +7,7 @@
     inputToArray,
     pickFrom,
     timeAsNumber,
-  } from "../../../../helpers";
+  } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
   import TimeInput from "../../../inputs/TimeInput.svelte";

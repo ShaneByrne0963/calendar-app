@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { calculateEaster } from "../../helpers";
+  import { calculateEaster } from "../../helpers.js";
   import { calendarData, mDisplay } from "../../shared.svelte";
   import CalendarDay from "./CalendarDay.svelte";
 

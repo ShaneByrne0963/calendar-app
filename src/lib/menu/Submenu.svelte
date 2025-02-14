@@ -1,42 +1,57 @@
-<script lang="ts">
+<script>
   import { menuData } from "../../shared.svelte";
   import Graphic from "../global/Graphic.svelte";
+  import Submenu from "./Submenu.svelte";
 
-  let { handleBack, contentComponent, children } = $props();
+  let { index, children } = $props();
 
-  let submenu = $state({
-    component: null,
-    props: {},
-    closing: false,
-    handleBack: () => {
-      submenu.closing = true;
-    },
-    handleTransitionEnd: (event: TransitionEvent) => {
-      if (submenu.closing && event.propertyName === "left") {
-        submenu.component = null;
-        submenu.props = {};
-        submenu.closing = false;
-        submenu.setAsFreeSubmenu();
-      }
-    },
-    setAsFreeSubmenu: () => {
-      // Allows any submenu to be inserted into the current submenu
-      menuData.currentSubmenu = contentComponent;
-      menuData.setSubmenu = (component: any, props = {}) => {
-        if (menuData.currentSubmenu !== component) {
-          submenu.component = component;
-          submenu.props = props;
-        }
-      };
-    },
-  });
-  submenu.setAsFreeSubmenu();
+  let child = $derived({ ...menuData.submenus[index + 1] });
+
+  // let child = $state({
+  //   component: null,
+  //   props: {},
+  //   closing: false,
+  //   handleBack: () => {
+  //     child.closing = true;
+  //   },
+  //   handleTransitionEnd: (event: TransitionEvent) => {
+  //     if (child.closing && event.propertyName === "left") {
+  //       child.component = null;
+  //       child.props = {};
+  //       child.closing = false;
+  //       child.setAsFreeSubmenu();
+  //       menuData.submenus.splice(menuData.submenus.length - 1);
+  //     }
+  //   },
+  //   setAsFreeSubmenu: () => {
+  //     // Allows any submenu to be inserted into the current submenu
+  //     menuData.currentSubmenu = contentComponent;
+  //     menuData.setSubmenu = (component: any, props = {}) => {
+  //       if (menuData.currentSubmenu !== component) {
+  //         child.component = component;
+  //         child.props = props;
+  //       } else {
+  //         // Update existing submenu
+  //       }
+  //     };
+  //   },
+  // });
+  function handleBack() {
+    if (index > 0) {
+      menuData.submenus[index].closing = true;
+    } else {
+      menuData.closing = true;
+    }
+  }
+
+  function ontransitionend(event) {
+    if (child.closing && event.propertyName === "left") {
+      menuData.submenus.pop();
+    }
+  }
 </script>
 
-<div
-  class={"submenu" + (submenu.closing ? " closing" : "")}
-  ontransitionend={submenu.handleTransitionEnd}
->
+<div class={"submenu" + (child.closing ? " closing" : "")} {ontransitionend}>
   <button class="btn btn-accent btn-sm back-btn" onclick={handleBack}>
     <Graphic width={20} height={20} path={"back"} fill={"#000000"}></Graphic>
     Back
@@ -44,9 +59,10 @@
   <div class="submenu-content">
     {@render children()}
   </div>
-  {#if submenu.component}
-    <submenu.component handleBack={submenu.handleBack} {...submenu.props}
-    ></submenu.component>
+  {#if menuData.submenus.length > index + 1}
+    <Submenu index={index + 1} contentComponent={child.component}>
+      <child.component index={index + 1} {...child.props}></child.component>
+    </Submenu>
   {/if}
 </div>
 

@@ -33,6 +33,7 @@ export const calendarData = $state({
 
 export const menuData = $state({
   submenu: null,
+  submenus: [],
   props: {},
   clickWindow: { component: null, x: -1, y: -1, onSelect: null },
   closing: false,

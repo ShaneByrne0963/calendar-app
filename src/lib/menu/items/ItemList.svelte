@@ -1,13 +1,11 @@
 <script lang="ts">
   import { userData } from "../../../shared.svelte";
-  import Submenu from "../Submenu.svelte";
-  import ItemList from "./ItemList.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
   import ActivityListItem from "./list/ActivityListItem.svelte";
-  import { setSubmenu } from "../../../helpers";
+  import { openSubmenu } from "../../../helpers.js";
 
-  let { itemType, handleBack } = $props();
+  let { itemType } = $props();
 
   // Each component for adding new items
   let listItemComponents = {
@@ -32,41 +30,39 @@
   };
 
   function addItem() {
-    setSubmenu(addItemComponents[`Add${singular}Inputs`], {
+    openSubmenu(addItemComponents[`Add${singular}Inputs`], {
       singular,
     });
   }
 </script>
 
-<Submenu {handleBack} contentComponent={ItemList}>
-  <SubmenuHeading text={itemType}>
+<SubmenuHeading text={itemType}>
+  <button
+    class="btn btn-sm btn-secondary"
+    aria-label={"Add " + singular}
+    onclick={addItem}>+ New</button
+  >
+</SubmenuHeading>
+{#if itemData.length > 0}
+  <div class="mb-3">
+    {itemData.length}
+    {(itemData.length === 1 ? singular : itemType).toLowerCase()}
+  </div>
+  <div id="item-list">
+    {#each itemData as item}
+      <listComponent.value data={item}></listComponent.value>
+    {/each}
+  </div>
+{:else}
+  <div class="submenu-center">
+    <p class="pb-2">You do not have any {itemType.toLowerCase()}</p>
     <button
-      class="btn btn-sm btn-secondary"
-      aria-label={"Add " + singular}
-      onclick={addItem}>+ New</button
+      class="btn btn-secondary"
+      aria-label={"Add " + singular.toLowerCase()}
+      onclick={addItem}>+ Add</button
     >
-  </SubmenuHeading>
-  {#if itemData.length > 0}
-    <div class="mb-3">
-      {itemData.length}
-      {(itemData.length === 1 ? singular : itemType).toLowerCase()}
-    </div>
-    <div id="item-list">
-      {#each itemData as item}
-        <listComponent.value data={item}></listComponent.value>
-      {/each}
-    </div>
-  {:else}
-    <div class="submenu-center">
-      <p class="pb-2">You do not have any {itemType.toLowerCase()}</p>
-      <button
-        class="btn btn-secondary"
-        aria-label={"Add " + singular.toLowerCase()}
-        onclick={addItem}>+ Add</button
-      >
-    </div>
-  {/if}
-</Submenu>
+  </div>
+{/if}
 
 <style>
   #item-list {

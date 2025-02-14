@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { first3 } from "../../helpers";
+  import { first3 } from "../../helpers.js";
   import { days, months } from "../../types";
   import Calendar from "./Calendar.svelte";
   import Schedule from "./Schedule.svelte";
@@ -9,7 +9,6 @@
     mDisplay,
     wDisplay,
   } from "../../shared.svelte";
-  import DateChanger from "./DateChanger.svelte";
   import DateFormat from "./DateFormat.svelte";
   import ToolTip from "../global/ToolTip.svelte";
   import DateController from "./DateController.svelte";

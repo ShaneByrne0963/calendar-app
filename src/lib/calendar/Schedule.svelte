@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { compareDates } from "../../helpers";
+  import { compareDates } from "../../helpers.js";
   import { userData } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
   import ScheduleDay from "./ScheduleDay.svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addZeroToNumber } from "../../helpers";
+  import { addZeroToNumber } from "../../helpers.js";
   import { userData } from "../../shared.svelte";
   import Select from "./Select.svelte";
 

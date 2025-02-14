@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dateToInputValue } from "../../../../helpers";
+  import { dateToInputValue } from "../../../../helpers.js";
   import { addToast, userData } from "../../../../shared.svelte";
   import Input from "../../../inputs/Input.svelte";
   import AddItem from "../AddItem.svelte";

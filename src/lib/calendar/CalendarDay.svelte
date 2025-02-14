@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dateToInputValue, setSubmenu } from "../../helpers";
+  import { dateToInputValue, openSubmenu } from "../../helpers.js";
   import {
     calendarData,
     mDisplay,
@@ -66,7 +66,7 @@
   function handleDateClick(e: Event) {
     if ((e.target as HTMLElement).closest(".day-journal")) {
       // If the journal list is selected, show the journal for the selected day
-      setSubmenu(JournalList, {});
+      openSubmenu(JournalList, { selectedDate: currentDate });
       return;
     }
 

@@ -1,4 +1,4 @@
-import {compareDates, inputToArray} from "./helpers";
+import {compareDates, inputToArray} from "./helpers.js";
 
 export const inputFeedback = {
   required: "Please fill out this field",

@@ -1,5 +1,5 @@
 <script>
-  import { compareDates, dateToInputValue } from "../../helpers";
+  import { compareDates, dateToInputValue } from "../../helpers.js";
   import { calendarData, mDisplay, userData } from "../../shared.svelte";
   import ScheduleSlot from "./ScheduleSlot.svelte";
   import TimeMarker from "./TimeMarker.svelte";

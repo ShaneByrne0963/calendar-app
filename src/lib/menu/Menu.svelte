@@ -1,19 +1,22 @@
-<script lang="ts">
+<script>
   import MenuButton from "./MenuButton.svelte";
   import { menuData } from "../../shared.svelte";
   import MenuActionBar from "./MenuActionBar.svelte";
+  import Submenu from "./Submenu.svelte";
 
-  function handleBack() {
-    menuData.closing = true;
-  }
+  let submenu = $derived({
+    component: menuData.submenus[0].component,
+    props: menuData.submenus[0].props,
+  });
 
   // Allows the submenu to remain visible while it closes
-  function handleTransitionEnd(event: TransitionEvent) {
+  function handleTransitionEnd(event) {
     if (menuData.closing && event.propertyName === "left") {
       menuData.submenu = null;
       menuData.props = {};
       menuData.closing = false;
       menuData.setSubmenu = null;
+      menuData.submenus.splice(menuData.submenus.length - 1);
     }
   }
 </script>
@@ -37,8 +40,10 @@
       <MenuButton type="Preferences" />
     </div>
 
-    {#if menuData.submenu}
-      <menuData.submenu {...menuData.props} {handleBack}></menuData.submenu>
+    {#if menuData.submenus.length > 0}
+      <Submenu index={0}>
+        <submenu.component index={0} {...submenu.props}></submenu.component>
+      </Submenu>
     {/if}
   </div>
 </div>

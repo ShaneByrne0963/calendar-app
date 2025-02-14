@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { timeAsNumber } from "../../helpers";
+  import { timeAsNumber } from "../../helpers.js";
   import { inputFeedback } from "../../validation";
   import Select from "./Select.svelte";
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Submenu from "../Submenu.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
 
   let {
@@ -13,13 +12,11 @@
   } = $props();
 </script>
 
-<Submenu {handleBack}>
-  <SubmenuHeading text="{isEdit ? 'Edit' : 'New'} {singular}" />
-  <div id="add-item">
-    {@render children()}
-  </div>
-  <button class="btn" onclick={handleBack}>Cancel</button>
-  <button class="btn btn-secondary" onclick={createItem} disabled={!isValid}
-    >{isEdit ? "Save" : submitText}</button
-  >
-</Submenu>
+<SubmenuHeading text="{isEdit ? 'Edit' : 'New'} {singular}" />
+<div id="add-item">
+  {@render children()}
+</div>
+<button class="btn" onclick={handleBack}>Cancel</button>
+<button class="btn btn-secondary" onclick={createItem} disabled={!isValid}
+  >{isEdit ? "Save" : submitText}</button
+>

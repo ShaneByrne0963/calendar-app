@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { compareDates } from "./helpers";
+  import { compareDates } from "./helpers.js";
   import CalendarContainer from "./lib/calendar/CalendarContainer.svelte";
   import ItemDragging from "./lib/calendar/ItemDragging.svelte";
-  import ColorPicker from "./lib/inputs/ColorPicker.svelte";
   import Menu from "./lib/menu/Menu.svelte";
   import ToastContainer from "./lib/toasts/ToastContainer.svelte";
   import { userData, calendarData, menuData } from "./shared.svelte";

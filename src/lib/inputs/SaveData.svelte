@@ -1,6 +1,6 @@
 <script lang="ts">
   import { userData } from "../../shared.svelte";
-  import { downloadTextFile } from "../../helpers";
+  import { downloadTextFile } from "../../helpers.js";
   import Graphic from "../global/Graphic.svelte";
   import ToolTip from "../global/ToolTip.svelte";
   import MenuAction from "../menu/MenuAction.svelte";

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { calendarData } from "../../shared.svelte";
-  import { clamp } from "../../helpers";
+  import { clamp } from "../../helpers.js";
 
   let style = $derived.by(() => {
     let data: any = calendarData.itemAddData;

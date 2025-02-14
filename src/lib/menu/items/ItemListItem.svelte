@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { dateToInputValue, numberAsTime } from "../../../helpers";
+  import { dateToInputValue, numberAsTime } from "../../../helpers.js";
   import { calendarData, userData, wDisplay } from "../../../shared.svelte";
   let { children, title, color, duration, startTime = null } = $props();
 
