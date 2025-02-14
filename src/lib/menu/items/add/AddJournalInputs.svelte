@@ -4,19 +4,28 @@
   import Input from "../../../inputs/Input.svelte";
   import AddItem from "../AddItem.svelte";
 
-  let { handleBack } = $props();
-  let body = $state({ value: "" });
+  let { handleBack, todaysLog } = $props();
+  let body = $state({ value: todaysLog });
   let isValid = $derived(body.value);
 
   function createItem() {
     let key = dateToInputValue(new Date());
     userData.journal[key] = body.value;
-    addToast("success", "Your journal entry has been added!");
+    addToast(
+      "success",
+      `Your journal entry has been ${todaysLog.length > 0 ? "saved" : "added"}!`
+    );
     handleBack();
   }
 </script>
 
-<AddItem {handleBack} singular="Journal Entry" {createItem} {isValid}>
+<AddItem
+  {handleBack}
+  isEdit={todaysLog.length > 0}
+  singular="Journal Entry"
+  {createItem}
+  {isValid}
+>
   <Input
     type="textarea"
     label="Your thoughts"

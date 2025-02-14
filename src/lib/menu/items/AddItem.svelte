@@ -3,6 +3,7 @@
   import SubmenuHeading from "../SubmenuHeading.svelte";
 
   let {
+    isEdit = false,
     handleBack,
     children,
     singular,
@@ -13,12 +14,12 @@
 </script>
 
 <Submenu {handleBack}>
-  <SubmenuHeading text={`New ${singular}`} />
+  <SubmenuHeading text="{isEdit ? 'Edit' : 'New'} {singular}" />
   <div id="add-item">
     {@render children()}
   </div>
   <button class="btn" onclick={handleBack}>Cancel</button>
   <button class="btn btn-secondary" onclick={createItem} disabled={!isValid}
-    >{submitText}</button
+    >{isEdit ? "Save" : submitText}</button
   >
 </Submenu>

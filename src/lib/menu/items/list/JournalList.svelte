@@ -25,6 +25,26 @@
 
   let selectedDate = $state(new Date());
 
+  let text = $derived.by(() => {
+    const date = dateToInputValue(selectedDate);
+    if (date in userData.journal) {
+      return userData.journal[date].split("\n");
+    }
+    return [];
+  });
+
+  let today = $derived(
+    compareDates(calendarData.today, selectedDate) === "Equal"
+  );
+
+  let todaysLog = $derived.by(() => {
+    let key = dateToInputValue(new Date());
+    if (key in userData.journal) {
+      return userData.journal[key];
+    }
+    return "";
+  });
+
   function onDateChange(direction: 1 | -1) {
     if (
       direction === -1 ||
@@ -38,21 +58,11 @@
     }
   }
 
-  let text = $derived.by(() => {
-    const date = dateToInputValue(selectedDate);
-    if (date in userData.journal) {
-      return userData.journal[date].split("\n");
-    }
-    return [];
-  });
-
-  let today = $derived(
-    compareDates(calendarData.today, selectedDate) === "Equal"
-  );
-
   function addItem() {
     submenu.component = AddJournalInputs;
-    submenu.props = {};
+    submenu.props = {
+      todaysLog,
+    };
   }
 
   // Allows the user to quickly select a day's journal by clicking the calendar
@@ -72,7 +82,11 @@
 
 <Submenu handleBack={customBack} {submenu}>
   <SubmenuHeading text="Journal">
-    <button class="btn btn-sm btn-secondary" onclick={addItem}>+ Write</button>
+    <button class="btn btn-sm btn-secondary" onclick={addItem}>
+      {#if todaysLog}Edit
+      {:else}+ Write
+      {/if}
+    </button>
   </SubmenuHeading>
   <div id="journal-list">
     <DateController
