@@ -40,7 +40,20 @@ export function removeProxy(val) {
 }
 
 export function openSubmenu(component, props = {}) {
-  menuData.submenus.push({component, props, closing: false});
+  const componentIndex = menuData.submenus.findIndex((item) => item.component == component);
+  if (componentIndex === -1) {
+    menuData.submenus.push({component, props, closing: false});
+  } else {
+    if (componentIndex < menuData.submenus.length - 1) {
+      // Trigger the closing animation directly back to the found component
+      let i = componentIndex + 1;
+      // Delete every submenu between the found component and the current submenu
+      while (i < menuData.submenus.length - 1) {
+        menuData.submenus.splice(i, 1);
+      }
+      menuData.submenus[componentIndex + 1].closing = true;
+    }
+  }
 }
 
 // Converts a date to a string format that can be used in an input value
