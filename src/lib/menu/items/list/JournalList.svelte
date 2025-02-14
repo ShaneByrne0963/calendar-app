@@ -1,27 +1,17 @@
 <script lang="ts">
-  import { compareDates, dateToInputValue } from "../../../../helpers";
+  import {
+    compareDates,
+    dateToInputValue,
+    setSubmenu,
+  } from "../../../../helpers";
   import { calendarData, userData } from "../../../../shared.svelte";
   import DateController from "../../../calendar/DateController.svelte";
   import Submenu from "../../Submenu.svelte";
   import SubmenuHeading from "../../SubmenuHeading.svelte";
+  import JournalList from "./JournalList.svelte";
   import AddJournalInputs from "../add/AddJournalInputs.svelte";
 
   let { handleBack } = $props();
-  let submenu = $state({
-    component: null,
-    props: {},
-    closing: false,
-    handleBack: () => {
-      submenu.closing = true;
-    },
-    handleTransitionEnd: (event: TransitionEvent) => {
-      if (submenu.closing && event.propertyName === "left") {
-        submenu.component = null;
-        submenu.props = {};
-        submenu.closing = false;
-      }
-    },
-  });
 
   let selectedDate = $state(new Date());
 
@@ -59,10 +49,7 @@
   }
 
   function addItem() {
-    submenu.component = AddJournalInputs;
-    submenu.props = {
-      todaysLog,
-    };
+    setSubmenu(AddJournalInputs, { todaysLog });
   }
 
   // Allows the user to quickly select a day's journal by clicking the calendar
@@ -80,7 +67,7 @@
   }
 </script>
 
-<Submenu handleBack={customBack} {submenu}>
+<Submenu handleBack={customBack} contentComponent={JournalList}>
   <SubmenuHeading text="Journal">
     <button class="btn btn-sm btn-secondary" onclick={addItem}>
       {#if todaysLog}Edit

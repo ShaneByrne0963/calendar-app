@@ -1,12 +1,41 @@
 <script lang="ts">
+  import { menuData } from "../../shared.svelte";
   import Graphic from "../global/Graphic.svelte";
 
-  let { handleBack, children, submenu = null } = $props();
+  let { handleBack, contentComponent, children } = $props();
+
+  let submenu = $state({
+    component: null,
+    props: {},
+    closing: false,
+    handleBack: () => {
+      submenu.closing = true;
+    },
+    handleTransitionEnd: (event: TransitionEvent) => {
+      if (submenu.closing && event.propertyName === "left") {
+        submenu.component = null;
+        submenu.props = {};
+        submenu.closing = false;
+        submenu.setAsFreeSubmenu();
+      }
+    },
+    setAsFreeSubmenu: () => {
+      // Allows any submenu to be inserted into the current submenu
+      menuData.currentSubmenu = contentComponent;
+      menuData.setSubmenu = (component: any, props = {}) => {
+        if (menuData.currentSubmenu !== component) {
+          submenu.component = component;
+          submenu.props = props;
+        }
+      };
+    },
+  });
+  submenu.setAsFreeSubmenu();
 </script>
 
 <div
-  class={"submenu" + (submenu?.closing ? " closing" : "")}
-  ontransitionend={submenu?.handleTransitionEnd}
+  class={"submenu" + (submenu.closing ? " closing" : "")}
+  ontransitionend={submenu.handleTransitionEnd}
 >
   <button class="btn btn-accent btn-sm back-btn" onclick={handleBack}>
     <Graphic width={20} height={20} path={"back"} fill={"#000000"}></Graphic>
@@ -15,7 +44,7 @@
   <div class="submenu-content">
     {@render children()}
   </div>
-  {#if submenu?.component}
+  {#if submenu.component}
     <submenu.component handleBack={submenu.handleBack} {...submenu.props}
     ></submenu.component>
   {/if}

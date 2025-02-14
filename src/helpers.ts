@@ -41,9 +41,9 @@ export function removeProxy(val: any) {
 
 // Allows the insertion of a submenu into any submenu.
 // This is useful for opening menus that aren't triggered through the menu, like opening the day details menu
-export function forceSubmenu(component: any, props = {}) {
-  if (menuData.forceSubmenu) {
-    menuData.forceSubmenu(component, props);
+export function setSubmenu(component: any, props = {}) {
+  if (menuData.setSubmenu) {
+    menuData.setSubmenu(component, props);
   }
   else {
     menuData.submenu = component;
@@ -176,26 +176,30 @@ export function downloadTextFile(filename: string, text: string) {
 // Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code
 /*
 let submenu = $state({
-  component: null,
-  props: {},
-  closing: false,
-  handleBack: () => {
-    submenu.closing = true;
-  },
-  handleTransitionEnd: (event: TransitionEvent) => {
-    if (submenu.closing && event.propertyName === "left") {
-      submenu.component = null;
-      submenu.props = {};
-      submenu.closing = false;
-      setAsFreeSubmenu();
-    }
-  },
-  setAsFreeSubmenu: () => {
-    // Allows any submenu to be inserted into the current submenu
-    menuData.forceSubmenu = (component: Component, props = {}) => {
-      submenu.component = component;
-      submenu.props = props;
-    }
-  }
-});
+    component: null,
+    props: {},
+    closing: false,
+    handleBack: () => {
+      submenu.closing = true;
+    },
+    handleTransitionEnd: (event: TransitionEvent) => {
+      if (submenu.closing && event.propertyName === "left") {
+        submenu.component = null;
+        submenu.props = {};
+        submenu.closing = false;
+        submenu.setAsFreeSubmenu();
+      }
+    },
+    setAsFreeSubmenu: () => {
+      // Allows any submenu to be inserted into the current submenu
+      menuData.currentSubmenu = <ITEM COMPONENT>;
+      menuData.forceSubmenu = (component: any, props = {}) => {
+        if (menuData.currentSubmenu.isPrototypeOf(component)) {
+          submenu.component = component;
+          submenu.props = props;
+        }
+      };
+    },
+  });
+  submenu.setAsFreeSubmenu();
 */

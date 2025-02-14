@@ -1,35 +1,13 @@
 <script lang="ts">
-  import { userData, menuData } from "../../../shared.svelte";
+  import { userData } from "../../../shared.svelte";
   import Submenu from "../Submenu.svelte";
+  import ItemList from "./ItemList.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
   import ActivityListItem from "./list/ActivityListItem.svelte";
+  import { setSubmenu } from "../../../helpers";
 
   let { itemType, handleBack } = $props();
-  let submenu = $state({
-    component: null,
-    props: {},
-    closing: false,
-    handleBack: () => {
-      submenu.closing = true;
-    },
-    handleTransitionEnd: (event: TransitionEvent) => {
-      if (submenu.closing && event.propertyName === "left") {
-        submenu.component = null;
-        submenu.props = {};
-        submenu.closing = false;
-        submenu.setAsFreeSubmenu();
-      }
-    },
-    setAsFreeSubmenu: () => {
-      // Allows any submenu to be inserted into the current submenu
-      menuData.forceSubmenu = (component: any, props = {}) => {
-        submenu.component = component;
-        submenu.props = props;
-      };
-    },
-  });
-  submenu.setAsFreeSubmenu();
 
   // Each component for adding new items
   let listItemComponents = {
@@ -54,12 +32,13 @@
   };
 
   function addItem() {
-    submenu.component = addItemComponents[`Add${singular}Inputs`];
-    submenu.props = { singular };
+    setSubmenu(addItemComponents[`Add${singular}Inputs`], {
+      singular,
+    });
   }
 </script>
 
-<Submenu {handleBack} {submenu}>
+<Submenu {handleBack} contentComponent={ItemList}>
   <SubmenuHeading text={itemType}>
     <button
       class="btn btn-sm btn-secondary"
