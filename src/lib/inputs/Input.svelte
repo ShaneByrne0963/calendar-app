@@ -4,12 +4,15 @@
   let {
     id,
     type = "text",
+    size = "md",
     label,
+    labelHidden = false,
     required = true,
     placeholder = "",
     value = $bindable(),
     disabled = false,
     alignment = "y",
+    margin = true,
     validation = null,
   } = $props();
 
@@ -34,9 +37,9 @@
   };
 </script>
 
-<div class="mb-5">
+<div class={margin ? "mb-5" : ""}>
   <div class={alignment}>
-    <label for={id}>{label + (required ? "*" : "")}</label>
+    <label for={id} hidden={labelHidden}>{label + (required ? "*" : "")}</label>
     {#if type !== "textarea"}
       <input
         {type}
@@ -44,7 +47,7 @@
         name={id}
         placeholder={placeholder || label}
         value={value.value}
-        class="input input-bordered w-full"
+        class="input input-{size} input-bordered w-full"
         {required}
         {disabled}
         autocomplete="off"
@@ -55,7 +58,7 @@
         {id}
         name={id}
         placeholder={placeholder || label}
-        class="textarea textarea-bordered w-full"
+        class="textarea textarea-bordered textarea-{size} w-full"
         {required}
         {disabled}
         rows={12}

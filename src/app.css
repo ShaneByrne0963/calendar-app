@@ -85,3 +85,8 @@ button[disabled] {
   align-items: center;
   justify-content: space-between;
 }
+
+.input-section input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

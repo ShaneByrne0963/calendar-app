@@ -11,6 +11,7 @@
   import NumberInput from "../../../inputs/NumberInput.svelte";
   import Select from "../../../inputs/Select.svelte";
   import AddItem from "../AddItem.svelte";
+  import AddItemInput from "../../../inputs/AddItemInput.svelte";
 
   let { singular } = $props();
 
@@ -33,6 +34,7 @@
   let periodLength = $state({ value: times[0] });
   let format = $state({ value: formats[0] });
   let checkedDefault = $state(false);
+  let checklistValues = $state([]);
   let startDate = $state({
     value: dateToInputValue(calendarData.selected),
     feedback: "",
@@ -119,6 +121,11 @@
         label="Checked By Default"
         bind:checked={checkedDefault}
       ></CheckBox>
+    {:else if format.value === "Checklist"}
+      <div class="mt-4 pb-5">
+        <AddItemInput id="habit-checklist" bind:values={checklistValues}
+        ></AddItemInput>
+      </div>
     {/if}
   </Select>
   <Input
