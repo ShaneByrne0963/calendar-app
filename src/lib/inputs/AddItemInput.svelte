@@ -10,6 +10,12 @@
     values.push(currentValue.value);
     currentValue.value = "";
   }
+
+  function validate() {
+    if (values.includes(currentValue.value)) {
+      currentValue.feedback = "Cannot enter the same value twice";
+    }
+  }
 </script>
 
 <div class="add-item-input">
@@ -29,6 +35,7 @@
       label="Add Item"
       labelHidden={true}
       margin={false}
+      validation={validate}
     ></Input>
     <button
       class="btn btn-secondary btn-sm"
