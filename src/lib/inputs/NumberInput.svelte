@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { inputFeedback } from "../../validation";
+
   let {
     id,
     label,
@@ -11,6 +13,33 @@
     alignment = "y",
     validation = null,
   } = $props();
+
+  const onchange = (e: Event) => {
+    const val = (e.target as HTMLInputElement).value.trim();
+
+    // Simple validation
+    if ("feedback" in value) {
+      value.feedback = "";
+
+      if (required && val === "") {
+        value.feedback = inputFeedback.required;
+        return;
+      }
+    }
+    // Clamp the value to the min and max, if specified
+    let numVal = parseInt(val);
+    if (numVal < min) {
+      numVal = min;
+    }
+    if (max && numVal > max) {
+      numVal = max;
+    }
+    value.value = numVal;
+    (e.target as HTMLInputElement).value = `${numVal}`;
+
+    // For more complex validation
+    validation?.();
+  };
 </script>
 
 <div class="mb-5">
@@ -26,6 +55,7 @@
       {required}
       {disabled}
       placeholder={placeholder || label}
+      {onchange}
     />
   </div>
 </div>
