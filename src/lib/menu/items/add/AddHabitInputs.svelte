@@ -2,10 +2,11 @@
   import { dateToInputValue, first3 } from "../../../../helpers";
   import { calendarData } from "../../../../shared.svelte";
   import { days } from "../../../../types";
-  import { inputFeedback } from "../../../../validation";
+  import { handleDateOrder, inputFeedback } from "../../../../validation";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import Input from "../../../inputs/Input.svelte";
+  import NumberInput from "../../../inputs/NumberInput.svelte";
   import Select from "../../../inputs/Select.svelte";
   import AddItem from "../AddItem.svelte";
 
@@ -13,7 +14,6 @@
 
   const occurences = ["Every Day", "Fixed Days", "Times Per Period"];
   const formats = ["Checkbox", "Checklist", "Number"];
-  const checkboxDays = days.map((item) => first3(item));
 
   let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
@@ -27,8 +27,23 @@
     feedback: "",
   });
   let endDate = $state({ value: "" });
+  let goal = $state({ value: "" });
 
-  let isValid = $derived(!name.feedback);
+  // Validation
+  let isValid = $derived.by(() => {
+    if (occurence.value === "Fixed Days") {
+      let checkedValues = checkedDays.filter((item) => item.value);
+      if (checkedValues.length === 0) {
+        return false;
+      }
+    }
+    return !name.feedback && !startDate.feedback;
+  });
+
+  // Ensures the start date is before the end date
+  function validateStartDate() {
+    startDate.feedback = handleDateOrder(startDate.value, endDate.value);
+  }
 
   function createItem() {
     console.log("Item Created");
@@ -42,11 +57,12 @@
     label="Check In"
     bind:value={occurence}
     options={occurences}
-  ></Select>
-  {#if occurence.value === "Fixed Days"}
-    <CheckBoxList label="Days" required={true} bind:values={checkedDays}
-    ></CheckBoxList>
-  {/if}
+  >
+    {#if occurence.value === "Fixed Days"}
+      <CheckBoxList label="Days" required={true} bind:values={checkedDays}
+      ></CheckBoxList>
+    {/if}
+  </Select>
   <Select id="format" label="Format" bind:value={format} options={formats}>
     {#if format.value === "Checkbox"}
       <CheckBox
@@ -62,6 +78,7 @@
     label="Start Date"
     bind:value={startDate}
     alignment="x"
+    validation={validateStartDate}
   ></Input>
   <Input
     type="date"
@@ -70,5 +87,13 @@
     bind:value={endDate}
     alignment="x"
     required={false}
+    validation={validateStartDate}
   ></Input>
+  <NumberInput
+    id="goal"
+    label="Goal"
+    required={false}
+    bind:value={goal}
+    alignment="x"
+  ></NumberInput>
 </AddItem>
