@@ -1,5 +1,6 @@
 <script lang="ts">
   import { inputFeedback } from "../../validation";
+  import Feedback from "./Feedback.svelte";
   let {
     id,
     type = "text",
@@ -63,7 +64,7 @@
     {/if}
   </div>
   {#if showFeedback && value.feedback}
-    <p class="text-error text-xs">{value.feedback}</p>
+    <Feedback text={value.feedback}></Feedback>
   {/if}
 </div>
 

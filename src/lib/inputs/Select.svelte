@@ -5,6 +5,7 @@
     labelHidden = false,
     value = $bindable(),
     options,
+    margin = true,
     blankText = "",
     disabled = false,
     small = true,
@@ -19,7 +20,7 @@
   };
 </script>
 
-<div class="{alignment} mb-5">
+<div class="{alignment} {margin ? 'mb-5' : ''}">
   <label for={id} hidden={labelHidden}>{label}</label>
   <select
     {id}

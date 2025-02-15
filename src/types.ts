@@ -1,5 +1,6 @@
 export const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 export const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+export const timePeriods = ["Day", "Week", "Month", "Year"];
 
 export const times = [
   { format12: "12:00am", format24: "00:00" },

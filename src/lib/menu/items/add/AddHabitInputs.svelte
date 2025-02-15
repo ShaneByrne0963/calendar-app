@@ -1,10 +1,11 @@
 <script>
   import { dateToInputValue, first3 } from "../../../../helpers";
   import { calendarData } from "../../../../shared.svelte";
-  import { days } from "../../../../types";
+  import { days, timePeriods } from "../../../../types";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
+  import Feedback from "../../../inputs/Feedback.svelte";
   import Input from "../../../inputs/Input.svelte";
   import NumberInput from "../../../inputs/NumberInput.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -12,14 +13,21 @@
 
   let { singular } = $props();
 
-  const occurences = ["Every Day", "Fixed Days", "Times Per Period"];
+  const occurences = [
+    "Every day",
+    "Specific days of the week",
+    "Times per period",
+  ];
   const formats = ["Checkbox", "Checklist", "Number"];
+  const times = timePeriods.slice(1);
 
   let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
   let checkedDays = $state(
     days.map((day) => ({ label: first3(day), value: "" }))
   );
+  let periodFrequency = $state({ value: "1", feedback: "" });
+  let periodLength = $state({ value: times[0] });
   let format = $state({ value: formats[0] });
   let checkedDefault = $state(false);
   let startDate = $state({
@@ -28,6 +36,16 @@
   });
   let endDate = $state({ value: "" });
   let goal = $state({ value: "" });
+
+  let maxPeriodFrequency = $derived.by(() => {
+    if (periodLength.value === "Week") {
+      return 7;
+    }
+    if (periodLength.value === "Month") {
+      return 28;
+    }
+    return 365;
+  });
 
   // Validation
   let isValid = $derived.by(() => {
@@ -58,9 +76,35 @@
     bind:value={occurence}
     options={occurences}
   >
-    {#if occurence.value === "Fixed Days"}
+    {#if occurence.value === "Specific days of the week"}
       <CheckBoxList label="Days" required={true} bind:values={checkedDays}
       ></CheckBoxList>
+    {:else if occurence.value === "Times per period"}
+      <div id="times-per-period" class="mt-3">
+        <NumberInput
+          id="period-frequency"
+          label="Frequency"
+          labelHidden={true}
+          margin={false}
+          bind:value={periodFrequency}
+          required={true}
+          min={1}
+          max={maxPeriodFrequency}
+          displayFeedback={false}
+        ></NumberInput>
+        <span>time{periodFrequency.value === "1" ? "" : "s"} per</span>
+        <Select
+          id="period-length"
+          label="Length"
+          labelHidden={true}
+          margin={false}
+          bind:value={periodLength}
+          options={times}
+        ></Select>
+      </div>
+      {#if periodFrequency.feedback}
+        <Feedback text={periodFrequency.feedback}></Feedback>
+      {/if}
     {/if}
   </Select>
   <Select id="format" label="Format" bind:value={format} options={formats}>
@@ -98,3 +142,17 @@
     min={1}
   ></NumberInput>
 </AddItem>
+
+<style>
+  #times-per-period {
+    display: grid;
+    grid-template-columns: 5fr auto 4fr;
+    align-items: center;
+
+    span {
+      text-align: center;
+      display: block;
+      margin: 0 6px;
+    }
+  }
+</style>

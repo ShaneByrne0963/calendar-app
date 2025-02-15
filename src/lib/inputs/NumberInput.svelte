@@ -1,5 +1,6 @@
 <script lang="ts">
   import { inputFeedback } from "../../validation";
+  import Feedback from "./Feedback.svelte";
 
   let {
     id,
@@ -8,14 +9,20 @@
     placeholder = "",
     min = 0,
     max = null,
+    labelHidden = false,
+    margin = true,
     value = $bindable(),
     disabled = false,
     alignment = "y",
+    displayFeedback = true,
     validation = null,
   } = $props();
 
+  let self = $state(null);
+
   const onchange = (e: Event) => {
     const val = (e.target as HTMLInputElement).value.trim();
+    value.value = val;
 
     // Simple validation
     if ("feedback" in value) {
@@ -49,9 +56,9 @@
   };
 </script>
 
-<div class="mb-5">
+<div class={margin ? "mb-5" : ""}>
   <div class={alignment}>
-    <label for={id}>{label}</label>
+    <label for={id} hidden={labelHidden}>{label}</label>
     <input
       type="number"
       {id}
@@ -63,8 +70,12 @@
       {disabled}
       placeholder={placeholder || label}
       {onchange}
+      bind:this={self}
     />
   </div>
+  {#if displayFeedback && value.feedback}
+    <Feedback text={value.feedback}></Feedback>
+  {/if}
 </div>
 
 <style>
