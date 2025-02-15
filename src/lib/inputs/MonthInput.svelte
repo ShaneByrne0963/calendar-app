@@ -1,7 +1,8 @@
 <script lang="ts">
-  let { label = "", values = $bindable() } = $props();
+  let { label = "", values = $bindable(), required = true } = $props();
 
   const buttons = new Array(31);
+  let hasSelected = $derived(values.findIndex((item: boolean) => item) !== -1);
 
   function selectDay(index: number) {
     values[index] = !values[index];
@@ -10,6 +11,9 @@
 
 {#if label}
   <span>{label}</span>
+{/if}
+{#if required && !hasSelected}
+  <span class="text-xs">*Please select at least 1</span>
 {/if}
 <div class="calendar-input">
   {#each buttons, i}
