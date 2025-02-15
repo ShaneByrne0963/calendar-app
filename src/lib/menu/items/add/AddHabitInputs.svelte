@@ -95,5 +95,6 @@
     required={false}
     bind:value={goal}
     alignment="x"
+    min={1}
   ></NumberInput>
 </AddItem>

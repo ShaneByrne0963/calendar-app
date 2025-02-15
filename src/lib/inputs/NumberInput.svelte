@@ -27,15 +27,22 @@
       }
     }
     // Clamp the value to the min and max, if specified
-    let numVal = parseInt(val);
-    if (numVal < min) {
-      numVal = min;
+    if (val) {
+      // Convert the string to a number to clamp it
+      let numVal = parseInt(val);
+      if (numVal < min) {
+        numVal = min;
+      }
+      if (max && numVal > max) {
+        numVal = max;
+      }
+      // Re-convert the number back to a string, to allow for blank values
+      let reconvertedVal = `${numVal}`;
+      value.value = reconvertedVal;
+      (e.target as HTMLInputElement).value = reconvertedVal;
+    } else {
+      value.value = "";
     }
-    if (max && numVal > max) {
-      numVal = max;
-    }
-    value.value = numVal;
-    (e.target as HTMLInputElement).value = `${numVal}`;
 
     // For more complex validation
     validation?.();
