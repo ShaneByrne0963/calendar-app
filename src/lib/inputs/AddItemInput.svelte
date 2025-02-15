@@ -1,7 +1,7 @@
 <script lang="ts">
   import { inputFeedback } from "../../validation";
   import Input from "./Input.svelte";
-  let { id, values = $bindable() } = $props();
+  let { id, required = true, values = $bindable() } = $props();
 
   const duplicateFeedback = "Cannot enter the same value twice";
   let currentValue = $state({ value: "", feedback: inputFeedback.required });
@@ -29,10 +29,13 @@
 </script>
 
 <div class="add-item-input">
-  <ul class="item-list">
+  <ul class="item-lists">
+    {#if required && values.length === 0}
+      <li class="text-sm">*Please enter at least one item</li>
+    {/if}
     {#each values as value, i}
       <li>
-        <span>{value}</span>
+        <span class="text-sm">{value}</span>
         <button aria-label="Delete item" onclick={() => deleteItem(i)}
           >&times;</button
         >
@@ -58,6 +61,10 @@
 </div>
 
 <style>
+  ul {
+    padding: 0 4px;
+  }
+
   li {
     display: flex;
     align-items: center;
