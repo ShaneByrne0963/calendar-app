@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
   import { inputFeedback } from "../../validation";
   import Input from "./Input.svelte";
   let { id, values = $bindable() } = $props();
 
+  const duplicateFeedback = "Cannot enter the same value twice";
   let currentValue = $state({ value: "", feedback: inputFeedback.required });
   let isValid = $derived(currentValue.value && !currentValue.feedback);
 
@@ -11,19 +12,30 @@
     currentValue.value = "";
   }
 
+  function deleteItem(index: number) {
+    values.splice(index, 1);
+
+    // Remove the duplicate feedback, if any
+    if (currentValue.value && currentValue.feedback === duplicateFeedback) {
+      currentValue.feedback = "";
+    }
+  }
+
   function validate() {
     if (values.includes(currentValue.value)) {
-      currentValue.feedback = "Cannot enter the same value twice";
+      currentValue.feedback = duplicateFeedback;
     }
   }
 </script>
 
 <div class="add-item-input">
   <ul class="item-list">
-    {#each values as value}
+    {#each values as value, i}
       <li>
         <span>{value}</span>
-        <button aria-label="Delete item">&times;</button>
+        <button aria-label="Delete item" onclick={() => deleteItem(i)}
+          >&times;</button
+        >
       </li>
     {/each}
   </ul>
