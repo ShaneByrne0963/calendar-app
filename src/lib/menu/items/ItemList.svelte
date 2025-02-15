@@ -4,6 +4,7 @@
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
   import ActivityListItem from "./list/ActivityListItem.svelte";
   import { openSubmenu } from "../../../helpers.js";
+  import AddHabitInputs from "./add/AddHabitInputs.svelte";
 
   let { itemType } = $props();
 
@@ -15,6 +16,7 @@
   // Each component for adding new items
   let addItemComponents = {
     AddActivityInputs,
+    AddHabitInputs,
   };
 
   // Get the singular form of the item

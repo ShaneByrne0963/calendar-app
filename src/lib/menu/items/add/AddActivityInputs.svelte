@@ -22,7 +22,7 @@
   import ColorInput from "../../../inputs/ColorInput.svelte";
   import IconInput from "../../../inputs/IconInput.svelte";
 
-  let { handleBack, singular } = $props();
+  let { singular } = $props();
 
   // Constants
   const occurences = ["Fixed", "Varying", "Flexible"];
