@@ -3,6 +3,7 @@
   import { calendarData } from "../../../../shared.svelte";
   import { days, timePeriods } from "../../../../types";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
+  import MonthInput from "../../../inputs/MonthInput.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import Feedback from "../../../inputs/Feedback.svelte";
@@ -16,6 +17,7 @@
   const occurences = [
     "Every day",
     "Specific days of the week",
+    "Specific days of the month",
     "Times per period",
   ];
   const formats = ["Checkbox", "Checklist", "Number"];
@@ -23,9 +25,10 @@
 
   let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
-  let checkedDays = $state(
+  let wCheckedDays = $state(
     days.map((day) => ({ label: first3(day), value: "" }))
   );
+  let mCheckedDays = $state(new Array(31).map(() => false));
   let periodFrequency = $state({ value: "1", feedback: "" });
   let periodLength = $state({ value: times[0] });
   let format = $state({ value: formats[0] });
@@ -50,7 +53,7 @@
   // Validation
   let isValid = $derived.by(() => {
     if (occurence.value === "Fixed Days") {
-      let checkedValues = checkedDays.filter((item) => item.value);
+      let checkedValues = wCheckedDays.filter((item) => item.value);
       if (checkedValues.length === 0) {
         return false;
       }
@@ -77,8 +80,10 @@
     options={occurences}
   >
     {#if occurence.value === "Specific days of the week"}
-      <CheckBoxList label="Days" required={true} bind:values={checkedDays}
+      <CheckBoxList label="Days" required={true} bind:values={wCheckedDays}
       ></CheckBoxList>
+    {:else if occurence.value === "Specific days of the month"}
+      <MonthInput bind:values={mCheckedDays}></MonthInput>
     {:else if occurence.value === "Times per period"}
       <div id="times-per-period" class="mt-3">
         <NumberInput
