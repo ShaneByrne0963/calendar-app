@@ -185,34 +185,3 @@ export function downloadTextFile(filename, text) {
 
   document.body.removeChild(element);
 }
-
-// Initialize a submenu state. Unfortunately no other way to do this other than boilerplate code
-/*
-let submenu = $state({
-    component: null,
-    props: {},
-    closing: false,
-    handleBack: () => {
-      submenu.closing = true;
-    },
-    handleTransitionEnd: (event: TransitionEvent) => {
-      if (submenu.closing && event.propertyName === "left") {
-        submenu.component = null;
-        submenu.props = {};
-        submenu.closing = false;
-        submenu.setAsFreeSubmenu();
-      }
-    },
-    setAsFreeSubmenu: () => {
-      // Allows any submenu to be inserted into the current submenu
-      menuData.currentSubmenu = <ITEM COMPONENT>;
-      menuData.forceSubmenu = (component: any, props = {}) => {
-        if (menuData.currentSubmenu.isPrototypeOf(component)) {
-          submenu.component = component;
-          submenu.props = props;
-        }
-      };
-    },
-  });
-  submenu.setAsFreeSubmenu();
-*/
