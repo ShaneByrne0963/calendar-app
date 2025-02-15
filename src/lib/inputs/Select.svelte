@@ -8,7 +8,7 @@
     blankText = "",
     disabled = false,
     small = true,
-    margin = true,
+    children = null,
     alignment = "y",
     onchange = null,
   } = $props();
@@ -19,7 +19,7 @@
   };
 </script>
 
-<div class={alignment + (margin ? " mb-5" : "")}>
+<div class="{alignment} mb-5">
   <label for={id} hidden={labelHidden}>{label}</label>
   <select
     {id}
@@ -36,6 +36,9 @@
       <option>{opt}</option>
     {/each}
   </select>
+  <div class="mt-1">
+    {@render children?.()}
+  </div>
 </div>
 
 <style>

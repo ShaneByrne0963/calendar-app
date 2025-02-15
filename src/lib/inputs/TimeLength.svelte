@@ -29,7 +29,7 @@
   }
 </script>
 
-<div class="mb-5">
+<div>
   <div>{label}</div>
   <div class="grid grid-cols-4">
     <Select
@@ -37,7 +37,6 @@
       label="{label} (Hours)"
       labelHidden={true}
       bind:value={hours}
-      margin={false}
       options={hourOptions}
       {onchange}
     ></Select>
@@ -47,7 +46,6 @@
       label="{label} (Minutes)"
       labelHidden={true}
       bind:value={minutes}
-      margin={false}
       options={minuteOptions}
       {onchange}
     ></Select>
