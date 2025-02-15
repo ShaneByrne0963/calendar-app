@@ -4,7 +4,7 @@
     dateToInputValue,
     openSubmenu,
   } from "../../../../helpers.js";
-  import { calendarData, userData } from "../../../../shared.svelte";
+  import { calendarData, menuData, userData } from "../../../../shared.svelte";
   import DateController from "../../../calendar/DateController.svelte";
   import SubmenuHeading from "../../SubmenuHeading.svelte";
   import AddJournalInputs from "../add/AddJournalInputs.svelte";
@@ -47,6 +47,13 @@
   function addItem() {
     openSubmenu(AddJournalInputs, { todaysLog });
   }
+
+  // Update the displayed journal when a day's journal icon has been clicked
+  menuData.submenus[menuData.submenus.length - 1].updateProps = (props: {
+    selectedDate: Date;
+  }) => {
+    selectedDate = props.selectedDate;
+  };
 </script>
 
 <SubmenuHeading text="Journal">

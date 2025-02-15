@@ -44,6 +44,7 @@ export function openSubmenu(component, props = {}) {
   if (componentIndex === -1) {
     menuData.submenus.push({component, props, closing: false});
   } else {
+    let submenu = menuData.submenus[componentIndex];
     if (componentIndex < menuData.submenus.length - 1) {
       // Trigger the closing animation directly back to the found component
       let i = componentIndex + 1;
@@ -52,6 +53,9 @@ export function openSubmenu(component, props = {}) {
         menuData.submenus.splice(i, 1);
       }
       menuData.submenus[componentIndex + 1].closing = true;
+    }
+    if ("updateProps" in submenu) {
+      submenu.updateProps(props);
     }
   }
 }
