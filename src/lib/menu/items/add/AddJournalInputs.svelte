@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { dateToInputValue } from "../../../../helpers.js";
+  import { closeSubmenu, dateToInputValue } from "../../../../helpers.js";
   import { addToast, userData } from "../../../../shared.svelte";
   import Input from "../../../inputs/Input.svelte";
   import AddItem from "../AddItem.svelte";
 
-  let { handleBack, todaysLog } = $props();
+  let { todaysLog } = $props();
   let body = $state({ value: todaysLog });
   let isValid = $derived(body.value);
 
@@ -15,12 +15,11 @@
       "success",
       `Your journal entry has been ${todaysLog.length > 0 ? "saved" : "added"}!`
     );
-    handleBack();
+    closeSubmenu();
   }
 </script>
 
 <AddItem
-  {handleBack}
   isEdit={todaysLog.length > 0}
   singular="Journal Entry"
   {createItem}

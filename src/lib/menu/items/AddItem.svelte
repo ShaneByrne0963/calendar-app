@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { closeSubmenu } from "../../../helpers";
   import SubmenuHeading from "../SubmenuHeading.svelte";
 
   let {
     isEdit = false,
-    handleBack,
     children,
     singular,
     createItem,
@@ -16,7 +16,7 @@
 <div id="add-item">
   {@render children()}
 </div>
-<button class="btn" onclick={handleBack}>Cancel</button>
+<button class="btn" onclick={closeSubmenu}>Cancel</button>
 <button class="btn btn-secondary" onclick={createItem} disabled={!isValid}
   >{isEdit ? "Save" : submitText}</button
 >

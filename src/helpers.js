@@ -56,6 +56,10 @@ export function openSubmenu(component, props = {}) {
   }
 }
 
+export function closeSubmenu() {
+  menuData.submenus[menuData.submenus.length - 1].closing = true;
+}
+
 // Converts a date to a string format that can be used in an input value
 export function dateToInputValue(date) {
   const day = date.getDate();

@@ -7,6 +7,7 @@
     inputToArray,
     pickFrom,
     timeAsNumber,
+    closeSubmenu,
   } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -149,12 +150,12 @@
       }
     }
     userData.activities.push({ ...activity, ...occurenceSpecific });
-    handleBack();
+    closeSubmenu();
     addToast("success", "Activity created successfully!");
   }
 </script>
 
-<AddItem {handleBack} {singular} {createItem} {isValid}>
+<AddItem {singular} {createItem} {isValid}>
   <Input id="item-name" label="Name" bind:value={name}></Input>
   <ColorInput bind:value={color}></ColorInput>
   <IconInput></IconInput>
