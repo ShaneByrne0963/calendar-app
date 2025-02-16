@@ -9,6 +9,7 @@
     timeAsNumber,
     closeSubmenu,
     incrementId,
+    dateArrayToInput,
   } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -120,10 +121,9 @@
     // For fixed activities
     if (occurence.value === occurences[0]) {
       // Parse the start and end dates
-      let pStartDate = inputToArray(startDate.value);
       let pEndDate = "";
       if (endDate.value) {
-        pEndDate = inputToArray(endDate.value);
+        pEndDate = endDate.value;
       }
       // Get the indices of every selected day
       let pFixedDays = fixedDays
@@ -131,17 +131,17 @@
         .map((item) => days.findIndex((day) => item.label === first3(day)));
 
       occurenceSpecific = {
-        startDate: pStartDate,
+        startDate: startDate.value,
         endDate: pEndDate,
         fixedDays: pFixedDays,
-        startTime,
-        endTime,
+        startTime: timeAsNumber(startTime, true),
+        endTime: timeAsNumber(endTime, true),
       };
     }
     // For varying activities
     else if (occurence.value === occurences[1]) {
       occurenceSpecific = {
-        duration: varyingDuration,
+        duration: timeAsNumber(varyingDuration, true),
       };
       if (varyingHasTime) {
         occurenceSpecific = {

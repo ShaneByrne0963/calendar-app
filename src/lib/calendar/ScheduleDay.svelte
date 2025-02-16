@@ -62,8 +62,8 @@
   {/each}
   {#each userActivities as activity}
     <ScheduleSlot
-      title={activity.title}
-      color={activity.color}
+      title={userData.activities[activity.id].name}
+      color={userData.activities[activity.id].color}
       start={activity.startTime}
       end={activity.duration}
     ></ScheduleSlot>

@@ -1,8 +1,8 @@
 <script lang="ts">
   let { title, color, start, end, isDuration = true } = $props();
 
-  let pStart = $derived(start.hours + start.minutes / 60);
-  let pEnd = $derived(end.hours + end.minutes / 60);
+  let pStart = $derived(start / 60);
+  let pEnd = $derived(end / 60);
 </script>
 
 <div

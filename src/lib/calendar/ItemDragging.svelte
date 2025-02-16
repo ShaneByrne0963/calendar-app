@@ -1,6 +1,14 @@
 <script lang="ts">
-  import { calendarData } from "../../shared.svelte";
+  import { calendarData, userData } from "../../shared.svelte";
   import { clamp } from "../../helpers.js";
+
+  let itemData = $derived.by(() => {
+    let item = userData.activities[calendarData.itemAddData.id];
+    return {
+      title: item.name,
+      color: item.color,
+    };
+  });
 
   let style = $derived.by(() => {
     let data: any = calendarData.itemAddData;
@@ -16,9 +24,7 @@
     let top = 0;
     if (data.day >= 0) {
       if ("startTime" in data && data) {
-        top =
-          data.top +
-          (data.startTime.hours + data.startTime.minutes / 60) * hourHeight;
+        top = data.top + (data.startTime / 60) * hourHeight;
       } else {
         top = clamp(
           data.top +
@@ -47,13 +53,12 @@
 
 <div
   id="item-drag"
-  class="background col-{calendarData.itemAddData.color}{'width' in
-  calendarData.itemAddData
+  class="background col-{itemData.color}{'width' in calendarData.itemAddData
     ? ' visible'
     : ''}{calendarData.itemAddData.day >= 0 ? ' snapped' : ''}"
   {style}
 >
-  {calendarData.itemAddData.title}
+  {itemData.title}
 </div>
 
 <style>

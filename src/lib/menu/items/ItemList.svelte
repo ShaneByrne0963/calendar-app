@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { userData } from "../../../shared.svelte";
   import SubmenuHeading from "../SubmenuHeading.svelte";
   import AddActivityInputs from "./add/AddActivityInputs.svelte";
@@ -30,7 +30,7 @@
     let arr = [];
     for (let [key, value] of Object.entries(userData[itemType.toLowerCase()])) {
       if (key !== "id") {
-        arr.push(value);
+        arr.push({ ...value, id: key });
       }
     }
     return arr;

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { dateToInputValue, numberAsTime } from "../../../helpers.js";
+  import { dateToInputValue } from "../../../helpers.js";
   import { calendarData, userData, wDisplay } from "../../../shared.svelte";
-  let { children, title, color, duration, startTime = null } = $props();
+  let { children, itemId, title, color, duration, startTime = null } = $props();
 
   function onmousedown(e: MouseEvent) {
     calendarData.itemAdding = true;
+    calendarData.itemAddData.id = itemId;
     if (
       document.querySelector("#schedule .day") &&
       !(e.target as HTMLElement).closest(".no-drag")
@@ -21,8 +22,7 @@
     let currentDay = calendarData.itemAddData.day;
 
     calendarData.itemAddData = {
-      title,
-      color,
+      id: itemId,
       mouseX: e.clientX,
       mouseY: e.clientY,
       width: dayRef.width,
@@ -50,20 +50,17 @@
         .querySelector("#schedule .day")
         .getBoundingClientRect();
 
-      let startTime = numberAsTime(
-        Math.round(((draggedItem.top - dayRef.top) / (dayRef.height / 24)) * 60)
+      let startTime = Math.round(
+        ((draggedItem.top - dayRef.top) / (dayRef.height / 24)) * 60
       );
-      let duration = numberAsTime(
-        Math.round((data.height / (dayRef.height / 24)) * 60)
-      );
+      let duration = Math.round((data.height / (dayRef.height / 24)) * 60);
 
       // Add the created item to the data
       let date = dateToInputValue(
         new Date(wDisplay.year, wDisplay.month, wDisplay.day + day)
       );
       let itemData = {
-        title: data.title,
-        color: data.color,
+        id: data.id,
         startTime,
         duration,
       };

@@ -98,6 +98,7 @@ export function dateToInputValue(date) {
 // Converts a date format received from a date input to a user-friendly date format
 export function inputToDateDisplay(date) {
   let dates = date.split("-").map(val => parseInt(val));
+  dates[1] -= 1;
 
   return arrayToDateDisplay(dates);
 }
@@ -105,6 +106,10 @@ export function inputToDateDisplay(date) {
 // Converts a date format as an array [y, m, d] input to a user-friendly date format
 export function arrayToDateDisplay(dates) {
   return `${dates[2]} ${first3(months[dates[1]])} ${dates[0]}`;
+}
+
+export function dateArrayToInput(date) {
+  return `${date[0]}-${date[1]}-${date[2]}`;
 }
 
 // Converts a date object to an array of numbers [y, m, d]
@@ -166,8 +171,8 @@ export function calculateEaster(year) {
 // Converts a time object { hours, minutes } into a user-friendly text format
 export function convertTimeToDisplay(time) {
   let preference = userData.preferences.timeFormat;
-  let hour = time.hours;
-  let minute = time.minutes;
+  let minute = typeof time === "number" ? time % 60 : time.minutes;
+  let hour = typeof time === "number" ? (time - minute) / 60 : time.hours;
   let parsedHour = "";
   let suffix = "";
   if (preference === "format12") {

@@ -1,9 +1,8 @@
 <script>
   import {
-    arrayToDateDisplay,
     convertTimeToDisplay,
     first3,
-    timeAsNumber,
+    inputToDateDisplay,
   } from "../../../../helpers.js";
   import { days, sliderThemeData } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
@@ -16,9 +15,9 @@
   let displayData = {};
 
   if (data.occurence === "Fixed") {
-    displayData.subtitle = ", " + arrayToDateDisplay(data.startDate);
+    displayData.subtitle = ", " + inputToDateDisplay(data.startDate);
     if (data.endDate !== "") {
-      displayData.subtitle += "- " + arrayToDateDisplay(data.endDate);
+      displayData.subtitle += "- " + inputToDateDisplay(data.endDate);
     }
 
     // Format the days to be organised in a neat manner
@@ -59,16 +58,16 @@
     if (startTime) {
       displayData.subtitle += startTime + ", ";
     }
-    let hrs = data.duration.hours;
-    let mins = data.duration.minutes;
+    let mins = data.duration % 60;
+    let hrs = (data.duration - mins) / 60;
     displayData.subtitle += `${hrs} hr${hrs != 1 ? "s" : ""}${mins ? " " + mins + " mins" : ""}`;
   }
 
   let duration =
     data.occurence === "Fixed"
-      ? timeAsNumber(data.endTime) - timeAsNumber(data.startTime)
+      ? data.endTime / 60 - data.startTime / 60
       : data.occurence === "Varying"
-        ? timeAsNumber(data.duration)
+        ? data.duration / 60
         : 1;
 
   let iconList = $derived.by(() => {
@@ -101,6 +100,7 @@
 <ItemListItem
   title={data.name}
   color={data.color}
+  itemId={data.id}
   {duration}
   startTime={data.startTime}
 >
