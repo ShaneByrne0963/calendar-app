@@ -1,12 +1,12 @@
 export const userData = $state({
   activities: { id: "0" },
-  events: [],
-  tasks: [],
+  events: { id: "0" },
+  tasks: { id: "0" },
   journal: {},
   notes: [],
   habits: { id: "0" },
-  goals: [],
-  records: [],
+  goals: { id: "0" },
+  records: { id: "0" },
   preferences: {
     timeFormat: "format24",
     hiddenMorningHours: 8,

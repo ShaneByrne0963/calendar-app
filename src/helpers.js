@@ -39,6 +39,12 @@ export function removeProxy(val) {
   return result.push(...storage.map(item => item.value));
 }
 
+export function addItemToData(key, value) {
+  const id = userData[key].id;
+  userData[key][id] = value;
+  userData[key].id = incrementId(id);
+}
+
 export function incrementId(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   let newId = id.split("");

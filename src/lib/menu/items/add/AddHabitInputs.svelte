@@ -1,6 +1,11 @@
 <script>
-  import { dateToInputValue, first3 } from "../../../../helpers";
-  import { calendarData } from "../../../../shared.svelte";
+  import {
+    addItemToData,
+    closeSubmenu,
+    dateToInputValue,
+    first3,
+  } from "../../../../helpers";
+  import { addToast, calendarData } from "../../../../shared.svelte";
   import { days, timePeriods } from "../../../../types";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
   import MonthInput from "../../../inputs/MonthInput.svelte";
@@ -35,7 +40,7 @@
   let periodLength = $state({ value: times[0] });
 
   let format = $state({ value: formats[0] });
-  let checkedDefault = $state(false);
+  let defaultChecked = $state(false);
   let checklistValues = $state([]);
 
   let numberUnit = $state({ value: "", feedback: inputFeedback.required });
@@ -92,7 +97,60 @@
   }
 
   function createItem() {
-    console.log("Item Created");
+    let habitBase = {
+      name: name.value,
+      occurence: occurence.value,
+      format: format.value,
+      startDate: startDate.value,
+      record: 0,
+    };
+    if (endDate) {
+      habitBase.endDate = endDate.value;
+    }
+    if (goal) {
+      habitBase.goal = goal.value;
+    }
+    // Occurence data
+    let occurenceSpecific = {};
+    if (occurence.value === "Specific days of the week") {
+      occurenceSpecific = {
+        days: wCheckedDays,
+      };
+    } else if (occurence.value === "Specific days of the month") {
+      occurenceSpecific = {
+        days: mCheckedDays,
+      };
+    } else if (occurence.value === "Times per period") {
+      occurenceSpecific = {
+        frequency: periodFrequency.value,
+        periodLength: periodLength.value,
+      };
+    }
+    // Format data
+    let formatSpecific = {};
+    if (format.value === "Checkbox") {
+      formatSpecific = {
+        defaultChecked,
+      };
+    } else if (format.value === "Checklist") {
+      formatSpecific = {
+        checkList: checklistValues,
+      };
+    } else if (format.value === "Number") {
+      formatSpecific = {
+        unit: numberUnit,
+        limit: numberLimit,
+        numberAmount: numberTimes,
+      };
+    }
+
+    addItemToData("habits", {
+      ...habitBase,
+      ...occurenceSpecific,
+      ...formatSpecific,
+    });
+    closeSubmenu();
+    addToast("success", "Habit created successfully!");
   }
 </script>
 
@@ -142,7 +200,7 @@
       <CheckBox
         id="checked-default"
         label="Checked By Default"
-        bind:checked={checkedDefault}
+        bind:checked={defaultChecked}
       ></CheckBox>
     {:else if format.value === "Checklist"}
       <div class="mt-4 pb-5">

@@ -10,6 +10,7 @@
     closeSubmenu,
     incrementId,
     dateArrayToInput,
+    addItemToData,
   } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -150,9 +151,7 @@
         };
       }
     }
-    const id = userData.activities.id;
-    userData.activities[id] = { ...activity, ...occurenceSpecific };
-    userData.activities.id = incrementId(id);
+    addItemToData("activities", { ...activity, ...occurenceSpecific });
     closeSubmenu();
     addToast("success", "Activity created successfully!");
   }

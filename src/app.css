@@ -29,7 +29,7 @@ button[disabled] {
   }
   
   #date-headings {
-    margin-left: var(--hour-marking-margin);
+    padding-left: var(--hour-marking-margin);
   }
 
   &:has(#item-drag) {
