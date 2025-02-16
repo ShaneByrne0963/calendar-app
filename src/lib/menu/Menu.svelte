@@ -12,10 +12,7 @@
   // Allows the submenu to remain visible while it closes
   function handleTransitionEnd(event) {
     if (menuData.closing && event.propertyName === "left") {
-      menuData.submenu = null;
-      menuData.props = {};
       menuData.closing = false;
-      menuData.setSubmenu = null;
       menuData.submenus.splice(menuData.submenus.length - 1);
     }
   }
@@ -33,8 +30,8 @@
       <MenuButton type="Events" />
       <MenuButton type="Tasks" />
       <MenuButton type="Journal" />
-      <MenuButton type="Notes" />
       <MenuButton type="Habits" />
+      <MenuButton type="Notes" />
       <MenuButton type="Goals" />
       <MenuButton type="Records" />
       <MenuButton type="Preferences" />

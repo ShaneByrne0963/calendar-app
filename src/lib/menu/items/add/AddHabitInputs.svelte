@@ -22,6 +22,7 @@
     "Times per period",
   ];
   const formats = ["Checkbox", "Checklist", "Number"];
+  const numberLimits = ["At least", "No more than", "Exactly"];
   const times = timePeriods.slice(1);
 
   let name = $state({ value: "", feedback: inputFeedback.required });
@@ -32,9 +33,15 @@
   let mCheckedDays = $state(new Array(31).map(() => false));
   let periodFrequency = $state({ value: "1", feedback: "" });
   let periodLength = $state({ value: times[0] });
+
   let format = $state({ value: formats[0] });
   let checkedDefault = $state(false);
   let checklistValues = $state([]);
+
+  let numberUnit = $state({ value: "", feedback: inputFeedback.required });
+  let numberLimit = $state({ value: numberLimits[0] });
+  let numberTimes = $state({ value: "", feedback: "" });
+
   let startDate = $state({
     value: dateToInputValue(calendarData.selected),
     feedback: "",
@@ -126,6 +133,40 @@
         <AddItemInput id="habit-checklist" bind:values={checklistValues}
         ></AddItemInput>
       </div>
+    {:else if format.value === "Number"}
+      <div class="my-3">
+        <Input
+          id="unit"
+          label="Unit"
+          placeholder="Write in singular form"
+          margin={false}
+          bind:value={numberUnit}
+        ></Input>
+      </div>
+      <span>Target</span>
+      <div class="number-input-section">
+        <Select
+          id="number-limits"
+          label="Your target"
+          labelHidden={true}
+          margin={false}
+          bind:value={numberLimit}
+          options={numberLimits}
+        ></Select>
+        <NumberInput
+          id="number-times"
+          label="Number of times"
+          labelHidden={true}
+          placeholder="Value"
+          margin={false}
+          bind:value={numberTimes}
+        ></NumberInput>
+        <span
+          >{numberUnit.value.toLowerCase()}{numberTimes.value !== "1"
+            ? "s"
+            : ""}</span
+        >
+      </div>
     {/if}
   </Select>
   <Input
@@ -165,6 +206,17 @@
       text-align: center;
       display: block;
       margin: 0 6px;
+    }
+  }
+
+  .number-input-section {
+    display: grid;
+    grid-template-columns: 3fr 2fr auto;
+    align-items: center;
+
+    > span {
+      display: block;
+      margin-left: 4px;
     }
   }
 </style>

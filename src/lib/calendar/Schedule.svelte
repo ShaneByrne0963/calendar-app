@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { compareDates } from "../../helpers.js";
   import { userData } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
@@ -7,11 +7,14 @@
   let { dates, hourFormat } = $props();
 
   let data = $derived.by(() => {
-    let fixedActivities = userData.activities.filter(
-      (item) => item.occurence === "Fixed"
-    );
+    let fixedActivities = [];
 
-    return dates.map((day: Date, i: number) => {
+    for (let [key, value] of Object.entries(userData.activities)) {
+      if (key !== "id" && value.occurence === "Fixed") {
+        fixedActivities.push(value);
+      }
+    }
+    return dates.map((day, i) => {
       let activities = fixedActivities.filter(
         (item) =>
           compareDates(day, item.startDate) !== "Before" &&

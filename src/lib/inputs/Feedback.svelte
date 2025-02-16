@@ -2,4 +2,4 @@
   let { text } = $props();
 </script>
 
-<p class="text-error text-xs">{text}</p>
+<p class="text-error text-xs pl-2">{text}</p>

@@ -8,6 +8,7 @@
     pickFrom,
     timeAsNumber,
     closeSubmenu,
+    incrementId,
   } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
   import Select from "../../../inputs/Select.svelte";
@@ -149,7 +150,9 @@
         };
       }
     }
-    userData.activities.push({ ...activity, ...occurenceSpecific });
+    const id = userData.activities.id;
+    userData.activities[id] = { ...activity, ...occurenceSpecific };
+    userData.activities.id = incrementId(id);
     closeSubmenu();
     addToast("success", "Activity created successfully!");
   }

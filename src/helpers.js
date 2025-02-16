@@ -39,6 +39,29 @@ export function removeProxy(val) {
   return result.push(...storage.map(item => item.value));
 }
 
+export function incrementId(id) {
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  let newId = id.split("");
+  let idIndices = newId.map(item => chars.findIndex(char => item === char));
+
+  for (let i = idIndices.length - 1; i >= 0; i--) {
+    let index = idIndices[i];
+    index++;
+    if (index >= chars.length) {
+      index = 0;
+      newId[i] = "0";
+      if (i === 0) {
+        idIndices.unshift("0");
+        break;
+      }
+      continue;
+    }
+    newId[i] = chars[index];
+    break;
+  }
+  return newId.join("");
+}
+
 export function openSubmenu(component, props = {}) {
   const componentIndex = menuData.submenus.findIndex((item) => item.component == component);
   if (componentIndex === -1) {

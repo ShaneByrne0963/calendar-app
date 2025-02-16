@@ -26,7 +26,15 @@
       ? itemType.slice(0, itemType.length - 1)
       : itemType;
 
-  let itemData = $derived(userData[itemType.toLowerCase()]);
+  let itemData = $derived.by(() => {
+    let arr = [];
+    for (let [key, value] of Object.entries(userData[itemType.toLowerCase()])) {
+      if (key !== "id") {
+        arr.push(value);
+      }
+    }
+    return arr;
+  });
   let listComponent = {
     value: listItemComponents[`${singular}ListItem`],
   };
