@@ -147,7 +147,7 @@
       if (varyingHasTime) {
         occurenceSpecific = {
           ...occurenceSpecific,
-          startTime,
+          startTime: timeAsNumber(startTime, true),
         };
       }
     }
@@ -187,7 +187,11 @@
       validation={validateStartDate}
     ></Input>
 
-    <CheckBoxList label="Days" bind:values={fixedDays} required={true}
+    <CheckBoxList
+      label="Days"
+      bind:values={fixedDays}
+      required={true}
+      spread={true}
     ></CheckBoxList>
     <TimeInput
       id="start-time"

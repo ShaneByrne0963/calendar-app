@@ -1,5 +1,5 @@
 <script>
-  import { compareDates } from "../../helpers.js";
+  import { compareDates, inputToArray } from "../../helpers.js";
   import { userData } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
   import ScheduleDay from "./ScheduleDay.svelte";
@@ -17,8 +17,9 @@
     return dates.map((day, i) => {
       let activities = fixedActivities.filter(
         (item) =>
-          compareDates(day, item.startDate) !== "Before" &&
-          (!item.endDate || compareDates(day, item.endDate) !== "After") &&
+          compareDates(day, inputToArray(item.startDate)) !== "Before" &&
+          (!item.endDate ||
+            compareDates(day, inputToArray(item.endDate)) !== "After") &&
           item.fixedDays.includes(i)
       );
       return {

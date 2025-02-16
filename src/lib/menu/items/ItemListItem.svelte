@@ -1,7 +1,7 @@
 <script lang="ts">
   import { dateToInputValue } from "../../../helpers.js";
   import { calendarData, userData, wDisplay } from "../../../shared.svelte";
-  let { children, title, grabData = null, color, startTime = null } = $props();
+  let { children, title, grabData = null, color } = $props();
 
   function onmousedown(e: MouseEvent) {
     if (grabData) {
@@ -34,9 +34,6 @@
       left: dayRef.left,
       top: dayRef.top,
     };
-    if (startTime) {
-      calendarData.itemAddData.startTime = startTime;
-    }
   }
 
   // Adds an item to the schedule when the mouse is released

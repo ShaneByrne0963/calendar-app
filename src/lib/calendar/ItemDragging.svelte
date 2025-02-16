@@ -12,6 +12,7 @@
 
   let style = $derived.by(() => {
     let data: any = calendarData.itemAddData;
+    let item = userData.activities[calendarData.itemAddData.id];
     let width = data.width;
     let height = data.height;
     let hourHeight = data.dayHeight / 24;
@@ -23,8 +24,8 @@
         : calendarData.itemAddData.mouseX - width / 2;
     let top = 0;
     if (data.day >= 0) {
-      if ("startTime" in data && data) {
-        top = data.top + (data.startTime / 60) * hourHeight;
+      if ("startTime" in item && item.startTime) {
+        top = data.top + (item.startTime / 60) * hourHeight;
       } else {
         top = clamp(
           data.top +
