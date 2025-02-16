@@ -61,9 +61,25 @@
 
   // Validation
   let isValid = $derived.by(() => {
-    if (occurence.value === "Fixed Days") {
+    // Occurence validation
+    if (occurence.value === "Specific days of the week") {
       let checkedValues = wCheckedDays.filter((item) => item.value);
       if (checkedValues.length === 0) {
+        return false;
+      }
+    } else if (occurence.value === "Specific days of the month") {
+      let checkedValues = mCheckedDays.filter((item) => item);
+      if (checkedValues.length === 0) {
+        return false;
+      }
+    } else if (occurence.value === "Times per period") {
+      if (!periodFrequency.value) {
+        return false;
+      }
+    }
+    // Format validation
+    if (format.value === "Checklist") {
+      if (checklistValues.length === 0) {
         return false;
       }
     }
