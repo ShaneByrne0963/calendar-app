@@ -5,12 +5,14 @@
   import ActivityListItem from "./list/ActivityListItem.svelte";
   import { openSubmenu } from "../../../helpers.js";
   import AddHabitInputs from "./add/AddHabitInputs.svelte";
+  import HabitListItem from "./list/HabitListItem.svelte";
 
   let { itemType } = $props();
 
   // Each component for adding new items
   let listItemComponents = {
     ActivityListItem,
+    HabitListItem,
   };
 
   // Each component for adding new items
@@ -54,10 +56,6 @@
   >
 </SubmenuHeading>
 {#if itemData.length > 0}
-  <div class="mb-3">
-    {itemData.length}
-    {(itemData.length === 1 ? singular : itemType).toLowerCase()}
-  </div>
   <div id="item-list">
     {#each itemData as item}
       <listComponent.value data={item}></listComponent.value>

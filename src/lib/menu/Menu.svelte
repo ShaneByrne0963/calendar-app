@@ -24,13 +24,13 @@
     class={menuData.closing ? " closing" : ""}
     ontransitionend={handleTransitionEnd}
   >
-    <MenuActionBar></MenuActionBar>
+    <MenuActionBar />
     <div id="menu-content">
-      <MenuButton type="Activities" />
+      <MenuButton type="Activities" disabled={false} />
       <MenuButton type="Events" />
       <MenuButton type="Tasks" />
-      <MenuButton type="Journal" />
-      <MenuButton type="Habits" />
+      <MenuButton type="Journal" disabled={false} />
+      <MenuButton type="Habits" disabled={false} />
       <MenuButton type="Notes" />
       <MenuButton type="Goals" />
       <MenuButton type="Records" />

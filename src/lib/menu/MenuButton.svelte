@@ -4,7 +4,7 @@
   import ItemList from "./items/ItemList.svelte";
   import JournalList from "./items/list/JournalList.svelte";
 
-  let { type } = $props();
+  let { type, disabled = true } = $props();
 
   const submenus = $derived({
     Journal: {
@@ -26,7 +26,8 @@
 
 <button
   class="btn btn-accent btn-block btn-xs sm:btn-sm md:btn-md"
-  onclick={handleMenuClick}>{type}</button
+  onclick={handleMenuClick}
+  {disabled}>{type}</button
 >
 
 <style>

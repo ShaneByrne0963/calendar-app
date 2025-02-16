@@ -11,6 +11,10 @@
   border: 1px solid var(--col);
 }
 
+.col-white {
+  --col: white;
+}
+
 .col-red-200 {
   --col: oklch(0.885 0.062 18.334);
 }

@@ -70,6 +70,12 @@
         ? data.duration / 60
         : 1;
 
+  let grabData = $derived({
+    id: data.id,
+    startTime: data.startTime,
+    duration,
+  });
+
   let iconList = $derived.by(() => {
     let arr = [];
 
@@ -97,13 +103,7 @@
   });
 </script>
 
-<ItemListItem
-  title={data.name}
-  color={data.color}
-  itemId={data.id}
-  {duration}
-  startTime={data.startTime}
->
+<ItemListItem title={data.name} color={data.color} {grabData}>
   <div class="text-xs">
     {data.occurence}{displayData.subtitle}
   </div>

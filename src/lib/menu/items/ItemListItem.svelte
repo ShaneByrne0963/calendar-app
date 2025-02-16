@@ -1,17 +1,19 @@
 <script lang="ts">
   import { dateToInputValue } from "../../../helpers.js";
   import { calendarData, userData, wDisplay } from "../../../shared.svelte";
-  let { children, itemId, title, color, duration, startTime = null } = $props();
+  let { children, title, grabData = null, color, startTime = null } = $props();
 
   function onmousedown(e: MouseEvent) {
-    calendarData.itemAdding = true;
-    calendarData.itemAddData.id = itemId;
-    if (
-      document.querySelector("#schedule .day") &&
-      !(e.target as HTMLElement).closest(".no-drag")
-    ) {
-      document.addEventListener("mousemove", mouseMove);
-      document.addEventListener("mouseup", mouseUp);
+    if (grabData) {
+      calendarData.itemAdding = true;
+      calendarData.itemAddData.id = grabData.id;
+      if (
+        document.querySelector("#schedule .day") &&
+        !(e.target as HTMLElement).closest(".no-drag")
+      ) {
+        document.addEventListener("mousemove", mouseMove);
+        document.addEventListener("mouseup", mouseUp);
+      }
     }
   }
 
@@ -22,11 +24,11 @@
     let currentDay = calendarData.itemAddData.day;
 
     calendarData.itemAddData = {
-      id: itemId,
+      id: grabData.id,
       mouseX: e.clientX,
       mouseY: e.clientY,
       width: dayRef.width,
-      height: (dayRef.height / 24) * duration,
+      height: (dayRef.height / 24) * grabData.duration,
       dayHeight: dayRef.height,
       day: currentDay,
       left: dayRef.left,
@@ -84,7 +86,7 @@
 <div
   role="button"
   tabindex="0"
-  class="item-list-item border col-{color} mb-6"
+  class="item-list-item border col-{color} mb-6{grabData ? ' grab' : ''}"
   {onmousedown}
   aria-label="Pick Up Item"
 >
@@ -100,7 +102,9 @@
     border-radius: 16px;
     padding: 0.5em 1em 1em 1em;
 
-    cursor: grab;
+    &.grab {
+      cursor: grab;
+    }
   }
 
   h2 {
