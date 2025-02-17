@@ -75,13 +75,13 @@
   >
 </SubmenuHeading>
 {#if hasItems}
-  {#each Object.values(itemData) as data}
+  {#each Object.entries(itemData) as [key, data]}
     {#if data.title && data.items.length > 0}
       <div class="ml-2 mb-1">{data.title}</div>
     {/if}
     <div id="item-list">
       {#each data.items as item}
-        <listComponent.value data={item}></listComponent.value>
+        <listComponent.value data={item} itemGroup={key}></listComponent.value>
       {/each}
     </div>
   {/each}

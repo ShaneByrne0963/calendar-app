@@ -1,15 +1,12 @@
 <script>
   import Input from "../../../inputs/Input.svelte";
-  import { userData, calendarData, addToast } from "../../../../shared.svelte";
+  import { calendarData, addToast } from "../../../../shared.svelte";
   import {
     dateToInputValue,
     first3,
-    inputToArray,
     pickFrom,
     timeAsNumber,
     closeSubmenu,
-    incrementId,
-    dateArrayToInput,
     addItemToData,
   } from "../../../../helpers.js";
   import AddItem from "../AddItem.svelte";
