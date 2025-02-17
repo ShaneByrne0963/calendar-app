@@ -6,7 +6,7 @@
   interface dateInfo {
     date: number;
     class: string;
-    data?: Record<string, any>;
+    data: Record<string, any>;
   }
 
   let days: dateInfo[] = $derived.by(() => {
@@ -32,10 +32,12 @@
       today.getFullYear() === mDisplay.year;
     for (let i = 1; i <= 42; i++) {
       let currentDay = i - startDate;
+      let currentDate = new Date(mDisplay.year, mDisplay.month, currentDay);
 
       let dateData: dateInfo = {
         date: 0,
         class: "day flex align-items-start",
+        data: { day: currentDate.getDay() - 1 },
       };
 
       // Get the background color of the date
@@ -49,11 +51,9 @@
       // Find the correct date number for the current cell
       if (i > startDate && currentDay <= lastDay) {
         dateData.date = currentDay;
-        let dayKey = dateToInputValue(
-          new Date(mDisplay.year, mDisplay.month, currentDay)
-        );
+        let dayKey = dateToInputValue(currentDate);
         if (dayKey in userData.calendar) {
-          dateData.data = userData.calendar[dayKey];
+          dateData.data = { ...dateData.data, ...userData.calendar[dayKey] };
         }
       } else {
         dateData.class += " blank";

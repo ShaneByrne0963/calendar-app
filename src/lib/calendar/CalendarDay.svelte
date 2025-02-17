@@ -78,6 +78,17 @@
     let key = dateToInputValue(currentDate);
     return key in userData.journal;
   });
+
+  let toolTipDirection = $derived.by(() => {
+    console.log(dayInfo);
+    if (dayInfo.day === 0) {
+      return "right";
+    }
+    if (dayInfo.day === 6) {
+      return "left";
+    }
+    return "bottom";
+  });
 </script>
 
 <button class={className} onclick={date ? handleDateClick : null}>
@@ -98,14 +109,14 @@
   <div class="day-content"></div>
   <div class="day-icons">
     {#if hasJournal}
-      <ToolTip text="Has Journal Entry">
+      <ToolTip text="Has Journal Entry" direction={toolTipDirection}>
         <div class="day-journal btn btn-square btn-xs btn-accent">
           <Graphic width={16} height={16} path="book" fill="black"></Graphic>
         </div>
       </ToolTip>
     {/if}
-    {#if dayInfo && Object.keys(dayInfo.habitData).length > 0}
-      <ToolTip text="Has Journal Entry">
+    {#if "habitData" in dayInfo && Object.keys(dayInfo.habitData).length > 0}
+      <ToolTip text="Habits" direction={toolTipDirection}>
         <div class="day-journal btn btn-square btn-xs btn-accent">
           <Graphic width={16} height={16} path="success" fill="black"></Graphic>
         </div>
