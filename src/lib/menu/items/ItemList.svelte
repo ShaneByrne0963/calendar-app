@@ -6,6 +6,7 @@
   import { openSubmenu } from "../../../helpers.js";
   import AddHabitInputs from "./add/AddHabitInputs.svelte";
   import HabitListItem from "./list/HabitListItem.svelte";
+  import { sortHabits } from "./itemsort.js";
 
   let { itemType } = $props();
 
@@ -29,17 +30,35 @@
       : itemType;
 
   let itemData = $derived.by(() => {
-    let arr = [];
+    if (itemType === "Habits") {
+      return sortHabits();
+    }
+    let obj = {
+      main: {
+        title: ``,
+        items: [],
+      },
+    };
     for (let [key, value] of Object.entries(userData[itemType.toLowerCase()])) {
       if (key !== "id") {
-        arr.push({ ...value, id: key });
+        obj.main.items.push({ ...value, id: key });
       }
     }
-    return arr;
+    return obj;
   });
+
   let listComponent = {
     value: listItemComponents[`${singular}ListItem`],
   };
+
+  let hasItems = $derived.by(() => {
+    for (let val of Object.values(itemData)) {
+      if (val.items.length > 0) {
+        return true;
+      }
+    }
+    return false;
+  });
 
   function addItem() {
     openSubmenu(addItemComponents[`Add${singular}Inputs`], {
@@ -55,12 +74,17 @@
     onclick={addItem}>+ New</button
   >
 </SubmenuHeading>
-{#if itemData.length > 0}
-  <div id="item-list">
-    {#each itemData as item}
-      <listComponent.value data={item}></listComponent.value>
-    {/each}
-  </div>
+{#if hasItems}
+  {#each Object.values(itemData) as data}
+    {#if data.title && data.items.length > 0}
+      <div class="ml-2 mb-1">{data.title}</div>
+    {/if}
+    <div id="item-list">
+      {#each data.items as item}
+        <listComponent.value data={item}></listComponent.value>
+      {/each}
+    </div>
+  {/each}
 {:else}
   <div class="submenu-center">
     <p class="pb-2">You do not have any {itemType.toLowerCase()}</p>

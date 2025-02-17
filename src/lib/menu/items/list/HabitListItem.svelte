@@ -45,9 +45,9 @@
       }
     } else if (format === "Number") {
       let numVal = parseInt(record.value);
-      if (data.limit === "At least") {
-        if (!numVal) return "white";
+      if (!numVal) return "white";
 
+      if (data.limit === "At least") {
         if (numVal >= data.numberAmount) {
           return colors.success;
         }
@@ -59,7 +59,6 @@
         if (numVal > data.numberAmount) {
           return colors.fail;
         }
-        console.log(numVal, data.numberAmount);
         if (numVal === data.numberAmount) {
           return colors.success;
         }

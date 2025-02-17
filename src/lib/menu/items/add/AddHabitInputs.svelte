@@ -113,13 +113,15 @@
     // Occurence data
     let occurenceSpecific = {};
     if (occurence.value === "Specific days of the week") {
-      occurenceSpecific = {
-        days: wCheckedDays,
-      };
+      let days = wCheckedDays
+        .map((val, i) => (val.value ? i : null))
+        .filter((item) => item !== null);
+      occurenceSpecific = { days };
     } else if (occurence.value === "Specific days of the month") {
-      occurenceSpecific = {
-        days: mCheckedDays,
-      };
+      let days = mCheckedDays
+        .map((val, i) => (val ? i : null))
+        .filter((item) => item !== null);
+      occurenceSpecific = { days };
     } else if (occurence.value === "Times per period") {
       occurenceSpecific = {
         frequency: periodFrequency.value,
