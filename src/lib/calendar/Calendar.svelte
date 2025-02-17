@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { calculateEaster } from "../../helpers.js";
-  import { calendarData, mDisplay } from "../../shared.svelte";
+  import { calculateEaster, dateToInputValue } from "../../helpers.js";
+  import { calendarData, mDisplay, userData } from "../../shared.svelte";
   import CalendarDay from "./CalendarDay.svelte";
 
   interface dateInfo {
     date: number;
     class: string;
+    data?: Record<string, any>;
   }
 
   let days: dateInfo[] = $derived.by(() => {
@@ -31,7 +32,8 @@
       today.getFullYear() === mDisplay.year;
     for (let i = 1; i <= 42; i++) {
       let currentDay = i - startDate;
-      let dateData = {
+
+      let dateData: dateInfo = {
         date: 0,
         class: "day flex align-items-start",
       };
@@ -47,6 +49,12 @@
       // Find the correct date number for the current cell
       if (i > startDate && currentDay <= lastDay) {
         dateData.date = currentDay;
+        let dayKey = dateToInputValue(
+          new Date(mDisplay.year, mDisplay.month, currentDay)
+        );
+        if (dayKey in userData.calendar) {
+          dateData.data = userData.calendar[dayKey];
+        }
       } else {
         dateData.class += " blank";
       }
@@ -62,7 +70,12 @@
 
 <div id="calendar">
   {#each days as day}
-    <CalendarDay className={day.class} date={day.date} {data}></CalendarDay>
+    <CalendarDay
+      className={day.class}
+      date={day.date}
+      dayInfo={day.data || null}
+      {data}
+    ></CalendarDay>
   {/each}
 </div>
 

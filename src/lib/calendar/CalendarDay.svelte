@@ -10,7 +10,7 @@
   import ToolTip from "../global/ToolTip.svelte";
   import JournalList from "../menu/items/list/JournalList.svelte";
 
-  let { className, date, data } = $props();
+  let { className, date, data, dayInfo } = $props();
   let currentDate = $derived(new Date(mDisplay.year, mDisplay.month, date));
 
   let specialDays = $derived.by(() => {
@@ -104,6 +104,13 @@
         </div>
       </ToolTip>
     {/if}
+    {#if dayInfo && Object.keys(dayInfo.habitData).length > 0}
+      <ToolTip text="Has Journal Entry">
+        <div class="day-journal btn btn-square btn-xs btn-accent">
+          <Graphic width={16} height={16} path="success" fill="black"></Graphic>
+        </div>
+      </ToolTip>
+    {/if}
   </div>
 </button>
 
@@ -130,6 +137,7 @@
 
     .day-icons {
       display: flex;
+      gap: 4px;
     }
   }
 </style>
