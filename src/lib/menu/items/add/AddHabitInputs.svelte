@@ -138,9 +138,9 @@
       };
     } else if (format.value === "Number") {
       formatSpecific = {
-        unit: numberUnit,
-        limit: numberLimit,
-        numberAmount: numberTimes,
+        unit: numberUnit.value,
+        limit: numberLimit.value,
+        numberAmount: numberTimes.value,
       };
     }
 
@@ -163,7 +163,11 @@
     options={occurences}
   >
     {#if occurence.value === "Specific days of the week"}
-      <CheckBoxList label="Days" required={true} bind:values={wCheckedDays}
+      <CheckBoxList
+        label="Days"
+        required={true}
+        bind:values={wCheckedDays}
+        spread={true}
       ></CheckBoxList>
     {:else if occurence.value === "Specific days of the month"}
       <MonthInput bind:values={mCheckedDays}></MonthInput>
