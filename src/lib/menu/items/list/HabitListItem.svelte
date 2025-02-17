@@ -1,13 +1,27 @@
 <script>
+  import { dateToInputValue } from "../../../../helpers";
+  import { userData } from "../../../../shared.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import NumberInput from "../../../inputs/NumberInput.svelte";
   import ItemListItem from "../ItemListItem.svelte";
 
   let { data, itemGroup } = $props();
+
+  // Add the habit entry to the list of the day's habits, if none exists
+  if (itemGroup === "todaysHabits") {
+    const todaysKey = dateToInputValue(new Date());
+    if (!(data.id in userData.calendar[todaysKey].habitData)) {
+      userData.calendar[todaysKey].habitData[data.id] = getRecord();
+    }
+  }
   let record = $state(getRecord());
 
   function getRecord() {
+    const todaysKey = dateToInputValue(new Date());
+    if (data.id in userData.calendar[todaysKey].habitData) {
+      return userData.calendar[todaysKey].habitData[data.id];
+    }
     let format = data.format;
     if (format === "Checkbox") {
       return data.defaultChecked;
@@ -65,6 +79,12 @@
       }
     }
     return "white";
+  });
+
+  // Save the data every time there is an update
+  $effect(() => {
+    const todaysKey = dateToInputValue(new Date());
+    userData.calendar[todaysKey].habitData[data.id] = record;
   });
 </script>
 

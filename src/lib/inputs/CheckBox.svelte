@@ -1,5 +1,6 @@
 <script lang="ts">
   let {
+    id,
     label,
     checked = $bindable(false),
     type = "checkbox",
@@ -12,8 +13,9 @@
 </script>
 
 <div class="form-control">
-  <label class="label cursor-pointer">
+  <label for={id} class="label cursor-pointer">
     <input
+      {id}
       type="checkbox"
       {checked}
       class="{type} {type}-accent {type}-{size}"

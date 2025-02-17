@@ -104,10 +104,10 @@
       startDate: startDate.value,
       record: 0,
     };
-    if (endDate) {
+    if (endDate.value) {
       habitBase.endDate = endDate.value;
     }
-    if (goal) {
+    if (goal.value) {
       habitBase.goal = goal.value;
     }
     // Occurence data

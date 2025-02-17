@@ -14,26 +14,28 @@ export function sortHabits() {
     }
   }
   for (let [key, entry] of Object.entries(userData.habits)) {
+    let parsedData = {...entry, id: key};
+
     if (key === "id") continue;
     let today = new Date();
     const [day, date] = [today.getDay(), today.getDate()];
 
     // Daily activities
     if (entry.occurence === "Every day") {
-      result.todaysHabits.items.push(entry);
+      result.todaysHabits.items.push(parsedData);
       continue;
     }
     // Specific days of the week
     if (entry.occurence === "Specific days of the week") {
       if (entry.days.includes(day - 1)) {
-        result.todaysHabits.items.push(entry);
+        result.todaysHabits.items.push(parsedData);
         continue;
       }
     }
     // Specific days of the month
     if (entry.occurence === "Specific days of the month") {
       if (entry.days.includes(date - 1)) {
-        result.todaysHabits.items.push(entry);
+        result.todaysHabits.items.push(parsedData);
         continue;
       }
     }
@@ -55,7 +57,7 @@ export function sortHabits() {
       //   }
       // }
     }
-    result.otherHabits.items.push(entry);
+    result.otherHabits.items.push(parsedData);
   }
   return result;
 }
