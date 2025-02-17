@@ -28,11 +28,10 @@
     <div id="menu-content">
       <MenuButton type="Activities" disabled={false} />
       <MenuButton type="Events" />
-      <MenuButton type="Tasks" />
+      <MenuButton type="To-Do List" />
       <MenuButton type="Journal" disabled={false} />
       <MenuButton type="Habits" disabled={false} />
       <MenuButton type="Notes" />
-      <MenuButton type="Goals" />
       <MenuButton type="Records" />
       <MenuButton type="Preferences" />
     </div>
