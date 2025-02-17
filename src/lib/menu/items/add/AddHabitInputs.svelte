@@ -140,7 +140,7 @@
       formatSpecific = {
         unit: numberUnit.value,
         limit: numberLimit.value,
-        numberAmount: numberTimes.value,
+        numberAmount: parseInt(numberTimes.value),
       };
     }
 

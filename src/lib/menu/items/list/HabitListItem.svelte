@@ -16,7 +16,7 @@
       return data.checkList.map((item) => ({ label: item, value: false }));
     }
     if (format === "Number") {
-      return 0;
+      return { value: "0" };
     }
   }
 
@@ -25,9 +25,51 @@
 
     return str;
   });
+
+  let color = $derived.by(() => {
+    const colors = { success: "lime-500", fail: "red-500" };
+    let format = data.format;
+
+    if (format === "Checkbox") {
+      if (data.defaultChecked) {
+        if (!record) {
+          return colors.fail;
+        }
+      } else if (record) {
+        return colors.success;
+      }
+    } else if (format === "Checklist") {
+      let unchecked = record.filter((item) => !item.value);
+      if (unchecked.length === 0) {
+        return colors.success;
+      }
+    } else if (format === "Number") {
+      let numVal = parseInt(record.value);
+      if (data.limit === "At least") {
+        if (!numVal) return "white";
+
+        if (numVal >= data.numberAmount) {
+          return colors.success;
+        }
+      } else if (data.limit === "No more than") {
+        if (numVal > data.numberAmount) {
+          return colors.fail;
+        }
+      } else {
+        if (numVal > data.numberAmount) {
+          return colors.fail;
+        }
+        console.log(numVal, data.numberAmount);
+        if (numVal === data.numberAmount) {
+          return colors.success;
+        }
+      }
+    }
+    return "white";
+  });
 </script>
 
-<ItemListItem title={data.name} color="white">
+<ItemListItem title={data.name} {color}>
   <div class="text-xs">
     {data.occurence}
   </div>
