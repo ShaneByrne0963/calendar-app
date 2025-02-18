@@ -56,7 +56,7 @@ export function sortHabits() {
           && key in userData.calendar[dayKey].habitData
         ) {
           let result = userData.calendar[dayKey].habitData[key];
-          if (habitComplete(id, result)) {
+          if (habitComplete(key, result)) {
             times++;
           }
         }

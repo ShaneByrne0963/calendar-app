@@ -26,7 +26,10 @@
 
   function getRecord() {
     const todaysKey = dateToInputValue(new Date());
-    if (data.id in userData.calendar[todaysKey].habitData) {
+    if (
+      todaysKey in userData.calendar &&
+      data.id in userData.calendar[todaysKey].habitData
+    ) {
       return userData.calendar[todaysKey].habitData[data.id];
     }
     let format = data.format;
