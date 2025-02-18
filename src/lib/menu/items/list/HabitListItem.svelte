@@ -11,6 +11,13 @@
   // Add the habit entry to the list of the day's habits, if none exists
   if (itemGroup === "todaysHabits") {
     const todaysKey = dateToInputValue(new Date());
+    if (!(todaysKey in userData.calendar)) {
+      userData.calendar[todaysKey] = {
+        habitData: {},
+      };
+    } else if (!("habitData" in userData.calendar[todaysKey])) {
+      userData.calendar[todaysKey].habitData = {};
+    }
     if (!(data.id in userData.calendar[todaysKey].habitData)) {
       userData.calendar[todaysKey].habitData[data.id] = getRecord();
     }
@@ -83,8 +90,10 @@
 
   // Save the data every time there is an update
   $effect(() => {
-    const todaysKey = dateToInputValue(new Date());
-    userData.calendar[todaysKey].habitData[data.id] = record;
+    if (itemGroup === "todaysHabits") {
+      const todaysKey = dateToInputValue(new Date());
+      userData.calendar[todaysKey].habitData[data.id] = record;
+    }
   });
 </script>
 

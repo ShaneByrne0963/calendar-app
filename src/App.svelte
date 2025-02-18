@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { compareDates, dateToInputValue } from "./helpers.js";
+  import { compareDates } from "./helpers.js";
   import CalendarContainer from "./lib/calendar/CalendarContainer.svelte";
   import ItemDragging from "./lib/calendar/ItemDragging.svelte";
   import Menu from "./lib/menu/Menu.svelte";
@@ -22,14 +22,6 @@
     setTimeout(tick, 10000);
   }
   tick();
-
-  // Add habit data to the current day if none exists
-  let todayKey = dateToInputValue(new Date());
-  if (!(todayKey in userData.calendar)) {
-    userData.calendar[todayKey] = {
-      habitData: {},
-    };
-  }
 </script>
 
 <div

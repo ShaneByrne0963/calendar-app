@@ -63,6 +63,21 @@
     return arr;
   });
 
+  let hasJournal = $derived.by(() => {
+    let key = dateToInputValue(currentDate);
+    return key in userData.journal;
+  });
+
+  let toolTipDirection = $derived.by(() => {
+    if (dayInfo.day === 0) {
+      return "right";
+    }
+    if (dayInfo.day === 6) {
+      return "left";
+    }
+    return "bottom";
+  });
+
   function handleDateClick(e: Event) {
     if ((e.target as HTMLElement).closest(".day-journal")) {
       // If the journal list is selected, show the journal for the selected day
@@ -73,22 +88,6 @@
     calendarData.selected = currentDate;
     wDisplay.set(calendarData.selected);
   }
-
-  let hasJournal = $derived.by(() => {
-    let key = dateToInputValue(currentDate);
-    return key in userData.journal;
-  });
-
-  let toolTipDirection = $derived.by(() => {
-    console.log(dayInfo);
-    if (dayInfo.day === 0) {
-      return "right";
-    }
-    if (dayInfo.day === 6) {
-      return "left";
-    }
-    return "bottom";
-  });
 </script>
 
 <button class={className} onclick={date ? handleDateClick : null}>

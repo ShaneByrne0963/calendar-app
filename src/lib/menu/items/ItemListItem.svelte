@@ -65,6 +65,9 @@
       };
 
       if (date in userData.calendar) {
+        if (!("userEntered" in userData.calendar[date])) {
+          userData.calendar[date].userEntered = [];
+        }
         userData.calendar[date].userEntered.push(itemData);
       } else {
         userData.calendar[date] = {
