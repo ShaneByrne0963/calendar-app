@@ -219,3 +219,30 @@ export function downloadTextFile(filename, text) {
 
   document.body.removeChild(element);
 }
+
+export function habitComplete(id, data) {
+  let habitData = userData.habits[id];
+  // Checkboxes
+  if (habitData.format === "Checkbox") {
+    return data;
+  }
+  // Checklist
+  if (habitData.format === "Checklist") {
+    return data.all((item) => item.value);
+  }
+  // Number
+  if (habitData.format === "Number") {
+    let num = parseInt(data.value);
+    let target = data.numberAmount;
+    if (habitData.limit === "At least") {
+      return num >= target;
+    }
+    if (habitData.limit === "No more than") {
+      return num <= target;
+    }
+    if (habitData.limit === "Exactly") {
+      return num === target;
+    }
+  }
+  return false;
+}

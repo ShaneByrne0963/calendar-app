@@ -1,4 +1,4 @@
-import { dateToInputValue } from "../../../helpers";
+import { dateToInputValue, habitComplete } from "../../../helpers";
 import {userData} from "../../../shared.svelte";
 
 // Sorts the habits by ones that need to be checked today and ones that don't
@@ -42,20 +42,29 @@ export function sortHabits() {
     // Times per period
     if (entry.occurence === "Times per period") {
       // Subtract the current day (i.e. Wednesday) to get the start of the week (Sunday), then add 1 to get Monday
-      // let startDay = entry.periodLength === "Week" ? date - day + 1 : 1;
-      // let numChecks = entry.periodLength === "Week" ? day : date;
+      let startDay = entry.periodLength === "Week" ? date - day + 1 : 1;
+      let numChecks = entry.periodLength === "Week" ? day : date;
 
-      // const periodStart = new Date(today.getFullYear(), today.getMonth(), startDay);
-      // let times = 0;
-      // // Check each day since the start of the period to see if the target has been met
-      // for (let i = 0; i < numChecks - 1; i++) {
-      //   const key = dateToInputValue(new Date(periodStart.getFullYear(), periodStart.getMonth(), periodStart.getDate() + i));
-      //   if (key in userData.habits) {
-      //     let data = userData.habits[key];
-
-          
-      //   }
-      // }
+      const periodStart = new Date(today.getFullYear(), today.getMonth(), startDay);
+      let times = 0;
+      // Check each day since the start of the period to see if the target has been met
+      for (let i = 0; i < numChecks - 1; i++) {
+        const dayKey = dateToInputValue(new Date(periodStart.getFullYear(), periodStart.getMonth(), periodStart.getDate() + i));
+        if (
+          dayKey in userData.calendar
+          && "habitData" in userData.calendar[dayKey]
+          && key in userData.calendar[dayKey].habitData
+        ) {
+          let result = userData.calendar[dayKey].habitData[key];
+          if (habitComplete(id, result)) {
+            times++;
+          }
+        }
+      }
+      if (times < entry.frequency) {
+        result.todaysHabits.items.push(parsedData);
+        continue;
+      }
     }
     result.otherHabits.items.push(parsedData);
   }
