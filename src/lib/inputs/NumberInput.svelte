@@ -16,6 +16,7 @@
     alignment = "y",
     displayFeedback = true,
     validation = null,
+    unit = "",
   } = $props();
 
   let self = $state(null);
@@ -59,19 +60,24 @@
 <div class={margin ? "mb-5" : ""}>
   <div class={alignment}>
     <label for={id} hidden={labelHidden}>{label}</label>
-    <input
-      type="number"
-      {id}
-      class="input input-bordered input-sm w-full"
-      {min}
-      {max}
-      value={value.value}
-      {required}
-      {disabled}
-      placeholder={placeholder || label}
-      {onchange}
-      bind:this={self}
-    />
+    <div class="flex items-center">
+      <input
+        type="number"
+        {id}
+        class="input input-bordered input-sm w-full"
+        {min}
+        {max}
+        value={value.value}
+        {required}
+        {disabled}
+        placeholder={placeholder || label}
+        {onchange}
+        bind:this={self}
+      />
+      {#if unit}
+        <div class="ml-2">{unit}</div>
+      {/if}
+    </div>
   </div>
   {#if displayFeedback && value.feedback}
     <Feedback text={value.feedback}></Feedback>

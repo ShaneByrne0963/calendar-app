@@ -91,6 +91,13 @@
     return !name.feedback && !startDate.feedback;
   });
 
+  let timeUnit = $derived.by(() => {
+    if (occurence.value === "Times per period") {
+      return periodLength.value + "s";
+    }
+    return "Days";
+  });
+
   // Ensures the start date is before the end date
   function validateStartDate() {
     startDate.feedback = handleDateOrder(startDate.value, endDate.value);
@@ -102,6 +109,7 @@
       occurence: occurence.value,
       format: format.value,
       startDate: startDate.value,
+      recordStart: dateToInputValue(new Date()),
       record: 0,
     };
     if (endDate.value) {
@@ -240,12 +248,10 @@
           placeholder="Value"
           margin={false}
           bind:value={numberTimes}
+          unit="{numberUnit.value.toLowerCase()}{numberTimes.value !== '1'
+            ? 's'
+            : ''}"
         ></NumberInput>
-        <span
-          >{numberUnit.value.toLowerCase()}{numberTimes.value !== "1"
-            ? "s"
-            : ""}</span
-        >
       </div>
     {/if}
   </Select>
@@ -272,6 +278,7 @@
     required={false}
     bind:value={goal}
     alignment="x"
+    unit={timeUnit}
     min={1}
   ></NumberInput>
 </AddItem>
@@ -291,12 +298,7 @@
 
   .number-input-section {
     display: grid;
-    grid-template-columns: 3fr 2fr auto;
+    grid-template-columns: 2fr 3fr;
     align-items: center;
-
-    > span {
-      display: block;
-      margin-left: 4px;
-    }
   }
 </style>
