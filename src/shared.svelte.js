@@ -15,6 +15,7 @@ export const userData = $state({
 });
 
 export const sessionData = $state({
+  checkedHabits: [],
   habitStreaks: {},
 });
 

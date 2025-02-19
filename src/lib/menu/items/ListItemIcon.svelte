@@ -6,10 +6,10 @@
 </script>
 
 <ToolTip text={tooltip}>
-  <div class="no-drag{text ? ' btn btn-xs btn-neutral' : ''}">
+  <div class="no-drag{text !== '' ? ' btn btn-xs btn-neutral' : ''}">
     <Graphic width={18} height={18} path={icon} fill={color || "#ffffff"} />
-    {#if text}
-      <span>{text}</span>
+    {#if text !== ""}
+      <span style={color ? `color: ${color};` : null}>{text}</span>
     {/if}
   </div>
 </ToolTip>

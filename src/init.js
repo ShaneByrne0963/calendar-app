@@ -2,20 +2,23 @@ import { compareDates, dateToInputValue, habitComplete, inputToArray } from "./h
 import { calendarData, userData, sessionData } from "./shared.svelte";
 
 export function init() {
-  habitInit();
+  habitInit(true);
 }
 
 // Calculates the streaks of all the habits
-export function habitInit() {
+export function habitInit(forceAll = false) {
   let year = calendarData.today.getFullYear();
   let month = calendarData.today.getMonth();
   let day = calendarData.today.getDate();
   let weekDay = calendarData.today.getDay() - 1;
   if (weekDay < 0) weekDay += 7;
+  // Update all habits if specified
+  if (forceAll) sessionData.checkedHabits = [];
+
   for (let [key, data] of Object.entries(userData.habits)) {
-    if (key === "id") {
-      continue;
-    }
+    if (key === "id") continue;
+    if (sessionData.checkedHabits.includes(key)) continue;
+
     let startDate = inputToArray(data.startDate);
     let streak = 0;
 
@@ -55,5 +58,6 @@ export function habitInit() {
       data.record = streak;
     }
     sessionData.habitStreaks[key] = streak;
+    sessionData.checkedHabits.push(key);
   }
 }
