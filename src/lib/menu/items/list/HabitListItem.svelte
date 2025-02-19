@@ -8,7 +8,7 @@
 
   let { data, itemGroup } = $props();
 
-  // Add the habit entry to the list of the day's habits, if none exists
+  // Add the habit storage location to the calendar, if none exists
   if (itemGroup === "todaysHabits") {
     const todaysKey = dateToInputValue(new Date());
     if (!(todaysKey in userData.calendar)) {
@@ -17,9 +17,6 @@
       };
     } else if (!("habitData" in userData.calendar[todaysKey])) {
       userData.calendar[todaysKey].habitData = {};
-    }
-    if (!(data.id in userData.calendar[todaysKey].habitData)) {
-      userData.calendar[todaysKey].habitData[data.id] = getRecord();
     }
   }
   let record = $state(getRecord());
@@ -30,7 +27,17 @@
       todaysKey in userData.calendar &&
       data.id in userData.calendar[todaysKey].habitData
     ) {
-      return userData.calendar[todaysKey].habitData[data.id];
+      let result = userData.calendar[todaysKey].habitData[data.id];
+      if (data.format === "Checkbox") {
+        return result;
+      }
+      if (data.format === "Checklist") {
+        return result.map((item, index) => ({
+          label: data.checkList[index],
+          value: item,
+        }));
+      }
+      return { value: result.value };
     }
     let format = data.format;
     if (format === "Checkbox") {
@@ -95,7 +102,15 @@
   $effect(() => {
     if (itemGroup === "todaysHabits") {
       const todaysKey = dateToInputValue(new Date());
-      userData.calendar[todaysKey].habitData[data.id] = record;
+      if (data.format === "Checkbox") {
+        userData.calendar[todaysKey].habitData[data.id] = record;
+      } else if (data.format === "Checklist") {
+        userData.calendar[todaysKey].habitData[data.id] = record.map(
+          (item) => item.value
+        );
+      } else {
+        userData.calendar[todaysKey].habitData[data.id] = record.value;
+      }
     }
   });
 </script>
