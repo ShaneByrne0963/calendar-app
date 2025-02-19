@@ -164,8 +164,15 @@
         icon="streak"
         text={currentStreak}
       />
+      {#if data.goal}
+        <ListItemIcon
+          tooltip="Goal: {data.goal}"
+          icon="goal"
+          text={data.goal}
+        />
+      {/if}
       <ListItemIcon
-        tooltip="Record: {data.record}"
+        tooltip="Best: {data.record}"
         icon="record"
         text={data.record}
       />

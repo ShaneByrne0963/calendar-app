@@ -57,6 +57,10 @@ export function habitInit(forceAll = false) {
     if (streak > data.record) {
       data.record = streak;
     }
+    // Remove the goal when reached
+    if ("goal" in data && streak >= data.goal) {
+      delete data.goal;
+    }
     sessionData.habitStreaks[key] = streak;
     sessionData.checkedHabits.push(key);
   }
