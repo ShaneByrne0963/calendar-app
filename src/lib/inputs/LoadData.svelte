@@ -3,6 +3,7 @@
   import Graphic from "../global/Graphic.svelte";
   import ToolTip from "../global/ToolTip.svelte";
   import MenuAction from "../menu/MenuAction.svelte";
+  import { init } from "../../init";
 
   function onclick() {
     document.getElementById("load-file").click();
@@ -49,6 +50,7 @@
         return;
       }
       setUserData(data);
+      init();
     };
   }
 </script>

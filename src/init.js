@@ -1,8 +1,12 @@
 import { compareDates, dateToInputValue, habitComplete } from "./helpers";
 import { calendarData, userData, sessionData } from "./shared.svelte";
 
+export function init() {
+  habitInit();
+}
+
 // Calculates the streaks of all the habits
-export function habitInit() {
+function habitInit() {
   let year = calendarData.today.getFullYear();
   let month = calendarData.today.getMonth();
   let day = calendarData.today.getDate();

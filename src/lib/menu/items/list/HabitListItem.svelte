@@ -1,14 +1,6 @@
 <script>
-  import {
-    compareDates,
-    dateToInputValue,
-    habitComplete,
-  } from "../../../../helpers";
-  import {
-    calendarData,
-    sessionData,
-    userData,
-  } from "../../../../shared.svelte";
+  import { dateToInputValue, habitComplete } from "../../../../helpers";
+  import { sessionData, userData } from "../../../../shared.svelte";
   import Graphic from "../../../global/Graphic.svelte";
   import ToolTip from "../../../global/ToolTip.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";

@@ -4,7 +4,7 @@
   import ItemDragging from "./lib/calendar/ItemDragging.svelte";
   import Menu from "./lib/menu/Menu.svelte";
   import ToastContainer from "./lib/toasts/ToastContainer.svelte";
-  import { habitInit } from "./init.js";
+  import { init } from "./init.js";
   import { userData, calendarData, menuData } from "./shared.svelte";
 
   const hourPreference = userData.preferences.timeFormat;
@@ -25,7 +25,7 @@
   tick();
 
   // Getting the current streaks of each habit
-  habitInit();
+  init();
 </script>
 
 <div
