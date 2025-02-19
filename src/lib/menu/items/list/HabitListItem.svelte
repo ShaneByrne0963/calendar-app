@@ -164,11 +164,21 @@
           <span>{currentStreak}</span>
         </div>
       </ToolTip>
+      <ToolTip text="Record: {data.record}">
+        <div class="btn btn-xs btn-neutral">
+          <Graphic width="18" height="18" path="record"></Graphic>
+          <span>{data.record}</span>
+        </div>
+      </ToolTip>
     </div>
   {/if}
 </ItemListItem>
 
 <style>
+  .flex.items-center {
+    gap: 4px;
+  }
+
   .btn.btn-xs.btn-neutral {
     gap: 4px;
   }

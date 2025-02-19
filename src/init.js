@@ -51,7 +51,9 @@ export function habitInit() {
         break;
       }
     }
-    console.log(streak);
+    if (streak > data.record) {
+      data.record = streak;
+    }
     sessionData.habitStreaks[key] = streak;
   }
 }
