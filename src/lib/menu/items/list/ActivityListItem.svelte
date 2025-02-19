@@ -116,10 +116,20 @@
     </div>
   {/if}
   {#if iconList.length > 0}
-    <div class="text-xs mt-2 flex items-center">
+    <div class="item-footer text-xs mt-2 flex items-center">
       {#each iconList as data}
-        <ListItemIcon {data}></ListItemIcon>
+        <ListItemIcon
+          tooltip={data.label}
+          icon={data.icon}
+          color={data.color}
+        />
       {/each}
     </div>
   {/if}
 </ItemListItem>
+
+<style>
+  .item-footer {
+    gap: 8px;
+  }
+</style>

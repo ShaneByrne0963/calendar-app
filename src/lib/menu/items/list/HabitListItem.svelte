@@ -7,6 +7,7 @@
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import NumberInput from "../../../inputs/NumberInput.svelte";
   import ItemListItem from "../ItemListItem.svelte";
+  import ListItemIcon from "../ListItemIcon.svelte";
 
   let { data, itemGroup } = $props();
 
@@ -158,28 +159,22 @@
       ></NumberInput>
     {/if}
     <div class="text-xs mt-2 flex items-center">
-      <ToolTip text="Streak: {currentStreak}">
-        <div class="btn btn-xs btn-neutral">
-          <Graphic width="18" height="18" path="streak"></Graphic>
-          <span>{currentStreak}</span>
-        </div>
-      </ToolTip>
-      <ToolTip text="Record: {data.record}">
-        <div class="btn btn-xs btn-neutral">
-          <Graphic width="18" height="18" path="record"></Graphic>
-          <span>{data.record}</span>
-        </div>
-      </ToolTip>
+      <ListItemIcon
+        tooltip="Streak: {currentStreak}"
+        icon="streak"
+        text={currentStreak}
+      />
+      <ListItemIcon
+        tooltip="Record: {data.record}"
+        icon="record"
+        text={data.record}
+      />
     </div>
   {/if}
 </ItemListItem>
 
 <style>
   .flex.items-center {
-    gap: 4px;
-  }
-
-  .btn.btn-xs.btn-neutral {
     gap: 4px;
   }
 </style>

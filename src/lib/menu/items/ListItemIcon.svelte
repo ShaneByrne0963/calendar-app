@@ -1,23 +1,25 @@
 <script lang="ts">
   import Graphic from "../../global/Graphic.svelte";
+  import ToolTip from "../../global/ToolTip.svelte";
 
-  let { data, last = false } = $props();
+  let { tooltip, icon, color, text = "" } = $props();
 </script>
 
-<div
-  class="tooltip tooltip-bottom{last ? '' : ' mr-2'} no-drag"
-  data-tip={data.label}
->
-  <Graphic
-    width={16}
-    height={16}
-    path={data.icon}
-    fill={data.color || "#ffffff"}
-  ></Graphic>
-</div>
+<ToolTip text={tooltip}>
+  <div class="no-drag{text ? ' btn btn-xs btn-neutral' : ''}">
+    <Graphic width={18} height={18} path={icon} fill={color || "#ffffff"} />
+    {#if text}
+      <span>{text}</span>
+    {/if}
+  </div>
+</ToolTip>
 
 <style>
-  .tooltip {
+  .no-drag {
     cursor: default;
+  }
+
+  .btn.btn-xs {
+    gap: 4px;
   }
 </style>
