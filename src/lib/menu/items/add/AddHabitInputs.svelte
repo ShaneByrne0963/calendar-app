@@ -109,6 +109,7 @@
       occurence: occurence.value,
       format: format.value,
       startDate: startDate.value,
+      streak: 0,
       recordStart: dateToInputValue(new Date()),
       record: 0,
     };

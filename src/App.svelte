@@ -22,6 +22,8 @@
     setTimeout(tick, 10000);
   }
   tick();
+
+  // Getting the current streaks of each habit
 </script>
 
 <div

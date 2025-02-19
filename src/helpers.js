@@ -228,7 +228,7 @@ export function habitComplete(id, data) {
   }
   // Checklist
   if (habitData.format === "Checklist") {
-    return data.all((item) => item.value);
+    return data.every((item) => item.value);
   }
   // Number
   if (habitData.format === "Number") {

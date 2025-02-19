@@ -101,6 +101,7 @@
     border-width: 1px;
     border-radius: 16px;
     padding: 0.5em 1em 1em 1em;
+    cursor: default;
 
     &.grab {
       cursor: grab;

@@ -1,4 +1,4 @@
-import { dateToInputValue, habitComplete } from "../../../helpers";
+import { compareDates, dateToInputValue, habitComplete, inputToArray } from "../../../helpers";
 import {userData} from "../../../shared.svelte";
 
 // Sorts the habits by ones that need to be checked today and ones that don't
@@ -8,8 +8,8 @@ export function sortHabits() {
       title: "Today's habits",
       items: [],
     },
-    otherHabits: {
-      title: "Other habits",
+    upcomingHabits: {
+      title: "Upcoming habits",
       items: [],
     }
   }
@@ -19,6 +19,13 @@ export function sortHabits() {
     if (key === "id") continue;
     let today = new Date();
     const [day, date] = [today.getDay(), today.getDate()];
+    let startDate = inputToArray(entry.startDate);
+
+    // Upcoming habits
+    if (compareDates(today, startDate) === "Before") {
+      result.upcomingHabits.items.push(entry);
+      continue;
+    }
 
     // Daily activities
     if (entry.occurence === "Every day") {
@@ -66,7 +73,7 @@ export function sortHabits() {
         continue;
       }
     }
-    result.otherHabits.items.push(parsedData);
+    result.upcomingHabits.items.push(parsedData);
   }
   return result;
 }
