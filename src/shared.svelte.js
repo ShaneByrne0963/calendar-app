@@ -14,6 +14,10 @@ export const userData = $state({
   calendar: {}
 });
 
+export const sessionData = $state({
+  habitStreaks: {},
+});
+
 export function setUserData(data) {
   for (let [key, value] of Object.entries(data)) {
     userData[key] = value;

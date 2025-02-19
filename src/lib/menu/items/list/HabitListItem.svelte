@@ -4,7 +4,11 @@
     dateToInputValue,
     habitComplete,
   } from "../../../../helpers";
-  import { calendarData, userData } from "../../../../shared.svelte";
+  import {
+    calendarData,
+    sessionData,
+    userData,
+  } from "../../../../shared.svelte";
   import Graphic from "../../../global/Graphic.svelte";
   import ToolTip from "../../../global/ToolTip.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";
@@ -28,47 +32,8 @@
   let record = $state(getRecord());
 
   // Calculate the previos streak
-  const previousStreak = (function () {
-    let year = calendarData.today.getFullYear();
-    let month = calendarData.today.getMonth();
-    let day = calendarData.today.getDate();
-    let weekDay = calendarData.today.getDay() - 1;
-    if (weekDay < 0) weekDay += 7;
-    let streak = 0;
-
-    for (let i = 1; true; i++) {
-      let date;
-      let result = null;
-      // For every day, decrement the date by 1 until the start of the streak is found
-      if (data.occurence === "Every day") {
-        date = new Date(year, month, day - i);
-      } else {
-        break;
-      }
-      // Ensure the checking date is not before the start date
-      if (compareDates(date, data.startDate) === "Before") {
-        break;
-      }
-
-      let dateKey = dateToInputValue(date);
-      // Attempt to find the data of the current date iteration
-      try {
-        result = userData.calendar[dateKey].habitData[data.id];
-        if (!habitComplete(data.id, result)) {
-          throw new Error("F");
-        }
-        streak++;
-      } catch (error) {
-        if (
-          error === "F" ||
-          !(data.format === "Checkbox" && data.defaultChecked)
-        ) {
-          break;
-        }
-      }
-    }
-    return streak;
-  })();
+  const previousStreak = sessionData.habitStreaks[data.id];
+  $inspect(sessionData);
 
   let subtitle = $derived.by(() => {
     let str = data.occurence;
