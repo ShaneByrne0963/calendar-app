@@ -172,9 +172,9 @@
         />
       {/if}
       <ListItemIcon
-        tooltip="Best: {data.record}"
+        tooltip="Best: {Math.max(data.record, currentStreak)}"
         icon="record"
-        text={data.record}
+        text={Math.max(data.record, currentStreak)}
       />
     </div>
   {/if}
