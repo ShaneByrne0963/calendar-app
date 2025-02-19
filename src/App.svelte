@@ -15,6 +15,7 @@
     // Change days when necessary
     if (compareDates(now, calendarData.today) !== "Equal") {
       calendarData.today = now;
+      init();
     }
     calendarData.hours = now.getHours();
     calendarData.minutes = now.getMinutes();

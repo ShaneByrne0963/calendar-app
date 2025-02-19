@@ -5,6 +5,7 @@
     dateToInputValue,
     first3,
   } from "../../../../helpers";
+  import { habitInit } from "../../../../init";
   import { addToast, calendarData } from "../../../../shared.svelte";
   import { days, timePeriods } from "../../../../types";
   import { handleDateOrder, inputFeedback } from "../../../../validation";
@@ -162,6 +163,7 @@
     });
     closeSubmenu();
     addToast("success", "Habit created successfully!");
+    habitInit();
   }
 </script>
 

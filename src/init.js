@@ -1,4 +1,4 @@
-import { compareDates, dateToInputValue, habitComplete } from "./helpers";
+import { compareDates, dateToInputValue, habitComplete, inputToArray } from "./helpers";
 import { calendarData, userData, sessionData } from "./shared.svelte";
 
 export function init() {
@@ -6,7 +6,7 @@ export function init() {
 }
 
 // Calculates the streaks of all the habits
-function habitInit() {
+export function habitInit() {
   let year = calendarData.today.getFullYear();
   let month = calendarData.today.getMonth();
   let day = calendarData.today.getDate();
@@ -16,6 +16,7 @@ function habitInit() {
     if (key === "id") {
       continue;
     }
+    let startDate = inputToArray(data.startDate);
     let streak = 0;
 
     for (let i = 1; true; i++) {
@@ -28,7 +29,7 @@ function habitInit() {
         break;
       }
       // Ensure the checking date is not before the start date
-      if (compareDates(date, data.startDate) === "Before") {
+      if (compareDates(date, startDate) === "Before") {
         break;
       }
 
@@ -41,14 +42,16 @@ function habitInit() {
         }
         streak++;
       } catch (error) {
-        if (
-          error === "F" ||
-          !(data.format === "Checkbox" && data.defaultChecked)
-        ) {
-          break;
+        // Accept missing data as a continued streak if the default is complete
+        if ((data.format === "Checkbox" && data.defaultChecked) ||
+          (data.format === "Number" && data.limit === "No more than")) {
+          streak++;
+          continue;
         }
+        break;
       }
     }
+    console.log(streak);
     sessionData.habitStreaks[key] = streak;
   }
 }

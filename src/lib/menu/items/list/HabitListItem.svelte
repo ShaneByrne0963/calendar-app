@@ -25,7 +25,6 @@
 
   // Calculate the previos streak
   const previousStreak = sessionData.habitStreaks[data.id];
-  $inspect(sessionData);
 
   let subtitle = $derived.by(() => {
     let str = data.occurence;
