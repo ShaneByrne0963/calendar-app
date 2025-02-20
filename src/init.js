@@ -8,9 +8,11 @@ export function init() {
 // Calculates the streaks of all the habits
 export function habitInit(forceAll = false) {
   let [year, month, day] = convertDateToArray(calendarData.today);
+  let todaysDay = calendarData.today.getDay() - 1;
+  if (todaysDay < 0) todaysDay += 7;
   // Update all habits if specified
   if (forceAll) sessionData.checkedHabits = [];
-
+  
   for (let [key, data] of Object.entries(userData.habits)) {
     if (key === "id") continue;
     if (sessionData.checkedHabits.includes(key)) continue;
@@ -18,6 +20,11 @@ export function habitInit(forceAll = false) {
     let startDate = inputToArray(data.startDate);
     let streakLast = inputToArray(data.streakLast);
     let streak = 0;
+    let foundStreakLast = false;
+    // Stores whether the target has been reached since the last evaluation. Prevents double counts
+    let completedStreak = false;
+    let completeHabits = 0;
+    let isStart = true;
     
     for (let i = 1; true; i++) {
       let result = null;
@@ -29,7 +36,6 @@ export function habitInit(forceAll = false) {
         data.occurence === "Specific days of the month") {
         // Do the same for specific days of the week/month, but only the days that are selected
         let specificType = data.occurence.replace("Specific days of the ", "");
-        let foundStreakLast = false;
         while (!foundStreakLast) {
           date = new Date(year, month, day - i);
           let checkDay = specificType === "week" ? date.getDay() - 1 : date.getDate() - 1;
@@ -49,11 +55,27 @@ export function habitInit(forceAll = false) {
         // Don't check if the habit is valid if the last date it was evaluated doesn't fall on a day it was checked
         if (foundStreakLast) break;
       } else {
-        break;
+        if (data.periodLength === "Week") {
+          date = new Date(year, month, day - todaysDay - i);
+          // When the current iteration day is Monday, evaluate the results
+          if (date.getDay() === 0) {
+            if (foundStreakLast) {
+              streak += data.streak;
+              break;
+            }
+            // End the streak check when the target is not met
+            if (!isStart && completeHabits < data.frequency) {
+              break;
+            }
+            completeHabits = 0;
+            completedStreak = false;
+            isStart = false;
+          }
+        }
       }
       // Ensure the checking date is not before the start date or the date where the streak was last evaluated
       if (compareDates(date, startDate) === "Before"
-        || compareDates(date, streakLast) === "Before") {
+        || (compareDates(date, streakLast) === "Before" && data.occurence !== "Times per period")) {
         break;
       }
 
@@ -65,6 +87,9 @@ export function habitInit(forceAll = false) {
           throw new Error("F");
         }
       } catch (error) {
+        if (data.occurence === "Times per period") {
+          continue;
+        }
         // Accept missing data as a continued streak if the default is complete
         if (!((data.format === "Checkbox" && data.defaultChecked) ||
           (data.format === "Number" && data.limit === "No more than"))) {
@@ -72,10 +97,32 @@ export function habitInit(forceAll = false) {
         }
       }
       // If the code makes it this far, the day's habits have been completed
-      streak++;
-      if (compareDates(date, streakLast) ===  "Equal") {
-        streak += data.streak;
-        break;
+      if (data.occurence === "Times per period") {
+        completeHabits++;
+        if (completeHabits === data.frequency) {
+          if (completedStreak) {
+            // Takes 1 away from the streak as it will be added again from the previous evaluation
+            streak--;
+          }
+          else {
+            streak++;
+          }
+          completedStreak = true;
+        }
+        if (compareDates(date, streakLast) ===  "Equal") {
+          foundStreakLast = true;
+          // Resets the completed habit count to check if the previous recorded streak already counted this period
+          if (completedStreak) {
+            completeHabits = 0;
+          }
+        }
+      }
+      else { 
+        streak++;
+        if (compareDates(date, streakLast) ===  "Equal") {
+          streak += data.streak;
+          break;
+        }
       }
     }
     if (streak > data.record) {

@@ -29,7 +29,7 @@
   ];
   const formats = ["Checkbox", "Checklist", "Number"];
   const numberLimits = ["At least", "No more than", "Exactly"];
-  const times = timePeriods.slice(1);
+  const times = timePeriods.slice(1, 3);
 
   let name = $state({ value: "", feedback: inputFeedback.required });
   let occurence = $state({ value: occurences[0] });
@@ -134,7 +134,7 @@
       occurenceSpecific = { days };
     } else if (occurence.value === "Times per period") {
       occurenceSpecific = {
-        frequency: periodFrequency.value,
+        frequency: parseInt(periodFrequency.value),
         periodLength: periodLength.value,
       };
     }

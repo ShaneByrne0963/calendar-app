@@ -1,8 +1,6 @@
 <script>
   import { dateToInputValue, habitComplete } from "../../../../helpers";
   import { sessionData, userData } from "../../../../shared.svelte";
-  import Graphic from "../../../global/Graphic.svelte";
-  import ToolTip from "../../../global/ToolTip.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import NumberInput from "../../../inputs/NumberInput.svelte";
