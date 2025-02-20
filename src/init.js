@@ -18,21 +18,23 @@ export function habitInit(forceAll = false) {
   for (let [key, data] of Object.entries(userData.habits)) {
     if (key === "id") continue;
     if (sessionData.checkedHabits.includes(key)) continue;
-
+    
     let startDate = inputToArray(data.startDate);
+    let streakLast = inputToArray(data.streakLast);
     let streak = 0;
-
+    
     for (let i = 1; true; i++) {
-      let date;
       let result = null;
+      let date;
       // For every day, decrement the date by 1 until the start of the streak is found
       if (data.occurence === "Every day") {
         date = new Date(year, month, day - i);
       } else {
         break;
       }
-      // Ensure the checking date is not before the start date
-      if (compareDates(date, startDate) === "Before") {
+      // Ensure the checking date is not before the start date or the date where the streak was last evaluated
+      if (compareDates(date, startDate) === "Before"
+        || compareDates(date, streakLast) === "Before") {
         break;
       }
 
@@ -43,14 +45,17 @@ export function habitInit(forceAll = false) {
         if (!habitComplete(key, result)) {
           throw new Error("F");
         }
-        streak++;
       } catch (error) {
         // Accept missing data as a continued streak if the default is complete
-        if ((data.format === "Checkbox" && data.defaultChecked) ||
-          (data.format === "Number" && data.limit === "No more than")) {
-          streak++;
-          continue;
+        if (!((data.format === "Checkbox" && data.defaultChecked) ||
+          (data.format === "Number" && data.limit === "No more than"))) {
+          break;
         }
+      }
+      // If the code makes it this far, the day's habits have been completed
+      streak++;
+      if (compareDates(date, streakLast) ===  "Equal") {
+        streak += data.streak;
         break;
       }
     }
@@ -61,6 +66,8 @@ export function habitInit(forceAll = false) {
     if ("goal" in data && streak >= data.goal) {
       delete data.goal;
     }
+    data.streak = streak;
+    data.streakLast = dateToInputValue(calendarData.today);
     sessionData.habitStreaks[key] = streak;
     sessionData.checkedHabits.push(key);
   }

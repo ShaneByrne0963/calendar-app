@@ -111,6 +111,8 @@
       format: format.value,
       startDate: startDate.value,
       record: 0,
+      streakLast: startDate.value,
+      streak: 0,
     };
     if (endDate.value) {
       habitBase.endDate = endDate.value;
