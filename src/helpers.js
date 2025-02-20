@@ -220,7 +220,7 @@ export function downloadTextFile(filename, text) {
   document.body.removeChild(element);
 }
 
-export function habitComplete(id, data) {
+export function habitComplete(id, data, isFromData = false) {
   let habitData = userData.habits[id];
   // Checkboxes
   if (habitData.format === "Checkbox") {
@@ -228,11 +228,14 @@ export function habitComplete(id, data) {
   }
   // Checklist
   if (habitData.format === "Checklist") {
+    if (isFromData) {
+      return data.every((item) => item);
+    }
     return data.every((item) => item.value);
   }
   // Number
   if (habitData.format === "Number") {
-    let num = parseInt(data.value);
+    let num = isFromData ? data : parseInt(data.value);
     let target = data.numberAmount;
     if (habitData.limit === "At least") {
       return num >= target;

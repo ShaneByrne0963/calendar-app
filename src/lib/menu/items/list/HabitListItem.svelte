@@ -1,6 +1,14 @@
 <script>
-  import { dateToInputValue, habitComplete } from "../../../../helpers";
-  import { sessionData, userData } from "../../../../shared.svelte";
+  import {
+    compareDates,
+    dateToInputValue,
+    habitComplete,
+  } from "../../../../helpers";
+  import {
+    calendarData,
+    sessionData,
+    userData,
+  } from "../../../../shared.svelte";
   import CheckBox from "../../../inputs/CheckBox.svelte";
   import CheckBoxList from "../../../inputs/CheckBoxList.svelte";
   import NumberInput from "../../../inputs/NumberInput.svelte";
@@ -74,7 +82,38 @@
 
   let currentStreak = $derived.by(() => {
     if (color === "lime-500") {
-      return previousStreak + 1;
+      if (!data.occurence === "Times per period") {
+        return previousStreak + 1;
+      }
+      // Checking if the amount of habits in the selected period of time has been completed
+      let today = calendarData.today;
+      let count = 1;
+      let currentDay = today.getDay() - 1;
+      if (currentDay < 0) currentDay += 7;
+
+      let current = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        data.periodLength === "Week" ? today - currentDay : 1
+      );
+      while (compareDates(current, today) === "Before") {
+        let currentKey = dateToInputValue(current);
+        try {
+          let result = userData.calendar[currentKey].habitData[data.id];
+          if (habitComplete(data.id, result, true)) {
+            count++;
+          }
+        } catch {}
+        current = new Date(
+          current.getFullYear(),
+          current.getMonth(),
+          current.getDate() + 1
+        );
+      }
+      if (count >= data.frequency) {
+        return previousStreak + 1;
+      }
+      return 0;
     }
     if (color === "red-500") {
       return 0;
