@@ -25,12 +25,14 @@ export function habitInit(forceAll = false) {
       if (data.occurence === "Every day") {
         // For every day, decrement the date by 1 until the start of the streak is found
         date = new Date(year, month, day - i);
-      } else if (data.occurence === "Specific days of the week") {
-        // Do the same for specific days of the week, but only the days that are selected
+      } else if (data.occurence === "Specific days of the week" ||
+        data.occurence === "Specific days of the month") {
+        // Do the same for specific days of the week/month, but only the days that are selected
+        let specificType = data.occurence.replace("Specific days of the ", "");
         let foundStreakLast = false;
         while (!foundStreakLast) {
           date = new Date(year, month, day - i);
-          let checkDay = date.getDay() - 1;
+          let checkDay = specificType === "week" ? date.getDay() - 1 : date.getDate() - 1;
           if (checkDay < 0) checkDay += 7;
           if (!data.days.includes(checkDay)) {
             i++;
