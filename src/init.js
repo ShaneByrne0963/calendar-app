@@ -18,7 +18,7 @@ export function habitInit(forceAll = false) {
     if (sessionData.checkedHabits.includes(key)) continue;
     
     let startDate = inputToArray(data.startDate);
-    let streakLast = inputToArray(data.streakLast);
+    let streakLast = inputToArray(data.streakLast || data.startDate);
     let streak = 0;
     let foundStreakLast = false;
     // Stores whether the target has been reached since the last evaluation. Prevents double counts
@@ -55,22 +55,23 @@ export function habitInit(forceAll = false) {
         // Don't check if the habit is valid if the last date it was evaluated doesn't fall on a day it was checked
         if (foundStreakLast) break;
       } else {
-        if (data.periodLength === "Week") {
-          date = new Date(year, month, day - todaysDay - i);
-          // When the current iteration day is Monday, evaluate the results
-          if (date.getDay() === 0) {
-            if (foundStreakLast) {
-              streak += data.streak;
-              break;
-            }
-            // End the streak check when the target is not met
-            if (!isStart && completeHabits < data.frequency) {
-              break;
-            }
-            completeHabits = 0;
-            completedStreak = false;
-            isStart = false;
+        date = new Date(year, month, day - i);
+        let nextDayDate = new Date(year, month, day - i + 1);
+
+        // When the current iteration day is the last day of the period length, evaluate the results
+        const isEval = data.periodLength === "Week" ? (date.getDay() === 0) : (date.getMonth() !== nextDayDate.getMonth());
+        if (isEval) {
+          if (foundStreakLast) {
+            streak += data.streak;
+            break;
           }
+          // End the streak check when the target is not met
+          if (!isStart && completeHabits < data.frequency) {
+            break;
+          }
+          completeHabits = 0;
+          completedStreak = false;
+          isStart = false;
         }
       }
       // Ensure the checking date is not before the start date or the date where the streak was last evaluated
