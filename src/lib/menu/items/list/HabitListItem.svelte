@@ -158,26 +158,22 @@
         margin={false}
       ></NumberInput>
     {/if}
-    <div class="text-xs mt-2 flex items-center">
-      <ListItemIcon
-        tooltip="Streak: {currentStreak}"
-        icon="streak"
-        text={currentStreak}
-      />
-      {#if data.goal}
-        <ListItemIcon
-          tooltip="Goal: {data.goal}"
-          icon="goal"
-          text={data.goal}
-        />
-      {/if}
-      <ListItemIcon
-        tooltip="Best: {Math.max(data.record, currentStreak)}"
-        icon="record"
-        text={Math.max(data.record, currentStreak)}
-      />
-    </div>
   {/if}
+  <div class="text-xs mt-2 flex items-center">
+    <ListItemIcon
+      tooltip="Streak: {currentStreak}"
+      icon="streak"
+      text={currentStreak}
+    />
+    {#if data.goal}
+      <ListItemIcon tooltip="Goal: {data.goal}" icon="goal" text={data.goal} />
+    {/if}
+    <ListItemIcon
+      tooltip="Best: {Math.max(data.record, currentStreak)}"
+      icon="record"
+      text={Math.max(data.record, currentStreak)}
+    />
+  </div>
 </ItemListItem>
 
 <style>

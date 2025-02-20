@@ -1,4 +1,4 @@
-import { compareDates, dateToInputValue, habitComplete, inputToArray } from "./helpers";
+import { compareDates, convertDateToArray, dateToInputValue, habitComplete, inputToArray } from "./helpers";
 import { calendarData, userData, sessionData } from "./shared.svelte";
 
 export function init() {
@@ -7,11 +7,7 @@ export function init() {
 
 // Calculates the streaks of all the habits
 export function habitInit(forceAll = false) {
-  let year = calendarData.today.getFullYear();
-  let month = calendarData.today.getMonth();
-  let day = calendarData.today.getDate();
-  let weekDay = calendarData.today.getDay() - 1;
-  if (weekDay < 0) weekDay += 7;
+  let [year, month, day] = convertDateToArray(calendarData.today);
   // Update all habits if specified
   if (forceAll) sessionData.checkedHabits = [];
 
@@ -26,9 +22,30 @@ export function habitInit(forceAll = false) {
     for (let i = 1; true; i++) {
       let result = null;
       let date;
-      // For every day, decrement the date by 1 until the start of the streak is found
       if (data.occurence === "Every day") {
+        // For every day, decrement the date by 1 until the start of the streak is found
         date = new Date(year, month, day - i);
+      } else if (data.occurence === "Specific days of the week") {
+        // Do the same for specific days of the week, but only the days that are selected
+        let foundStreakLast = false;
+        while (!foundStreakLast) {
+          date = new Date(year, month, day - i);
+          let checkDay = date.getDay() - 1;
+          if (checkDay < 0) checkDay += 7;
+          if (!data.days.includes(checkDay)) {
+            i++;
+            // Check to see if the selected date is the date where the habit was last checked
+            if (compareDates(date, streakLast) === "Equal") {
+              foundStreakLast = true;
+              streak += data.streak;
+              break;
+            }
+            continue;
+          }
+          break;
+        }
+        // Don't check if the habit is valid if the last date it was evaluated doesn't fall on a day it was checked
+        if (foundStreakLast) break;
       } else {
         break;
       }
