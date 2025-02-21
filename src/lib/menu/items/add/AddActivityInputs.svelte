@@ -25,7 +25,7 @@
   let { singular } = $props();
 
   // Constants
-  const occurences = ["Fixed", "Varying", "Flexible"];
+  const occurences = ["Varying", "Fixed", "Flexible"];
   const activityTypes = ["Work", "Leisure"];
   const settings = ["Indoors", "Outdoors"];
   const blankText = "Please Select";
@@ -36,6 +36,7 @@
   let name = $state({ value: "", feedback: inputFeedback.required });
   let color = $state({ value: startingColor });
   let occurence = $state({ value: occurences[0] });
+  let hasAttendance = $state(false);
   let activityType = $state({ value: "" });
   let setting = $state({ value: "" });
   let intensity = $state({ value: 0 });
@@ -105,6 +106,9 @@
       color: color.value,
       occurence: occurence.value,
     };
+    if (hasAttendance) {
+      activity.attendance = true;
+    }
     // Advanced options. Only add the ones that have been entered by the user
     if (activityType.value) {
       activity.type = activityType.value;
@@ -117,7 +121,7 @@
     }
     let occurenceSpecific = {};
     // For fixed activities
-    if (occurence.value === occurences[0]) {
+    if (occurence.value === occurences[1]) {
       // Parse the start and end dates
       let pEndDate = "";
       if (endDate.value) {
@@ -137,7 +141,7 @@
       };
     }
     // For varying activities
-    else if (occurence.value === occurences[1]) {
+    else if (occurence.value === occurences[0]) {
       occurenceSpecific = {
         duration: timeAsNumber(varyingDuration, true),
       };
@@ -205,7 +209,7 @@
   {:else if occurence.value === "Varying"}
     <TimeLength id="duration" label="Duration" bind:value={varyingDuration}
     ></TimeLength>
-    <CheckBox label="Fixed Start Time" bind:checked={varyingHasTime}></CheckBox>
+    <CheckBox label="Fixed Start Time" bind:checked={varyingHasTime} />
     <TimeInput
       id="start-time"
       label="Start Time"
@@ -214,8 +218,9 @@
     ></TimeInput>
   {/if}
   <hr />
+  <CheckBox label="Include Attendance Checkbox" bind:checked={hasAttendance} />
 
-  <div class="collapse collapse-plus bg-neutral mb-6">
+  <div class="collapse collapse-plus bg-neutral my-6">
     <input type="checkbox" />
     <div class="collapse-title text-xl font-medium">Advanced Properties</div>
     <div class="collapse-content">
@@ -252,6 +257,6 @@
 
 <style>
   hr {
-    margin: 0 0 2em 0;
+    margin-bottom: 1em;
   }
 </style>

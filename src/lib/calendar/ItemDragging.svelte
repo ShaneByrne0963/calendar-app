@@ -65,8 +65,9 @@
 <style>
   #item-drag {
     position: absolute;
-    text-align: center;
-    border-radius: 16px;
+    text-align: left;
+    padding: 6px;
+    border-radius: 12px;
     z-index: 3;
     opacity: 0.5;
     scale: 0;

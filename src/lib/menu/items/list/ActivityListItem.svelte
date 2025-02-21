@@ -2,10 +2,9 @@
   import {
     convertTimeToDisplay,
     displaySelectedDays,
-    first3,
     inputToDateDisplay,
   } from "../../../../helpers.js";
-  import { days, sliderThemeData } from "../../../../types";
+  import { sliderThemeData } from "../../../../types";
   import ItemListItem from "../ItemListItem.svelte";
   import ListItemIcon from "../ListItemIcon.svelte";
 
@@ -92,6 +91,7 @@
           tooltip={data.label}
           icon={data.icon}
           color={data.color}
+          text={data.text}
         />
       {/each}
     </div>

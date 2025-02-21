@@ -40,7 +40,7 @@
       options={hourOptions}
       {onchange}
     ></Select>
-    <div class="ml-1 mt-1">hour{parseInt(hours.value) !== 1 ? "s" : ""}</div>
+    <div class="ml-1 mt-1">Hour{parseInt(hours.value) !== 1 ? "s" : ""}</div>
     <Select
       id="{id}-minutes"
       label="{label} (Minutes)"
@@ -49,7 +49,7 @@
       options={minuteOptions}
       {onchange}
     ></Select>
-    <div class="ml-1 mt-1">minutes</div>
+    <div class="ml-1 mt-1">Minutes</div>
   </div>
   {#if value.feedback}
     <p class="text-error text-xs">{value.feedback}</p>
