@@ -5,7 +5,8 @@
 
   let attended = $state(getAttendance());
   let ref = $state(null);
-  let resizing = $state(false);
+  let resizing = $state("");
+  let resizeData = $state(null);
 
   let pStart = $derived(start / 60);
   let pEnd = $derived(isDuration ? end / 60 : end / 60 - pStart);
@@ -48,27 +49,67 @@
   }
 
   function onmousemove(e: MouseEvent) {
-    let rect = ref.getBoundingClientRect();
-    let mouseY = e.clientY;
-    resizing = false;
+    if (resizing === "" || resizing === "Hover") {
+      let rect = ref.getBoundingClientRect();
+      let mouseY = e.clientY;
+      resizing = "";
 
-    if (
-      Math.abs(rect.top - mouseY) <= 4 ||
-      Math.abs(rect.bottom - mouseY) <= 4
-    ) {
-      resizing = true;
+      if (
+        Math.abs(rect.top - mouseY) <= 4 ||
+        Math.abs(rect.bottom - mouseY) <= 4
+      ) {
+        resizing = "Hover";
+      }
     }
+  }
+
+  function onmousedown(e: MouseEvent) {
+    if (resizing === "Hover") {
+      let rect = ref.getBoundingClientRect();
+      let mouseY = e.clientY;
+      if (Math.abs(rect.top - mouseY) <= 4) {
+        resizing = "Top";
+      } else {
+        resizing = "Bottom";
+      }
+      resizeData = {
+        mouseYStart: mouseY,
+        start: pStart,
+        end: pEnd,
+      };
+      document.addEventListener("mousemove", resize);
+      document.addEventListener("mouseup", mouseup);
+    }
+  }
+
+  function resize(e: MouseEvent) {
+    let dayRect = document
+      .querySelector("#schedule .day")
+      .getBoundingClientRect();
+    let yDiff = (e.clientY - resizeData.mouseYStart) / (dayRect.height / 24);
+    if (resizing === "Top") {
+      resizeData.start = pStart + yDiff;
+      resizeData.end = pEnd - yDiff;
+    } else {
+      resizeData.end = pEnd + yDiff;
+    }
+  }
+
+  function mouseup() {
+    resizeData = null;
+    resizing = "";
+    document.removeEventListener("mousemove", resize);
+    document.removeEventListener("mouseup", mouseup);
   }
 </script>
 
-<div
-  role="button"
-  tabindex="0"
+<button
   class="slot background col-{data.color} text-black{small
     ? ' tiny'
     : ''}{resizing ? ' resize' : ''}"
-  style={`top: calc((100% / 24) * ${pStart}); height: calc((100% / 24) * ${pEnd})`}
+  style={`top: calc((100% / 24) * ${resizeData ? resizeData.start : pStart}); height: calc((100% / 24) * ${resizeData ? resizeData.end : pEnd})`}
   {onmousemove}
+  {onmousedown}
   bind:this={ref}
 >
   {#if !tiny}
@@ -87,11 +128,13 @@
       {/if}
     </div>
   {/if}
-</div>
+</button>
 
 <style>
   .slot {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     left: 50%;
     width: 95%;
     transform: translate(-50%, 0);
