@@ -61,7 +61,7 @@
       let itemData = {
         id: data.id,
         startTime,
-        duration,
+        endTime: duration,
       };
 
       if (date in userData.calendar) {

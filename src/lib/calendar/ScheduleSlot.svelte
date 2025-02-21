@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { data, start, end, isDuration = true } = $props();
+  let { id, day, data, start, end, isDuration = true } = $props();
 
   let pStart = $derived(start / 60);
   let pEnd = $derived(end / 60);

@@ -11,7 +11,7 @@
 
     for (let [key, value] of Object.entries(userData.activities)) {
       if (key !== "id" && value.occurence === "Fixed") {
-        fixedActivities.push(value);
+        fixedActivities.push({ ...value, id: key });
       }
     }
     return dates.map((day, i) => {

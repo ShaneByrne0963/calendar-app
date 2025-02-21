@@ -27,6 +27,42 @@
     return [];
   });
 
+  let slots = $derived.by(() => {
+    let amounts = {};
+    let activities = [];
+
+    let activityData = [...data.fixedActivities];
+    let key = dateToInputValue(data.date);
+
+    if (key in userData.calendar) {
+      activityData.push(
+        ...userData.calendar[key].userEntered.map((entry) => ({
+          ...userData.activities[entry.id],
+          ...entry,
+          isDuration: true,
+        }))
+      );
+    }
+
+    for (let activity of activityData) {
+      let newId = activity.id;
+      if (newId in amounts) {
+        newId += `-${amounts[newId]}`;
+        amounts[newId]++;
+      } else {
+        amounts[newId] = 0;
+      }
+      activities.push({
+        data: activity,
+        id: newId,
+        start: activity.startTime,
+        end: activity.endTime,
+        isDuration: "isDuration" in activity,
+      });
+    }
+    return activities;
+  });
+
   function handleDateClick() {
     calendarData.selected = data.date;
     // Update the month display to easily get to the selected date in the other format
@@ -51,20 +87,8 @@
   {onmouseenter}
   {onmouseleave}
 >
-  {#each data.fixedActivities as activity}
-    <ScheduleSlot
-      data={activity}
-      start={activity.startTime}
-      end={activity.endTime}
-      isDuration={false}
-    ></ScheduleSlot>
-  {/each}
-  {#each userActivities as activity}
-    <ScheduleSlot
-      data={userData.activities[activity.id]}
-      start={activity.startTime}
-      end={activity.duration}
-    ></ScheduleSlot>
+  {#each slots as slot}
+    <ScheduleSlot day={index} {...slot}></ScheduleSlot>
   {/each}
   {#if dayClass.includes("today")}
     <TimeMarker {index}></TimeMarker>
