@@ -86,7 +86,9 @@
     let dayRect = document
       .querySelector("#schedule .day")
       .getBoundingClientRect();
-    let yDiff = (e.clientY - resizeData.mouseYStart) / (dayRect.height / 24);
+    let yDiff =
+      Math.round((e.clientY - resizeData.mouseYStart) / (dayRect.height / 96)) /
+      4;
     if (resizing === "Top") {
       resizeData.start = pStart + yDiff;
       resizeData.end = pEnd - yDiff;
