@@ -36,16 +36,30 @@
   const previousStreak = sessionData.habitStreaks[data.id];
 
   let occurence = $derived.by(() => {
-    let str = data.occurence;
-    if (str === "Specific days of the week") {
-      str = displaySelectedDays(data.days) + " every week";
-    } else if (str === "Specific days of the month") {
-      str =
+    const occ = data.occurence;
+    if (occ === "Specific days of the week") {
+      return displaySelectedDays(data.days) + " every week";
+    }
+    if (occ === "Specific days of the month") {
+      return (
         "The " +
         data.days.map((day) => getNumberPlace(day + 1)).join(", ") +
-        " of each month";
+        " of each month"
+      );
     }
-    return str;
+    if (occ === "Times per period") {
+      let str = "";
+      const freq = data.frequency;
+      if (freq === 1) {
+        str = "Once";
+      } else if (freq === "2") {
+        str === "Twice";
+      } else {
+        str = data.frequency + " times";
+      }
+      return `${str} a ${data.periodLength.toLowerCase()}`;
+    }
+    return occ;
   });
 
   let complete = $derived(habitComplete(data.id, record));
