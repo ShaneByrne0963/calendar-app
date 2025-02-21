@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    compareDates,
     dateToInputValue,
     habitComplete,
     openSubmenu,
@@ -74,17 +75,20 @@
 
   let habitData = $derived.by(() => {
     let result = {
-      display: false,
       activeHabits: 0,
       completedHabits: 0,
       color: "",
     };
     if ("habitData" in dayInfo) {
       for (let [key, value] of Object.entries(dayInfo.habitData)) {
-        result.display = true;
         result.activeHabits++;
         if (habitComplete(key, value, true)) {
           result.completedHabits++;
+        } else if (
+          compareDates(currentDate, calendarData.today) !== "Equal" &&
+          userData.habits[key].occurence === "Times per period"
+        ) {
+          result.activeHabits--;
         }
       }
     }
@@ -92,9 +96,9 @@
       (result.completedHabits / result.activeHabits) * 100
     );
     let colors = {
-      red: "#dd6c6c",
-      yellow: "#e7e969",
-      green: "#7fe26b",
+      red: "#ff6c6c",
+      yellow: "#ffff69",
+      green: "#33ff33",
     };
     if (percentage <= 50) {
       result.color = `color-mix(in oklab, ${colors.red} ${100 - percentage * 2}%, ${colors.yellow});`;
@@ -150,7 +154,7 @@
         </div>
       </ToolTip>
     {/if}
-    {#if habitData.display}
+    {#if habitData.activeHabits > 0}
       <ToolTip
         text="{habitData.completedHabits} / {habitData.activeHabits} Habits"
         direction={toolTipDirection}

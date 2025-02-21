@@ -2,6 +2,8 @@
   import {
     compareDates,
     dateToInputValue,
+    displaySelectedDays,
+    getNumberPlace,
     habitComplete,
   } from "../../../../helpers";
   import {
@@ -33,9 +35,16 @@
   // Calculate the previos streak
   const previousStreak = sessionData.habitStreaks[data.id];
 
-  let subtitle = $derived.by(() => {
+  let occurence = $derived.by(() => {
     let str = data.occurence;
-
+    if (str === "Specific days of the week") {
+      str = displaySelectedDays(data.days) + " every week";
+    } else if (str === "Specific days of the month") {
+      str =
+        "The " +
+        data.days.map((day) => getNumberPlace(day + 1)).join(", ") +
+        " of each month";
+    }
     return str;
   });
 
@@ -82,7 +91,7 @@
 
   let currentStreak = $derived.by(() => {
     if (color === "lime-500") {
-      if (!data.occurence === "Times per period") {
+      if (!(data.occurence === "Times per period")) {
         return previousStreak + 1;
       }
       // Checking if the amount of habits in the selected period of time has been completed
@@ -134,7 +143,6 @@
       } else {
         userData.calendar[todaysKey].habitData[data.id] = record.value;
       }
-      userData.habits[data.id].streak = currentStreak;
     }
   });
 
@@ -172,7 +180,7 @@
 
 <ItemListItem title={data.name} {color}>
   <div class="text-xs">
-    {data.occurence}
+    {occurence}
   </div>
   {#if itemGroup === "todaysHabits"}
     {#if data.format === "Checkbox"}

@@ -1,4 +1,4 @@
-import { months } from "./types"
+import { days, months } from "./types"
 import {menuData, userData} from "./shared.svelte";
 
 /**
@@ -10,15 +10,34 @@ export function first3(val) {
   return val.slice(0, 3);
 }
 
+
 // Clamps a number between min and max
 export function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 
+
+// Gets the place of a number, i.e. 1st, 2nd, 3rd
+export function getNumberPlace(number) {
+  let digit = number % 10;
+  if (digit === 1) {
+    return `${number}st`;
+  }
+  if (digit === 2) {
+    return `${number}nd`;
+  }
+  if (digit === 3) {
+    return `${number}rd`;
+  }
+  return `${number}th`;
+}
+
+
 // Picks a random item from an array and returns it
 export function pickFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
 
 // Converts a possible proxy array into an array that can be used
 export function removeProxy(val) {
@@ -39,11 +58,13 @@ export function removeProxy(val) {
   return result.push(...storage.map(item => item.value));
 }
 
+
 export function addItemToData(key, value) {
   const id = userData[key].id;
   userData[key][id] = value;
   userData[key].id = incrementId(id);
 }
+
 
 export function incrementId(id) {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -68,6 +89,7 @@ export function incrementId(id) {
   return newId.join("");
 }
 
+
 export function openSubmenu(component, props = {}) {
   const componentIndex = menuData.submenus.findIndex((item) => item.component == component);
   if (componentIndex === -1) {
@@ -89,9 +111,11 @@ export function openSubmenu(component, props = {}) {
   }
 }
 
+
 export function closeSubmenu() {
   menuData.submenus[menuData.submenus.length - 1].closing = true;
 }
+
 
 // Converts a date to a string format that can be used in an input value
 export function dateToInputValue(date) {
@@ -101,6 +125,7 @@ export function dateToInputValue(date) {
   return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
 }
 
+
 // Converts a date format received from a date input to a user-friendly date format
 export function inputToDateDisplay(date) {
   let dates = date.split("-").map(val => parseInt(val));
@@ -109,19 +134,23 @@ export function inputToDateDisplay(date) {
   return arrayToDateDisplay(dates);
 }
 
+
 // Converts a date format as an array [y, m, d] input to a user-friendly date format
 export function arrayToDateDisplay(dates) {
   return `${dates[2]} ${first3(months[dates[1]])} ${dates[0]}`;
 }
 
+
 export function dateArrayToInput(date) {
   return `${date[0]}-${date[1]}-${date[2]}`;
 }
+
 
 // Converts a date object to an array of numbers [y, m, d]
 export function convertDateToArray(date) {
   return [date.getFullYear(), date.getMonth(), date.getDate()];
 }
+
 
 // Converts a date input to a [y, m, d] array
 export function inputToArray(input) {
@@ -130,6 +159,7 @@ export function inputToArray(input) {
   result[1] -= 1;
   return result
 }
+
 
 // Compares two dates, returning if the first date is before, the same as or after the second
 export function compareDates(date1, date2) {
@@ -150,10 +180,49 @@ export function compareDates(date1, date2) {
   return "Equal";
 }
 
+
+// Displays a list of days in a readable format
+export function displaySelectedDays(dayList) {
+  let parsedDays = dayList
+    .map((item) => ({
+      start: item,
+      end: item,
+      startLabel: first3(days[item]),
+      endLabel: first3(days[item]),
+    }))
+    .reduce((acc, item) => {
+      // Stack the days together if they are checked one after the other
+      if (acc.length === 0 || item.start > acc[acc.length - 1].end + 1) {
+        acc.push(item);
+      } else {
+        let endAcc = acc[acc.length - 1];
+        endAcc.end = item.start;
+        endAcc.endLabel = item.startLabel;
+      }
+      return acc;
+    }, []);
+  let formattedDays = "";
+  // Convert the data to a readable string format
+  for (let day of parsedDays) {
+    if (formattedDays !== "") {
+      formattedDays += ", ";
+    }
+    formattedDays += day.startLabel;
+    if (day.startLabel !== day.endLabel) {
+      // Only include the dash if the start day and end day are not beside each other
+      formattedDays +=
+        (day.end > day.start + 1 ? " - " : ", ") + day.endLabel;
+    }
+  }
+  return formattedDays;
+}
+
+
 // Returns a number as a string, adding a 0 to the beginning if it is only one digit
 export function addZeroToNumber(num) {
   return `${num < 10 ? 0 : ""}${num}`;
 }
+
 
 // Calculates the date of Easter Sunday for a given year
 export function calculateEaster(year) {
@@ -174,6 +243,7 @@ export function calculateEaster(year) {
   return [year, month - 1, day];
 }
 
+
 // Converts a time object { hours, minutes } into a user-friendly text format
 export function convertTimeToDisplay(time) {
   let preference = userData.preferences.timeFormat;
@@ -192,6 +262,7 @@ export function convertTimeToDisplay(time) {
   return `${parsedHour}:${parsedMinute}${suffix}`;
 }
 
+
 // Converts a time object { hours, minutes } to a decimal number between 0 and 24, or a whole number of minutes
 export function timeAsNumber(time, inMinutes = false) {
   return inMinutes ? time.hours * 60 + time.minutes : time.hours + (time.minutes / 60);
@@ -202,6 +273,7 @@ export function numberAsTime(value) {
   let minutes = value % 60;
   return { hours: Math.round((value - minutes) / 60), minutes };
 }
+
 
 // Downloads a file to the user's computer
 export function downloadTextFile(filename, text) {
@@ -219,6 +291,7 @@ export function downloadTextFile(filename, text) {
 
   document.body.removeChild(element);
 }
+
 
 export function habitComplete(id, data, isFromData = false) {
   let habitData = userData.habits[id];

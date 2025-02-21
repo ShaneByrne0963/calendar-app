@@ -1,6 +1,7 @@
 <script>
   import {
     convertTimeToDisplay,
+    displaySelectedDays,
     first3,
     inputToDateDisplay,
   } from "../../../../helpers.js";
@@ -21,38 +22,7 @@
     }
 
     // Format the days to be organised in a neat manner
-    let parsedDays = data.fixedDays
-      .map((item) => ({
-        start: item,
-        end: item,
-        startLabel: first3(days[item]),
-        endLabel: first3(days[item]),
-      }))
-      .reduce((acc, item) => {
-        // Stack the days together if they are checked one after the other
-        if (acc.length === 0 || item.start > acc[acc.length - 1].end + 1) {
-          acc.push(item);
-        } else {
-          let endAcc = acc[acc.length - 1];
-          endAcc.end = item.start;
-          endAcc.endLabel = item.startLabel;
-        }
-        return acc;
-      }, []);
-    let formattedDays = "";
-    // Convert the data to a readable string format
-    for (let day of parsedDays) {
-      if (formattedDays !== "") {
-        formattedDays += ", ";
-      }
-      formattedDays += day.startLabel;
-      if (day.startLabel !== day.endLabel) {
-        // Only include the dash if the start day and end day are not beside each other
-        formattedDays +=
-          (day.end > day.start + 1 ? " - " : ", ") + day.endLabel;
-      }
-    }
-    displayData.days = formattedDays;
+    displayData.days = displaySelectedDays(data.fixedDays);
   } else if (data.occurence === "Varying") {
     displayData.subtitle = ", ";
     if (startTime) {
