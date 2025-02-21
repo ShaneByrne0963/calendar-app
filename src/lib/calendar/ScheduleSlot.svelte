@@ -1,7 +1,7 @@
 <script lang="ts">
   import { userData } from "../../shared.svelte";
 
-  let { id, day, key, data, start, end, isDuration = true } = $props();
+  let { id, day, isToday, key, data, start, end, isDuration = true } = $props();
 
   let attended = $state(getAttendance());
 
@@ -57,6 +57,7 @@
           class="checkbox checkbox-{small ? 'xs' : 'sm'}"
           bind:checked={attended}
           {onchange}
+          disabled={!isToday}
         />
       {/if}
     </div>

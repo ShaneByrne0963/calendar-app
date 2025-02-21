@@ -24,6 +24,7 @@
 
     let activityData = [...data.fixedActivities];
     let key = dateToInputValue(data.date);
+    let isToday = compareDates(data.date, calendarData.today) === "Equal";
 
     if (key in userData.calendar) {
       activityData.push(
@@ -46,6 +47,7 @@
       activities.push({
         data: activity,
         key,
+        isToday,
         id: newId,
         start: activity.startTime,
         end: activity.endTime,
