@@ -33,6 +33,10 @@
     }
   }
 
+  $effect(() => {
+    attended = getAttendance();
+  });
+
   function getAttendance() {
     try {
       return userData.calendar[key].attendance.includes(id);
