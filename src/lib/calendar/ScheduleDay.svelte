@@ -18,15 +18,6 @@
     return val;
   });
 
-  let userActivities = $derived.by(() => {
-    let key = dateToInputValue(data.date);
-
-    if (key in userData.calendar) {
-      return userData.calendar[key].userEntered;
-    }
-    return [];
-  });
-
   let slots = $derived.by(() => {
     let amounts = {};
     let activities = [];
@@ -54,6 +45,7 @@
       }
       activities.push({
         data: activity,
+        key,
         id: newId,
         start: activity.startTime,
         end: activity.endTime,
@@ -88,7 +80,7 @@
   {onmouseleave}
 >
   {#each slots as slot}
-    <ScheduleSlot day={index} {...slot}></ScheduleSlot>
+    <ScheduleSlot day={index} date={data.date} {...slot}></ScheduleSlot>
   {/each}
   {#if dayClass.includes("today")}
     <TimeMarker {index}></TimeMarker>
