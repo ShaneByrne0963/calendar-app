@@ -235,8 +235,8 @@ export function habitComplete(id, data, isFromData = false) {
   }
   // Number
   if (habitData.format === "Number") {
-    let num = isFromData ? data : parseInt(data.value);
-    let target = data.numberAmount;
+    let num = parseInt(isFromData ? data : data.value);
+    let target = habitData.numberAmount;
     if (habitData.limit === "At least") {
       return num >= target;
     }

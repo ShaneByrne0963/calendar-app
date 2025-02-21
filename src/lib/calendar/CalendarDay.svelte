@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { dateToInputValue, openSubmenu } from "../../helpers.js";
+  import {
+    dateToInputValue,
+    habitComplete,
+    openSubmenu,
+  } from "../../helpers.js";
   import {
     calendarData,
     mDisplay,
@@ -68,6 +72,38 @@
     return key in userData.journal;
   });
 
+  let habitData = $derived.by(() => {
+    let result = {
+      display: false,
+      activeHabits: 0,
+      completedHabits: 0,
+      color: "",
+    };
+    if ("habitData" in dayInfo) {
+      for (let [key, value] of Object.entries(dayInfo.habitData)) {
+        result.display = true;
+        result.activeHabits++;
+        if (habitComplete(key, value, true)) {
+          result.completedHabits++;
+        }
+      }
+    }
+    let percentage = Math.round(
+      (result.completedHabits / result.activeHabits) * 100
+    );
+    let colors = {
+      red: "#dd6c6c",
+      yellow: "#e7e969",
+      green: "#7fe26b",
+    };
+    if (percentage <= 50) {
+      result.color = `color-mix(in oklab, ${colors.red} ${100 - percentage * 2}%, ${colors.yellow});`;
+    } else {
+      result.color = `color-mix(in oklab, ${colors.yellow}, ${colors.green} ${(percentage - 50) * 2}%);`;
+    }
+    return result;
+  });
+
   let toolTipDirection = $derived.by(() => {
     if (dayInfo.day === 0) {
       return "right";
@@ -114,9 +150,15 @@
         </div>
       </ToolTip>
     {/if}
-    {#if "habitData" in dayInfo && Object.keys(dayInfo.habitData).length > 0}
-      <ToolTip text="Habits" direction={toolTipDirection}>
-        <div class="day-journal btn btn-square btn-xs btn-accent">
+    {#if habitData.display}
+      <ToolTip
+        text="{habitData.completedHabits} / {habitData.activeHabits} Habits"
+        direction={toolTipDirection}
+      >
+        <div
+          class="day-habits btn btn-square btn-xs"
+          style="--color: {habitData.color};"
+        >
           <Graphic width={16} height={16} path="success" fill="black"></Graphic>
         </div>
       </ToolTip>
@@ -148,6 +190,12 @@
     .day-icons {
       display: flex;
       gap: 4px;
+    }
+
+    .day-habits {
+      background-color: var(--color);
+      outline-color: var(--color);
+      border-color: var(--color);
     }
   }
 </style>
