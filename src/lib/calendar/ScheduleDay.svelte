@@ -28,10 +28,11 @@
 
     if (key in userData.calendar) {
       activityData.push(
-        ...userData.calendar[key].userEntered.map((entry) => ({
+        ...userData.calendar[key].userEntered.map((entry, index) => ({
           ...userData.activities[entry.id],
           ...entry,
           isDuration: true,
+          dataIndex: index,
         }))
       );
     }

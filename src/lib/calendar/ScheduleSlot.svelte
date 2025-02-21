@@ -98,8 +98,16 @@
   }
 
   function mouseup() {
-    resizeData = null;
     resizing = "";
+
+    // Saving the new resize in the data
+    if ("dataIndex" in data) {
+      let dataUpdate = userData.calendar[key].userEntered[data.dataIndex];
+      dataUpdate.startTime = resizeData.start * 60;
+      dataUpdate.endTime = resizeData.end * 60;
+    }
+    resizeData = null;
+
     document.removeEventListener("mousemove", resize);
     document.removeEventListener("mouseup", mouseup);
   }
