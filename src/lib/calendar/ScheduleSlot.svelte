@@ -4,6 +4,8 @@
   let { id, day, isToday, key, data, start, end, isDuration = true } = $props();
 
   let attended = $state(getAttendance());
+  let ref = $state(null);
+  let resizing = $state(false);
 
   let pStart = $derived(start / 60);
   let pEnd = $derived(isDuration ? end / 60 : end / 60 - pStart);
@@ -44,11 +46,30 @@
       return false;
     }
   }
+
+  function onmousemove(e: MouseEvent) {
+    let rect = ref.getBoundingClientRect();
+    let mouseY = e.clientY;
+    resizing = false;
+
+    if (
+      Math.abs(rect.top - mouseY) <= 4 ||
+      Math.abs(rect.bottom - mouseY) <= 4
+    ) {
+      resizing = true;
+    }
+  }
 </script>
 
 <div
-  class="slot background col-{data.color} text-black{small ? ' tiny' : ''}"
+  role="button"
+  tabindex="0"
+  class="slot background col-{data.color} text-black{small
+    ? ' tiny'
+    : ''}{resizing ? ' resize' : ''}"
   style={`top: calc((100% / 24) * ${pStart}); height: calc((100% / 24) * ${pEnd})`}
+  {onmousemove}
+  bind:this={ref}
 >
   {#if !tiny}
     <div class="flex items-center justify-between">
@@ -81,6 +102,10 @@
 
     &.tiny {
       padding: 0 4px;
+    }
+
+    &.resize {
+      cursor: ns-resize;
     }
   }
 
