@@ -11,7 +11,22 @@ export const userData = $state({
     timeFormat: "format24",
     hiddenMorningHours: 8,
   },
-  calendar: {}
+  calendar: {},
+
+  // Sets a value in the data, creating any objects that don't exist
+  set: (location, value) => {
+    let keys = location.split(".");
+    let endKey = keys.splice(keys.length - 1);
+    let references = [userData];
+
+    for (let key of keys) {
+      if (!(key in references[0])) {
+        references[0][key] = {};
+        references.unshift(references[0][key]);
+      }
+    }
+    references[0][endKey] = value;
+  }
 });
 
 export const sessionData = $state({

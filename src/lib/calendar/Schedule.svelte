@@ -1,5 +1,9 @@
 <script>
-  import { compareDates, inputToArray } from "../../helpers.js";
+  import {
+    compareDates,
+    dateToInputValue,
+    inputToArray,
+  } from "../../helpers.js";
   import { userData } from "../../shared.svelte";
   import HourMarkings from "./HourMarkings.svelte";
   import ScheduleDay from "./ScheduleDay.svelte";
@@ -15,13 +19,21 @@
       }
     }
     return dates.map((day, i) => {
-      let activities = fixedActivities.filter(
-        (item) =>
+      let activities = fixedActivities.filter((item) => {
+        try {
+          let dateKey = dateToInputValue(day);
+          if (userData.calendar[dateKey].exceptions.includes(item.id)) {
+            return false;
+          }
+        } catch {}
+
+        return (
           compareDates(day, inputToArray(item.startDate)) !== "Before" &&
           (!item.endDate ||
             compareDates(day, inputToArray(item.endDate)) !== "After") &&
           item.fixedDays.includes(i)
-      );
+        );
+      });
       return {
         date: day,
         index: i,

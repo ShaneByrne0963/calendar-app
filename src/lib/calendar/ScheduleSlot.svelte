@@ -102,9 +102,31 @@
 
     // Saving the new resize in the data
     if ("dataIndex" in data) {
+      // User entered activities
       let dataUpdate = userData.calendar[key].userEntered[data.dataIndex];
       dataUpdate.startTime = resizeData.start * 60;
       dataUpdate.endTime = resizeData.end * 60;
+    } else {
+      // For fixed activities, add the activity to an exception list and replace with a user-entered one
+      if (!(key in userData.calendar)) {
+        userData.calendar[key] = {
+          exceptions: [],
+        };
+      }
+      // If the activity is present more than once in the day, then remove the extra id distinction
+      else if (!("exceptions" in userData.calendar[key])) {
+        userData.calendar[key].exceptions = [];
+      }
+      let activityId = id.split("-")[0];
+      userData.calendar[key].exceptions.push(activityId);
+      if (!("userEntered" in userData.calendar[key])) {
+        userData.calendar[key].userEntered = [];
+      }
+      userData.calendar[key].userEntered.push({
+        id: activityId,
+        startTime: resizeData.start * 60,
+        endTime: resizeData.end * 60,
+      });
     }
     resizeData = null;
 
